@@ -250,3 +250,37 @@ export async function fetchSetupPage(): Promise<SetupCard | null> {
     };
   }
 }
+
+// ─── AI Monthly Reviews ───────────────────────────────────────────────────────
+
+export interface AIReview {
+  monthKey: string;   // "2026-05"
+  wentWell: string;
+  toImprove: string;
+}
+
+export async function fetchAIReviews(): Promise<AIReview[]> {
+  const dbId = process.env.NOTION_REVIEWS_DB_ID;
+  if (!dbId) return [];
+
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const response: any = await notion.databases.query({
+      database_id: dbId,
+      sorts: [{ property: "Generated At", direction: "descending" }],
+    });
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return response.results.map((page: any) => {
+      const props = page.properties as Record<string, unknown>;
+      const monthKey   = extractTitle(props["Month"]);
+      const wentWell   = (props["Went Well"]  as { rich_text?: { plain_text?: string }[] })
+        ?.rich_text?.map((t) => t.plain_text ?? "").join("") ?? "";
+      const toImprove  = (props["To Improve"] as { rich_text?: { plain_text?: string }[] })
+        ?.rich_text?.map((t) => t.plain_text ?? "").join("") ?? "";
+      return { monthKey, wentWell, toImprove };
+    }).filter((r: AIReview) => r.monthKey && (r.wentWell || r.toImprove));
+  } catch {
+    return [];
+  }
+}

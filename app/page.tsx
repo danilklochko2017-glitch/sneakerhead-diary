@@ -2,7 +2,7 @@ import HeroChart from "@/components/HeroChart";
 import JournalTable from "@/components/JournalTable";
 import SetupsGrid from "@/components/SetupsGrid";
 import MonthlyReviews from "@/components/MonthlyReviews";
-import { fetchTrades, fetchSetupPage } from "@/lib/notion";
+import { fetchTrades, fetchSetupPage, fetchAIReviews } from "@/lib/notion";
 import { calculateStats, buildEquitySeries } from "@/lib/calculations";
 import { buildMonthlyReviews } from "@/lib/reviews";
 import type { Trade, SetupCard, MonthlyReview } from "@/types/trade";
@@ -49,7 +49,20 @@ export default async function HomePage() {
   const stats = calculateStats(trades);
   const equitySeries = buildEquitySeries(trades);
   const setups: SetupCard[] = setup ? [setup] : [];
-  const reviews: MonthlyReview[] = buildMonthlyReviews(trades);
+
+  // Build reviews: prefer AI-generated text from Notion when available
+  const templateReviews = buildMonthlyReviews(trades);
+  const aiReviews = await fetchAIReviews().catch(() => []);
+  const reviews: MonthlyReview[] = templateReviews.map((r) => {
+    const monthKey = `${r.year}-${String(
+      ["January","February","March","April","May","June",
+       "July","August","September","October","November","December"]
+        .indexOf(r.month) + 1
+    ).padStart(2, "0")}`;
+    const ai = aiReviews.find((a) => a.monthKey === monthKey);
+    if (ai) return { ...r, wentWell: ai.wentWell, toImprove: ai.toImprove };
+    return r;
+  });
 
   const pnlColor = stats.netPnL >= 0 ? "#34d399" : "#f87171";
   const pnlValue = `${stats.netPnL >= 0 ? "+" : ""}${stats.netPnL.toFixed(2)}R`;
