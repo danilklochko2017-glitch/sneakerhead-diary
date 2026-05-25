@@ -65,13 +65,19 @@ const TD: React.CSSProperties = {
 
 const PAGE_SIZE = 10;
 
-export default function JournalTable({ trades, stats }: { trades: Trade[]; stats: TradeStats }) {
-  const [active, setActive] = useState<Trade | null>(null);
-  const [page, setPage]     = useState(1);
+type SessionFilter = "All" | "London" | "New York";
+const SESSION_TABS: SessionFilter[] = ["All", "London", "New York"];
 
-  const totalPages  = Math.max(1, Math.ceil(trades.length / PAGE_SIZE));
+export default function JournalTable({ trades, stats }: { trades: Trade[]; stats: TradeStats }) {
+  const [active, setActive]         = useState<Trade | null>(null);
+  const [page, setPage]             = useState(1);
+  const [session, setSession]       = useState<SessionFilter>("All");
+
+  const filtered = session === "All" ? trades : trades.filter(t => t.session === session);
+
+  const totalPages  = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
   const safePage    = Math.min(page, totalPages);
-  const pageTrades  = trades.slice((safePage - 1) * PAGE_SIZE, safePage * PAGE_SIZE);
+  const pageTrades  = filtered.slice((safePage - 1) * PAGE_SIZE, safePage * PAGE_SIZE);
 
   return (
     <>
@@ -104,8 +110,29 @@ export default function JournalTable({ trades, stats }: { trades: Trade[]; stats
               Trade Journal
             </h2>
           </div>
-          <div style={{ fontFamily: BODY, fontSize: "12px", color: "#6b7280" }}>
-            Click any row to view screenshots
+
+          <div style={{ display: "flex", alignItems: "center", gap: "16px", flexWrap: "wrap" }}>
+            {/* Session tabs */}
+            <div style={{ display: "flex", gap: "6px" }}>
+              {SESSION_TABS.map(tab => {
+                const isActive = tab === session;
+                return (
+                  <button key={tab} onClick={() => { setSession(tab); setPage(1); }} style={{
+                    fontFamily: BODY, fontSize: "11px", fontWeight: 600,
+                    padding: "4px 12px", borderRadius: "9999px",
+                    border: `1px solid ${isActive ? "rgba(255,249,60,0.4)" : "#3a3a3f"}`,
+                    backgroundColor: isActive ? "rgba(255,249,60,0.10)" : "transparent",
+                    color: isActive ? "#FFF93C" : "#6b7280",
+                    cursor: "pointer", transition: "all 0.15s",
+                  }}>
+                    {tab === "All" ? "Все" : tab}
+                  </button>
+                );
+              })}
+            </div>
+            <div style={{ fontFamily: BODY, fontSize: "12px", color: "#6b7280" }}>
+              Нажми на строку чтобы посмотреть скриншоты
+            </div>
           </div>
         </div>
 
@@ -121,10 +148,10 @@ export default function JournalTable({ trades, stats }: { trades: Trade[]; stats
                 </tr>
               </thead>
               <tbody>
-                {trades.length === 0 ? (
+                {pageTrades.length === 0 ? (
                   <tr>
                     <td colSpan={7} style={{ ...TD, textAlign: "center", color: "#6b7280", padding: "48px", borderBottom: "none" }}>
-                      No trades yet.
+                      {filtered.length === 0 && session !== "All" ? `Нет сделок по сессии ${session}` : "Нет сделок"}
                     </td>
                   </tr>
                 ) : pageTrades.map((t, i) => {
@@ -198,7 +225,7 @@ export default function JournalTable({ trades, stats }: { trades: Trade[]; stats
             marginTop: "16px", fontFamily: BODY, fontSize: "12px", color: "#6b7280",
           }}>
             <span>
-              {(safePage - 1) * PAGE_SIZE + 1}–{Math.min(safePage * PAGE_SIZE, trades.length)} из {trades.length} сделок
+              {(safePage - 1) * PAGE_SIZE + 1}–{Math.min(safePage * PAGE_SIZE, filtered.length)} из {filtered.length} сделок
             </span>
             <div style={{ display: "flex", gap: "6px", alignItems: "center" }}>
               <button
