@@ -7,7 +7,7 @@ import { calculateStats, buildEquitySeries } from "@/lib/calculations";
 import { buildMonthlyReviews } from "@/lib/reviews";
 import type { Trade, SetupCard, MonthlyReview } from "@/types/trade";
 
-export const revalidate = 3600;
+export const revalidate = 60;
 
 const DISPLAY = "'Unbounded', sans-serif";
 const BODY    = "'Bricolage Grotesque', sans-serif";
