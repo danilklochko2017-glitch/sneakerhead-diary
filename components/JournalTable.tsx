@@ -68,7 +68,7 @@ const PAGE_SIZE = 10;
 type SessionFilter = "All" | "London" | "New York";
 const SESSION_TABS: SessionFilter[] = ["All", "London", "New York"];
 
-export default function JournalTable({ trades, stats }: { trades: Trade[]; stats: TradeStats }) {
+export default function JournalTable({ trades }: { trades: Trade[]; stats: TradeStats }) {
   const [active, setActive]         = useState<Trade | null>(null);
   const [page, setPage]             = useState(1);
   const [session, setSession]       = useState<SessionFilter>("All");
