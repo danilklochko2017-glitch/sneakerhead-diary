@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import type { Trade, TradeStats } from "@/types/trade";
-import { formatRR, formatWinRate } from "@/lib/calculations";
+import { formatRR, formatWinRate, calculateStats } from "@/lib/calculations";
 import TradeModal from "@/components/TradeModal";
 
 const DISPLAY = "'Unbounded', sans-serif";
@@ -73,7 +73,8 @@ export default function JournalTable({ trades, stats }: { trades: Trade[]; stats
   const [page, setPage]             = useState(1);
   const [session, setSession]       = useState<SessionFilter>("All");
 
-  const filtered = session === "All" ? trades : trades.filter(t => t.session === session);
+  const filtered     = session === "All" ? trades : trades.filter(t => t.session === session);
+  const filteredStats: TradeStats = useMemo(() => calculateStats(filtered), [filtered]);
 
   const totalPages  = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
   const safePage    = Math.min(page, totalPages);
@@ -202,15 +203,15 @@ export default function JournalTable({ trades, stats }: { trades: Trade[]; stats
               <tfoot>
                 <tr style={{ backgroundColor: "#1c1e24", borderTop: "1px solid #3a3a3f" }}>
                   <td colSpan={4} style={{ ...TD, fontSize: "12px", fontWeight: 600, color: "#FFF93C", borderBottom: "none", backgroundColor: "#1c1e24" }}>
-                    {stats.totalTrades} trades · avg {stats.avgRR >= 0 ? "+" : ""}{stats.avgRR.toFixed(2)}R
+                    {filteredStats.totalTrades} trades · avg {filteredStats.avgRR >= 0 ? "+" : ""}{filteredStats.avgRR.toFixed(2)}R
                   </td>
                   <td style={{ ...TD, fontSize: "14px", fontWeight: 700, borderBottom: "none", backgroundColor: "#1c1e24",
-                    color: stats.netPnL >= 0 ? "#34d399" : "#f87171" }}>
-                    {formatRR(stats.netPnL)}
+                    color: filteredStats.netPnL >= 0 ? "#34d399" : "#f87171" }}>
+                    {formatRR(filteredStats.netPnL)}
                   </td>
                   <td style={{ ...TD, borderBottom: "none", color: "#6b7280", backgroundColor: "#1c1e24" }} />
                   <td style={{ ...TD, fontSize: "12px", fontWeight: 600, color: "#e5e7eb", borderBottom: "none", backgroundColor: "#1c1e24" }}>
-                    {formatWinRate(stats.winRate)} WR
+                    {formatWinRate(filteredStats.winRate)} WR
                   </td>
                 </tr>
               </tfoot>
