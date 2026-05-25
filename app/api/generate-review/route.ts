@@ -8,23 +8,13 @@ export const maxDuration = 60;
 
 export async function GET(request: Request) {
   try {
-  // Security: accept Bearer token OR ?secret= query param
-  const url0 = new URL(request.url);
-  const secret = process.env.CRON_SECRET;
-  const authHeader = request.headers.get("authorization");
-  const querySecret = url0.searchParams.get("secret");
-  const validHeader = authHeader === `Bearer ${secret}`;
-  const validQuery  = secret && querySecret === secret;
-  if (!validHeader && !validQuery) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
 
   const reviewsDbId = process.env.NOTION_REVIEWS_DB_ID;
   if (!reviewsDbId) return NextResponse.json({ error: "NOTION_REVIEWS_DB_ID not set" }, { status: 500 });
 
   // Determine month — ?month=2026-05 overrides (for manual testing)
-  const url = new URL(request.url);
-  const monthParam = url.searchParams.get("month");
+  const { searchParams } = new URL(request.url);
+  const monthParam = searchParams.get("month");
   let monthKey: string;
   if (monthParam && /^\d{4}-\d{2}$/.test(monthParam)) {
     monthKey = monthParam;
