@@ -7,6 +7,7 @@ export const dynamic = "force-dynamic";
 export const maxDuration = 60;
 
 export async function GET(request: Request) {
+  try {
   // Security: accept Bearer token OR ?secret= query param
   const url0 = new URL(request.url);
   const secret = process.env.CRON_SECRET;
@@ -43,7 +44,7 @@ export async function GET(request: Request) {
   );
 
   if (monthTrades.length === 0) {
-    return NextResponse.json({ message: `No trades found for ${monthKey}` });
+    return NextResponse.json({ message: `No trades found for ${monthKey}`, allDates: allTrades.map(t => t.date).slice(0, 5) });
   }
 
   // Stats
@@ -130,4 +131,13 @@ TO_IMPROVE: [текст]`,
   }
 
   return NextResponse.json({ success: true, month: monthKey, wentWell, toImprove });
+  } catch (e: unknown) {
+    const msg = e instanceof Error ? e.message : String(e);
+    console.error("[generate-review] error:", msg);
+    return NextResponse.json({ error: msg }, { status: 500 });
+  }
+}
+
+export async function POST() {
+  return NextResponse.json({ error: "Use GET" }, { status: 405 });
 }
