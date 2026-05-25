@@ -16,12 +16,19 @@ export async function GET(request: Request) {
   const reviewsDbId = process.env.NOTION_REVIEWS_DB_ID;
   if (!reviewsDbId) return NextResponse.json({ error: "NOTION_REVIEWS_DB_ID not set" }, { status: 500 });
 
-  // Determine last month
-  const now = new Date();
-  const lastMonth = new Date(now.getFullYear(), now.getMonth() - 1, 1);
-  const year  = lastMonth.getFullYear();
-  const month = lastMonth.getMonth() + 1;
-  const monthKey = `${year}-${String(month).padStart(2, "0")}`; // "2026-05"
+  // Determine month — ?month=2026-05 overrides (for manual testing)
+  const url = new URL(request.url);
+  const monthParam = url.searchParams.get("month");
+  let monthKey: string;
+  if (monthParam && /^\d{4}-\d{2}$/.test(monthParam)) {
+    monthKey = monthParam;
+  } else {
+    const now = new Date();
+    const lastMonth = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+    const year  = lastMonth.getFullYear();
+    const month = lastMonth.getMonth() + 1;
+    monthKey = `${year}-${String(month).padStart(2, "0")}`;
+  }
 
   // Fetch trades and filter to last month
   const allTrades = await fetchTrades();
