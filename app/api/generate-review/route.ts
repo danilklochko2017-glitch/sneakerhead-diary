@@ -7,9 +7,14 @@ export const dynamic = "force-dynamic";
 export const maxDuration = 60;
 
 export async function GET(request: Request) {
-  // Security: Vercel Cron sends CRON_SECRET as Bearer token
-  const auth = request.headers.get("authorization");
-  if (auth !== `Bearer ${process.env.CRON_SECRET}`) {
+  // Security: accept Bearer token OR ?secret= query param
+  const url0 = new URL(request.url);
+  const secret = process.env.CRON_SECRET;
+  const authHeader = request.headers.get("authorization");
+  const querySecret = url0.searchParams.get("secret");
+  const validHeader = authHeader === `Bearer ${secret}`;
+  const validQuery  = secret && querySecret === secret;
+  if (!validHeader && !validQuery) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
