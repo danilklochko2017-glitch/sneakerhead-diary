@@ -131,9 +131,6 @@ export default function JournalTable({ trades, stats }: { trades: Trade[]; stats
                 );
               })}
             </div>
-            <div style={{ fontFamily: BODY, fontSize: "12px", color: "#6b7280" }}>
-              Нажми на строку чтобы посмотреть скриншоты
-            </div>
           </div>
         </div>
 
