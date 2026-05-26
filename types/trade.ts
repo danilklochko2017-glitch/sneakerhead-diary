@@ -14,6 +14,7 @@ export interface Trade {
   rr: number;
   result: Result;
   notes: string;          // entry type / setup name (e.g. "FVG Reaction")
+  note?: string;          // free-text note from the "Note" Notion field
   riskPct?: number;       // Risk (%) column
 }
 

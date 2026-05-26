@@ -62,6 +62,13 @@ function extractNumber(prop: unknown): number | null {
   return null;
 }
 
+function extractRichText(prop: unknown): string {
+  if (!prop || typeof prop !== "object") return "";
+  const p = prop as Record<string, unknown>;
+  if (!Array.isArray(p.rich_text)) return "";
+  return p.rich_text.map((t: { plain_text?: string }) => t.plain_text ?? "").join("");
+}
+
 function extractDate(prop: unknown): string {
   if (!prop || typeof prop !== "object") return "";
   const p = prop as Record<string, unknown>;
@@ -119,6 +126,7 @@ async function mapPageToTrade(page: any): Promise<Trade> {
     resultVal === "Win"  ? Math.abs(rrRaw) :
     rrRaw;
   const entryType   = extractSelect(props["Entry"]);           // e.g. "FVG Reaction"
+  const noteVal     = extractRichText(props["Note"]) || extractRichText(props["Notes"]);
   const instrumentVal = extractTitle(props["Pair"]) || "GER40";
   const riskPct     = extractNumber(props["Risk (%)"]);
 
@@ -155,6 +163,7 @@ async function mapPageToTrade(page: any): Promise<Trade> {
     rr: rrVal,
     result: resultVal,
     notes: entryType || "",
+    note: noteVal || undefined,
     riskPct: riskPct ?? undefined,
   };
 }
