@@ -9,9 +9,9 @@ import type { Trade, SetupCard, MonthlyReview } from "@/types/trade";
 
 export const revalidate = 60;
 
-const DISPLAY = "var(--font-space-mono), monospace";
-const BODY    = "var(--font-space-mono), monospace";
-const MONO    = "var(--font-space-mono), monospace";
+const DISPLAY = "var(--font-mono)";
+const BODY    = "var(--font-mono)";
+const MONO    = "var(--font-mono)";
 
 const CARD: React.CSSProperties = {
   backgroundColor: "#14151a",

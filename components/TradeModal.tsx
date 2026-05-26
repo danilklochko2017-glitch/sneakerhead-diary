@@ -3,9 +3,9 @@
 import { useEffect, useState, useCallback } from "react";
 import type { Trade } from "@/types/trade";
 
-const BODY = "var(--font-space-mono), monospace";
+const BODY = "var(--font-mono)";
 const MONO: React.CSSProperties = {
-  fontFamily: "var(--font-space-mono), monospace",
+  fontFamily: "var(--font-mono)",
 };
 
 function fmt(d: string) {

@@ -7,8 +7,8 @@ import {
 } from "recharts";
 import type { EquityPoint } from "@/types/trade";
 
-const BODY = "var(--font-space-mono), monospace";
-const MONO = "var(--font-space-mono), monospace";
+const BODY = "var(--font-mono)";
+const MONO = "var(--font-mono)";
 
 interface TooltipProps {
   active?: boolean;
@@ -159,12 +159,12 @@ export default function HeroChart({ data }: { data: EquityPoint[] }) {
                 return p ? fmt(p.date) : "";
               }}
               stroke="transparent"
-              tick={{ fill: "#6b7280", fontSize: 11, fontFamily: "var(--font-space-grotesk)" }}
+              tick={{ fill: "#6b7280", fontSize: 11, fontFamily: "var(--font-mono)" }}
               tickLine={false} axisLine={false} dy={6}
             />
             <YAxis
               stroke="transparent"
-              tick={{ fill: "#6b7280", fontSize: 11, fontFamily: "var(--font-space-mono)" }}
+              tick={{ fill: "#6b7280", fontSize: 11, fontFamily: "var(--font-mono)" }}
               tickLine={false} axisLine={false}
               tickFormatter={v => `${v >= 0 ? "+" : ""}${v}R`}
               width={52} dx={0}

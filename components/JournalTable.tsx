@@ -5,9 +5,9 @@ import type { Trade, TradeStats } from "@/types/trade";
 import { formatRR, formatWinRate, calculateStats } from "@/lib/calculations";
 import TradeModal from "@/components/TradeModal";
 
-const DISPLAY = "var(--font-space-mono), monospace";
-const BODY    = "var(--font-space-mono), monospace";
-const MONO    = "var(--font-space-mono), monospace";
+const DISPLAY = "var(--font-mono)";
+const BODY    = "var(--font-mono)";
+const MONO    = "var(--font-mono)";
 
 function Tag({ label, color = "#6b7280" }: { label: string; color?: string }) {
   const isNeutral = color === "#6b7280";

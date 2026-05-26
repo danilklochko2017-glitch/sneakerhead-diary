@@ -3,9 +3,9 @@
 import { useState } from "react";
 import type { MonthlyReview } from "@/types/trade";
 
-const DISPLAY = "var(--font-space-mono), monospace";
-const BODY    = "var(--font-space-mono), monospace";
-const MONO    = "var(--font-space-mono), monospace";
+const DISPLAY = "var(--font-mono)";
+const BODY    = "var(--font-mono)";
+const MONO    = "var(--font-mono)";
 const INNER   = "#22242A";
 
 function ReviewCard({ r }: { r: MonthlyReview }) {

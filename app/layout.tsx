@@ -1,20 +1,19 @@
 import type { Metadata } from "next";
-import { Unbounded, Bricolage_Grotesque } from "next/font/google";
+import { Space_Grotesk, Space_Mono } from "next/font/google";
 import GlowEffect from "@/components/GlowEffect";
-// JetBrains Mono removed — all data/numbers now use Bricolage Grotesque
 import "./globals.css";
 
-const unbounded = Unbounded({
+const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800", "900"],
-  variable: "--font-unbounded",
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-space-grotesk",
   display: "swap",
 });
 
-const bricolage = Bricolage_Grotesque({
+const spaceMono = Space_Mono({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700", "800"],
-  variable: "--font-bricolage",
+  weight: ["400", "700"],
+  variable: "--font-space-mono",
   display: "swap",
 });
 
@@ -25,18 +24,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${unbounded.variable} ${bricolage.variable}`}>
-      <head>
-        {/* eslint-disable-next-line @next/next/no-page-custom-font */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        {/* eslint-disable-next-line @next/next/no-page-custom-font */}
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        {/* eslint-disable-next-line @next/next/no-page-custom-font */}
-        <link
-          href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600;700;800;900&family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&display=swap"
-          rel="stylesheet"
-        />
-      </head>
+    <html lang="en" className={`${spaceGrotesk.variable} ${spaceMono.variable}`}>
       <body>
         <GlowEffect />
         {children}
