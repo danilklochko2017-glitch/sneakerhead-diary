@@ -122,7 +122,7 @@ function ReviewCard({ r }: { r: MonthlyReview }) {
                 }}>
                   {item.l}
                 </div>
-                <p style={{ fontFamily: BODY, fontSize: "12px", lineHeight: "1.65", color: "#6b7280" }}>
+                <p style={{ fontFamily: BODY, fontSize: "14px", lineHeight: "1.65", color: "#e5e7eb" }}>
                   {item.body}
                 </p>
               </div>
