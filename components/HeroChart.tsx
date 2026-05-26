@@ -176,7 +176,10 @@ export default function HeroChart({ data }: { data: EquityPoint[] }) {
             <Area
               type="monotone" dataKey="cumulative"
               stroke="none" fill="url(#equityGlow)"
-              fillOpacity={1} isAnimationActive={false}
+              fillOpacity={1}
+              isAnimationActive={true}
+              animationDuration={1500}
+              animationEasing="ease"
             />
 
             {/* Main line */}
@@ -184,6 +187,8 @@ export default function HeroChart({ data }: { data: EquityPoint[] }) {
               type="monotone" dataKey="cumulative" name="Equity"
               stroke="#FFF93C" strokeWidth={2.5}
               activeDot={{ r: 5, fill: "#FFF93C", strokeWidth: 0 }}
+              animationDuration={1500}
+              animationEasing="ease"
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
               dot={(props: any) => {
                 const { cx, cy, index } = props;
