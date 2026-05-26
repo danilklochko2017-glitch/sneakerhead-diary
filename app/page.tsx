@@ -111,7 +111,7 @@ export default async function HomePage() {
                 fontFamily: BODY, fontSize: "14px", lineHeight: 1.6,
                 color: "#6b7280", maxWidth: "300px",
               }}>
-                Every GER40 trade, logged. No edits, no cherry-picking — raw performance data from the session.
+                Каждая сделка на GER40 — без правок и отбора. Честные данные с реальных сессий.
               </p>
             </div>
           </div>
