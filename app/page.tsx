@@ -106,7 +106,7 @@ export default async function HomePage() {
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
               }}>
-                Trading<br />Journal
+                TRADING<br />JOURNAL
               </h1>
               <p style={{
                 fontFamily: BODY, fontSize: "14px", lineHeight: 1.6,

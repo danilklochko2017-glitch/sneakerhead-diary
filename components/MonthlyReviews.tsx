@@ -22,7 +22,7 @@ function ReviewCard({ r }: { r: MonthlyReview }) {
         onClick={() => setOpen((v) => !v)}
         style={{
           width: "100%", background: "none", border: "none",
-          padding: "16px 20px", cursor: "pointer",
+          padding: "0 20px", minHeight: "72px", cursor: "pointer",
           display: "flex", alignItems: "center",
           justifyContent: "space-between", gap: "12px",
           flexWrap: "wrap", textAlign: "left",
