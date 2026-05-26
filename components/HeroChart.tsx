@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import {
   ComposedChart, Line, Area, XAxis, YAxis,
   CartesianGrid, Tooltip, ResponsiveContainer, ReferenceLine,
@@ -65,6 +65,14 @@ export default function HeroChart({ data }: { data: EquityPoint[] }) {
   const latestMonth = months.length > 0 ? months[months.length - 1].key : "";
   const [activeMonth, setActiveMonth] = useState<string>("");
   const currentMonth = activeMonth || latestMonth;
+
+  // Delay last-dot visibility to match line animation duration (1500ms)
+  const [dotVisible, setDotVisible] = useState(false);
+  useEffect(() => {
+    setDotVisible(false);
+    const t = setTimeout(() => setDotVisible(true), 1500);
+    return () => clearTimeout(t);
+  }, [currentMonth]);
 
   const filtered = useMemo(() => {
     const base = (!currentMonth || currentMonth === "all")
@@ -192,7 +200,7 @@ export default function HeroChart({ data }: { data: EquityPoint[] }) {
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
               dot={(props: any) => {
                 const { cx, cy, index } = props;
-                if (index !== filtered.length - 1) return <g key={index} />;
+                if (index !== filtered.length - 1 || !dotVisible) return <g key={index} />;
                 return (
                   <g key="last-dot">
                     {/* Pulsing ring */}
