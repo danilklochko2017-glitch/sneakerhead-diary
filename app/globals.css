@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -19,10 +19,10 @@
   --color-warning-yellow:  #fcd34d;
   --color-danger-red:      #f87171;
 
-  /* Typography — all Space Mono */
-  --font-display: var(--font-space-mono, 'Space Mono'), monospace;
-  --font-body:    var(--font-space-mono, 'Space Mono'), monospace;
-  --font-mono:    var(--font-space-mono, 'Space Mono'), monospace;
+  /* Typography — all Geist Mono */
+  --font-display: 'Geist Mono', monospace;
+  --font-body:    'Geist Mono', monospace;
+  --font-mono:    'Geist Mono', monospace;
 
   /* Layout */
   --page-max-width: 1360px;
