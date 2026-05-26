@@ -45,7 +45,7 @@ function formatDate(d: string) {
   return new Date(d).toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" });
 }
 
-const INNER     = "#22242A";
+const INNER     = "#1c1e24"; // matches table header
 const INNER_ALT = "#282B33"; // zebra — slightly lighter
 
 const TH: React.CSSProperties = {
