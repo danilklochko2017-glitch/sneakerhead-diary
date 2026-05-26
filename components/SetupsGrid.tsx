@@ -18,7 +18,7 @@ function renderInline(text: string): React.ReactNode[] {
   while ((m = boldRx.exec(text)) !== null) {
     if (m.index > last) result.push(text.slice(last, m.index));
     result.push(
-      <strong key={m.index} style={{ color: "#e5e7eb", fontWeight: 700 }}>
+      <strong key={m.index} style={{ color: "#FFF93C", fontWeight: 700 }}>
         {m[1]}
       </strong>
     );
@@ -76,10 +76,10 @@ function renderSectionLines(lines: string[]) {
       if (numM) {
         return (
           <div key={idx} style={{ display: "flex", gap: "10px", marginBottom: "5px" }}>
-            <span style={{ color: "#FFF93C", fontWeight: 700, flexShrink: 0, fontFamily: BODY, fontSize: "12px", minWidth: "14px" }}>
+            <span style={{ color: "#FFF93C", fontWeight: 700, flexShrink: 0, fontFamily: BODY, fontSize: "14px", minWidth: "14px" }}>
               {numM[1]}.
             </span>
-            <span style={{ fontFamily: BODY, fontSize: "12px", color: "#6b7280", lineHeight: "1.7" }}>
+            <span style={{ fontFamily: BODY, fontSize: "14px", color: "#e5e7eb", lineHeight: "1.7" }}>
               {renderInline(numM[2])}
             </span>
           </div>
@@ -88,8 +88,8 @@ function renderSectionLines(lines: string[]) {
       if (line.startsWith("- ")) {
         return (
           <div key={idx} style={{ display: "flex", gap: "10px", marginBottom: "5px" }}>
-            <span style={{ color: "#FFF93C", flexShrink: 0, fontFamily: BODY, fontSize: "12px" }}>—</span>
-            <span style={{ fontFamily: BODY, fontSize: "12px", color: "#6b7280", lineHeight: "1.7" }}>
+            <span style={{ color: "#FFF93C", flexShrink: 0, fontFamily: BODY, fontSize: "14px" }}>—</span>
+            <span style={{ fontFamily: BODY, fontSize: "14px", color: "#e5e7eb", lineHeight: "1.7" }}>
               {renderInline(line.slice(2))}
             </span>
           </div>
@@ -97,7 +97,7 @@ function renderSectionLines(lines: string[]) {
       }
       if (line.trim() === "") return <div key={idx} style={{ height: "4px" }} />;
       return (
-        <p key={idx} style={{ fontFamily: BODY, fontSize: "12px", lineHeight: "1.7", color: "#6b7280" }}>
+        <p key={idx} style={{ fontFamily: BODY, fontSize: "14px", lineHeight: "1.7", color: "#e5e7eb" }}>
           {renderInline(line)}
         </p>
       );
