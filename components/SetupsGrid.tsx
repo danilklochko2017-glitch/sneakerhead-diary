@@ -123,7 +123,7 @@ function renderDescriptionBlocks(text: string) {
             {section.title && (
               <div style={{
                 fontFamily: BODY, fontSize: "12px", fontWeight: 700,
-                color: "#e5e7eb", textTransform: "uppercase",
+                color: "#6b7280", textTransform: "uppercase",
                 letterSpacing: "0.06em", marginBottom: "10px",
               }}>
                 {section.title}
