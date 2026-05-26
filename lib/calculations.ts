@@ -4,10 +4,13 @@ export function calculateStats(trades: Trade[]): TradeStats {
   const closed = trades.filter((t) => t.result === "Win" || t.result === "Loss" || t.result === "BE");
   const totalTrades = closed.length;
 
-  const netPnL = closed.reduce((sum, t) => sum + t.rr, 0);
-  const wins = closed.filter((t) => t.result === "Win").length;
-  const winRate = totalTrades > 0 ? (wins / totalTrades) * 100 : 0;
-  const avgRR = totalTrades > 0 ? netPnL / totalTrades : 0;
+  const netPnL  = closed.reduce((sum, t) => sum + t.rr, 0);
+  const wins    = closed.filter((t) => t.result === "Win").length;
+  const losses  = closed.filter((t) => t.result === "Loss").length;
+  // BE excluded from win rate — only Win vs Loss count
+  const decisive = wins + losses;
+  const winRate  = decisive > 0 ? (wins / decisive) * 100 : 0;
+  const avgRR    = totalTrades > 0 ? netPnL / totalTrades : 0;
   const maxDrawdown = calculateMaxDrawdown(closed);
 
   return { netPnL, winRate, maxDrawdown, totalTrades, avgRR };
