@@ -1,8 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@400;500;600;700;800;900&family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&display=swap');
 
 :root {
   /* Colors */
@@ -20,8 +20,9 @@
   --color-danger-red:      #f87171;
 
   /* Typography */
-  --font-display: var(--font-unbounded, 'Unbounded'), sans-serif;
-  --font-body:    var(--font-bricolage, 'Bricolage Grotesque'), sans-serif;
+  --font-display: var(--font-space-grotesk, 'Space Grotesk'), sans-serif;
+  --font-body:    var(--font-space-grotesk, 'Space Grotesk'), sans-serif;
+  --font-mono:    var(--font-space-mono, 'Space Mono'), monospace;
 
   /* Layout */
   --page-max-width: 1360px;
@@ -37,7 +38,7 @@ body {
   background-image: radial-gradient(circle, rgba(255,255,255,0.07) 1px, transparent 1px);
   background-size: 28px 28px;
   color: var(--color-silver-text);
-  font-family: var(--font-body);
+  font-family: var(--font-body, 'Space Grotesk'), sans-serif;
   font-size: 16px;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
