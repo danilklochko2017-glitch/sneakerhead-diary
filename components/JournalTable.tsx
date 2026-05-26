@@ -206,7 +206,7 @@ export default function JournalTable({ trades }: { trades: Trade[]; stats: Trade
               {/* Footer */}
               <tfoot>
                 <tr style={{ backgroundColor: "#1c1e24", borderTop: "1px solid #3a3a3f" }}>
-                  <td colSpan={5} style={{ ...TD, fontSize: "12px", fontWeight: 600, color: "#FFF93C", borderBottom: "none", backgroundColor: "#1c1e24" }}>
+                  <td colSpan={5} style={{ ...TD, fontSize: "14px", fontWeight: 600, color: "#FFF93C", borderBottom: "none", backgroundColor: "#1c1e24" }}>
                     {filteredStats.totalTrades} trades · avg {filteredStats.avgRR >= 0 ? "+" : ""}{filteredStats.avgRR.toFixed(2)}R
                   </td>
                   <td style={{ ...TD, fontSize: "14px", fontWeight: 700, borderBottom: "none", backgroundColor: "#1c1e24",
@@ -214,7 +214,7 @@ export default function JournalTable({ trades }: { trades: Trade[]; stats: Trade
                     {formatRR(filteredStats.netPnL)}
                   </td>
                   <td style={{ ...TD, borderBottom: "none", color: "#6b7280", backgroundColor: "#1c1e24" }} />
-                  <td style={{ ...TD, fontSize: "12px", fontWeight: 600, color: "#e5e7eb", borderBottom: "none", backgroundColor: "#1c1e24" }}>
+                  <td style={{ ...TD, fontSize: "14px", fontWeight: 600, color: "#e5e7eb", borderBottom: "none", backgroundColor: "#1c1e24" }}>
                     {formatWinRate(filteredStats.winRate)} WR
                   </td>
                 </tr>
