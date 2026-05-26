@@ -3,9 +3,9 @@
 import { useEffect, useState, useCallback } from "react";
 import type { Trade } from "@/types/trade";
 
-const BODY = "'Bricolage Grotesque', sans-serif";
+const BODY = "'Space Grotesk', sans-serif";
 const MONO: React.CSSProperties = {
-  fontFamily: "'Bricolage Grotesque', sans-serif",
+  fontFamily: "'Space Mono', monospace",
 };
 
 function fmt(d: string) {

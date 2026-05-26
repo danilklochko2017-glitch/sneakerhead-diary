@@ -7,7 +7,8 @@ import {
 } from "recharts";
 import type { EquityPoint } from "@/types/trade";
 
-const BODY = "'Bricolage Grotesque', sans-serif";
+const BODY = "'Space Grotesk', sans-serif";
+const MONO = "'Space Mono', monospace";
 
 interface TooltipProps {
   active?: boolean;
@@ -28,7 +29,7 @@ function CustomTooltip({ active, payload }: TooltipProps) {
       boxShadow: "0 8px 32px rgba(0,0,0,0.4)",
     }}>
       <div style={{ fontFamily: BODY, fontSize: "12px", color: "#6b7280", marginBottom: "6px" }}>{fmt(point.date)}</div>
-      <div style={{ fontFamily: BODY, fontSize: "13px", display: "flex", flexDirection: "column", gap: "3px" }}>
+      <div style={{ fontFamily: MONO, fontSize: "13px", display: "flex", flexDirection: "column", gap: "3px" }}>
         <span style={{ color: point.rr >= 0 ? "#34d399" : "#f87171", fontWeight: 600 }}>
           {point.rr >= 0 ? "+" : ""}{point.rr.toFixed(2)}R
         </span>
@@ -158,12 +159,12 @@ export default function HeroChart({ data }: { data: EquityPoint[] }) {
                 return p ? fmt(p.date) : "";
               }}
               stroke="transparent"
-              tick={{ fill: "#6b7280", fontSize: 11, fontFamily: "Bricolage Grotesque" }}
+              tick={{ fill: "#6b7280", fontSize: 11, fontFamily: "Space Grotesk" }}
               tickLine={false} axisLine={false} dy={6}
             />
             <YAxis
               stroke="transparent"
-              tick={{ fill: "#6b7280", fontSize: 11, fontFamily: "Bricolage Grotesque" }}
+              tick={{ fill: "#6b7280", fontSize: 11, fontFamily: "Space Mono" }}
               tickLine={false} axisLine={false}
               tickFormatter={v => `${v >= 0 ? "+" : ""}${v}R`}
               width={52} dx={0}

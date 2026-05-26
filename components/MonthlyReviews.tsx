@@ -3,8 +3,9 @@
 import { useState } from "react";
 import type { MonthlyReview } from "@/types/trade";
 
-const DISPLAY = "'Unbounded', sans-serif";
-const BODY    = "'Bricolage Grotesque', sans-serif";
+const DISPLAY = "'Space Grotesk', sans-serif";
+const BODY    = "'Space Grotesk', sans-serif";
+const MONO    = "'Space Mono', monospace";
 const INNER   = "#22242A";
 
 function ReviewCard({ r }: { r: MonthlyReview }) {
@@ -52,7 +53,7 @@ function ReviewCard({ r }: { r: MonthlyReview }) {
               }}>
                 {item.l}
               </div>
-              <div style={{ fontFamily: BODY, fontSize: "15px", fontWeight: 600, color: item.c }}>
+              <div style={{ fontFamily: MONO, fontSize: "15px", fontWeight: 700, color: item.c }}>
                 {item.v}
               </div>
             </div>
@@ -95,7 +96,7 @@ function ReviewCard({ r }: { r: MonthlyReview }) {
                   {item.l}
                 </div>
                 <div style={{
-                  fontFamily: BODY, fontSize: "26px", lineHeight: 1,
+                  fontFamily: MONO, fontSize: "26px", lineHeight: 1,
                   fontWeight: 700, color: item.c,
                 }}>
                   {item.v}
