@@ -53,7 +53,7 @@ function ReviewCard({ r }: { r: MonthlyReview }) {
               }}>
                 {item.l}
               </div>
-              <div style={{ fontFamily: MONO, fontSize: "15px", fontWeight: 700, color: item.c }}>
+              <div style={{ fontFamily: MONO, fontSize: "12px", fontWeight: 700, color: item.c }}>
                 {item.v}
               </div>
             </div>
