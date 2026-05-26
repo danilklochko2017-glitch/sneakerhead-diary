@@ -86,7 +86,9 @@ export function buildMonthlyReviews(trades: Trade[]): MonthlyReview[] {
     const wins     = monthTrades.filter((t: Trade) => t.result === "Win").length;
     const losses   = monthTrades.filter((t: Trade) => t.result === "Loss").length;
     const netRR    = monthTrades.reduce((s: number, t: Trade) => s + t.rr, 0);
-    const winRate  = monthTrades.length > 0 ? (wins / monthTrades.length) * 100 : 0;
+    // BE excluded — win rate only from decisive trades
+    const decisive = wins + losses;
+    const winRate  = decisive > 0 ? (wins / decisive) * 100 : 0;
     const rrValues = monthTrades.map((t: Trade) => t.rr);
     const bestTrade  = rrValues.length > 0 ? Math.max(...rrValues) : 0;
     const worstTrade = rrValues.length > 0 ? Math.min(...rrValues) : 0;
