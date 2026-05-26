@@ -126,7 +126,7 @@ export default function JournalTable({ trades }: { trades: Trade[]; stats: Trade
                     color: isActive ? "#FFF93C" : "#6b7280",
                     cursor: "pointer", transition: "all 0.15s",
                   }}>
-                    {tab === "All" ? "Все" : tab}
+                    {tab}
                   </button>
                 );
               })}
