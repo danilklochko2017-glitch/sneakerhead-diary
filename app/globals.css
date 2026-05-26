@@ -44,23 +44,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* ─── Mouse-following glow on cards ─── */
-.card-glow {
-  position: relative;
-}
-.card-glow::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: radial-gradient(
-    circle 240px at var(--glow-x, -999px) var(--glow-y, -999px),
-    rgba(255, 255, 255, 0.07),
-    transparent 70%
-  );
-  pointer-events: none;
-  z-index: 1;
-}
 
 /* ─── Live dot — pulsing green ping ─── */
 @keyframes live-ping {
