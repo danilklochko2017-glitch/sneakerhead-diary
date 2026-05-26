@@ -3,9 +3,9 @@
 import { useState } from "react";
 import type { MonthlyReview } from "@/types/trade";
 
-const DISPLAY = "'Space Grotesk', sans-serif";
-const BODY    = "'Space Grotesk', sans-serif";
-const MONO    = "'Space Mono', monospace";
+const DISPLAY = "var(--font-space-grotesk), sans-serif";
+const BODY    = "var(--font-space-grotesk), sans-serif";
+const MONO    = "var(--font-space-mono), monospace";
 const INNER   = "#22242A";
 
 function ReviewCard({ r }: { r: MonthlyReview }) {

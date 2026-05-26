@@ -9,8 +9,9 @@ import type { Trade, SetupCard, MonthlyReview } from "@/types/trade";
 
 export const revalidate = 60;
 
-const DISPLAY = "'Unbounded', sans-serif";
-const BODY    = "'Bricolage Grotesque', sans-serif";
+const DISPLAY = "var(--font-space-grotesk), sans-serif";
+const BODY    = "var(--font-space-grotesk), sans-serif";
+const MONO    = "var(--font-space-mono), monospace";
 
 const CARD: React.CSSProperties = {
   backgroundColor: "#14151a",
@@ -31,7 +32,7 @@ function StatCard({ label, value, color = "#ffffff" }: {
       </span>
       <span style={{
         display: "inline-block",
-        fontFamily: BODY, fontSize: "20px", fontWeight: 700, color, lineHeight: 1,
+        fontFamily: MONO, fontSize: "18px", fontWeight: 700, color, lineHeight: 1,
       }}>
         {value}
       </span>

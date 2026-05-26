@@ -4,8 +4,8 @@ import { useState } from "react";
 import type { SetupCard } from "@/types/trade";
 import Image from "next/image";
 
-const DISPLAY = "'Space Grotesk', sans-serif";
-const BODY    = "'Space Grotesk', sans-serif";
+const DISPLAY = "var(--font-space-grotesk), sans-serif";
+const BODY    = "var(--font-space-grotesk), sans-serif";
 const INNER   = "#22242A";
 
 // ─── Inline markdown renderer ────────────────────────────────────────────────

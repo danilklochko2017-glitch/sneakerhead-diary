@@ -5,8 +5,9 @@ import type { Trade, TradeStats } from "@/types/trade";
 import { formatRR, formatWinRate, calculateStats } from "@/lib/calculations";
 import TradeModal from "@/components/TradeModal";
 
-const DISPLAY = "'Unbounded', sans-serif";
-const BODY    = "'Bricolage Grotesque', sans-serif";
+const DISPLAY = "var(--font-space-grotesk), sans-serif";
+const BODY    = "var(--font-space-grotesk), sans-serif";
+const MONO    = "var(--font-space-mono), monospace";
 
 function Tag({ label, color = "#6b7280" }: { label: string; color?: string }) {
   const isNeutral = color === "#6b7280";
@@ -182,12 +183,12 @@ export default function JournalTable({ trades }: { trades: Trade[]; stats: Trade
                     </td>
                     <td style={{ ...TD, color: "#6b7280", fontSize: "13px", backgroundColor: rowBg }}>{t.notes || "—"}</td>
                     <td style={{
-                      ...TD, fontSize: "14px", fontWeight: 600, backgroundColor: rowBg,
+                      ...TD, fontFamily: MONO, fontSize: "13px", fontWeight: 700, backgroundColor: rowBg,
                       color: t.rr > 0 ? "#34d399" : t.rr < 0 ? "#f87171" : "#6b7280",
                     }}>
                       {t.rr > 0 ? "+" : ""}{t.rr.toFixed(2)}R
                     </td>
-                    <td style={{ ...TD, fontSize: "12px", color: "#6b7280", backgroundColor: rowBg }}>
+                    <td style={{ ...TD, fontFamily: MONO, fontSize: "12px", color: "#6b7280", backgroundColor: rowBg }}>
                       {t.riskPct != null ? `${t.riskPct}%` : "—"}
                     </td>
                     <td style={{ ...TD, backgroundColor: rowBg }}><ResultTag result={t.result} /></td>
