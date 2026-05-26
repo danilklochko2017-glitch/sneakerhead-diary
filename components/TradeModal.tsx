@@ -81,7 +81,7 @@ export default function TradeModal({ trade, onClose }: { trade: Trade; onClose: 
         }}>
           <div style={{ display: "flex", alignItems: "center", gap: "14px", flexWrap: "wrap" }}>
             <span style={{ ...MONO, fontSize: "17px", fontWeight: 600, color: "#ffffff" }}>{trade.instrument}</span>
-            <span style={{ fontFamily: BODY, fontSize: "13px", color: "#6b7280" }}>{fmt(trade.date)}</span>
+            <span style={{ fontFamily: BODY, fontSize: "12px", color: "#6b7280" }}>{fmt(trade.date)}</span>
             <span style={{
               fontFamily: BODY, fontSize: "12px", fontWeight: 600,
               color: resultColor,
@@ -89,7 +89,7 @@ export default function TradeModal({ trade, onClose }: { trade: Trade; onClose: 
               backgroundColor: resultBg,
               borderRadius: "9999px", padding: "2px 10px",
             }}>{resultLabel}</span>
-            <span style={{ ...MONO, fontSize: "13px", fontWeight: 500, color: "#FFF93C" }}>
+            <span style={{ ...MONO, fontSize: "12px", fontWeight: 500, color: "#FFF93C" }}>
               {trade.rr > 0 ? "+" : ""}{trade.rr.toFixed(2)}R
             </span>
             {trade.notes && (

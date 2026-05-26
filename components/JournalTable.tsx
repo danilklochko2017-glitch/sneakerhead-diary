@@ -49,7 +49,7 @@ const INNER     = "#22242A";
 const INNER_ALT = "#282B33"; // zebra — slightly lighter
 
 const TH: React.CSSProperties = {
-  fontFamily: BODY, fontSize: "11px",
+  fontFamily: BODY, fontSize: "12px",
   color: "#6b7280", fontWeight: 600, textTransform: "uppercase",
   letterSpacing: "0.06em", padding: "12px 16px",
   textAlign: "left", whiteSpace: "nowrap",
@@ -100,7 +100,7 @@ export default function JournalTable({ trades }: { trades: Trade[]; stats: Trade
         }}>
           <div>
             <p style={{
-              fontFamily: BODY, fontSize: "11px", fontWeight: 600,
+              fontFamily: BODY, fontSize: "12px", fontWeight: 600,
               color: "#6b7280", marginBottom: "6px",
               textTransform: "uppercase", letterSpacing: "0.06em",
             }}>All Trades</p>
@@ -120,7 +120,7 @@ export default function JournalTable({ trades }: { trades: Trade[]; stats: Trade
                 const isActive = tab === session;
                 return (
                   <button key={tab} onClick={() => { setSession(tab); setPage(1); }} style={{
-                    fontFamily: BODY, fontSize: "11px", fontWeight: 600,
+                    fontFamily: BODY, fontSize: "12px", fontWeight: 600,
                     padding: "4px 12px", borderRadius: "9999px",
                     border: `1px solid ${isActive ? "rgba(255,249,60,0.4)" : "#3a3a3f"}`,
                     backgroundColor: isActive ? "rgba(255,249,60,0.10)" : "transparent",
@@ -171,7 +171,7 @@ export default function JournalTable({ trades }: { trades: Trade[]; stats: Trade
                     }}
                   >
                     <td style={{ ...TD, fontSize: "12px", color: "#6b7280", backgroundColor: rowBg }}>{formatDate(t.date)}</td>
-                    <td style={{ ...TD, fontSize: "13px", fontWeight: 500, backgroundColor: rowBg,
+                    <td style={{ ...TD, fontSize: "12px", fontWeight: 500, backgroundColor: rowBg,
                       color: t.direction === "Long" ? "#34d399" : t.direction === "Short" ? "#f87171" : "#6b7280" }}>
                       {t.direction === "Long" ? "▲ Long" : t.direction === "Short" ? "▼ Short" : "—"}
                     </td>
@@ -181,7 +181,7 @@ export default function JournalTable({ trades }: { trades: Trade[]; stats: Trade
                        t.session === "Asian"    ? <Tag label="Asian"    color="#a78bfa" /> :
                        <span style={{ color: "#6b7280" }}>—</span>}
                     </td>
-                    <td style={{ ...TD, color: "#6b7280", fontSize: "13px", backgroundColor: rowBg }}>{t.notes || "—"}</td>
+                    <td style={{ ...TD, color: "#6b7280", fontSize: "12px", backgroundColor: rowBg }}>{t.notes || "—"}</td>
                     <td style={{
                       ...TD, fontSize: "12px", color: "#9ca3af", backgroundColor: rowBg,
                       maxWidth: "200px", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap",
@@ -189,7 +189,7 @@ export default function JournalTable({ trades }: { trades: Trade[]; stats: Trade
                       {t.note || <span style={{ color: "#3a3a3f" }}>—</span>}
                     </td>
                     <td style={{
-                      ...TD, fontFamily: MONO, fontSize: "13px", fontWeight: 700, backgroundColor: rowBg,
+                      ...TD, fontFamily: MONO, fontSize: "12px", fontWeight: 700, backgroundColor: rowBg,
                       color: t.rr > 0 ? "#34d399" : t.rr < 0 ? "#f87171" : "#6b7280",
                     }}>
                       {t.rr > 0 ? "+" : ""}{t.rr.toFixed(2)}R

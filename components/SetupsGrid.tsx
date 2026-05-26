@@ -76,10 +76,10 @@ function renderSectionLines(lines: string[]) {
       if (numM) {
         return (
           <div key={idx} style={{ display: "flex", gap: "10px", marginBottom: "5px" }}>
-            <span style={{ color: "#FFF93C", fontWeight: 700, flexShrink: 0, fontFamily: BODY, fontSize: "13px", minWidth: "14px" }}>
+            <span style={{ color: "#FFF93C", fontWeight: 700, flexShrink: 0, fontFamily: BODY, fontSize: "12px", minWidth: "14px" }}>
               {numM[1]}.
             </span>
-            <span style={{ fontFamily: BODY, fontSize: "13px", color: "#6b7280", lineHeight: "1.7" }}>
+            <span style={{ fontFamily: BODY, fontSize: "12px", color: "#6b7280", lineHeight: "1.7" }}>
               {renderInline(numM[2])}
             </span>
           </div>
@@ -88,8 +88,8 @@ function renderSectionLines(lines: string[]) {
       if (line.startsWith("- ")) {
         return (
           <div key={idx} style={{ display: "flex", gap: "10px", marginBottom: "5px" }}>
-            <span style={{ color: "#FFF93C", flexShrink: 0, fontFamily: BODY, fontSize: "13px" }}>—</span>
-            <span style={{ fontFamily: BODY, fontSize: "13px", color: "#6b7280", lineHeight: "1.7" }}>
+            <span style={{ color: "#FFF93C", flexShrink: 0, fontFamily: BODY, fontSize: "12px" }}>—</span>
+            <span style={{ fontFamily: BODY, fontSize: "12px", color: "#6b7280", lineHeight: "1.7" }}>
               {renderInline(line.slice(2))}
             </span>
           </div>
@@ -97,7 +97,7 @@ function renderSectionLines(lines: string[]) {
       }
       if (line.trim() === "") return <div key={idx} style={{ height: "4px" }} />;
       return (
-        <p key={idx} style={{ fontFamily: BODY, fontSize: "13px", lineHeight: "1.7", color: "#6b7280" }}>
+        <p key={idx} style={{ fontFamily: BODY, fontSize: "12px", lineHeight: "1.7", color: "#6b7280" }}>
           {renderInline(line)}
         </p>
       );
@@ -122,7 +122,7 @@ function renderDescriptionBlocks(text: string) {
           <div key={i} style={{ padding: "16px 20px", backgroundColor: INNER }}>
             {section.title && (
               <div style={{
-                fontFamily: BODY, fontSize: "10px", fontWeight: 700,
+                fontFamily: BODY, fontSize: "12px", fontWeight: 700,
                 color: "#e5e7eb", textTransform: "uppercase",
                 letterSpacing: "0.06em", marginBottom: "10px",
               }}>
@@ -141,7 +141,7 @@ function renderDescriptionBlocks(text: string) {
           backgroundColor: INNER,
           display: "flex", alignItems: "center", gap: "10px",
         }}>
-          <span style={{ fontFamily: BODY, fontSize: "11px", fontWeight: 600, color: "#6b7280", textTransform: "uppercase", letterSpacing: "0.06em" }}>
+          <span style={{ fontFamily: BODY, fontSize: "12px", fontWeight: 600, color: "#6b7280", textTransform: "uppercase", letterSpacing: "0.06em" }}>
             {backtest.label}
           </span>
           <a
@@ -189,7 +189,7 @@ function SetupCardUI({ s }: { s: SetupCard }) {
       >
         <div style={{ display: "flex", alignItems: "center", gap: "12px", flexWrap: "wrap" }}>
           <span style={{
-            fontFamily: BODY, fontSize: "11px", fontWeight: 600,
+            fontFamily: BODY, fontSize: "12px", fontWeight: 600,
             color: "#FFF93C", border: "1px solid rgba(255,249,60,0.4)",
             backgroundColor: "rgba(255,249,60,0.10)",
             borderRadius: "9999px", padding: "3px 10px",
@@ -208,13 +208,13 @@ function SetupCardUI({ s }: { s: SetupCard }) {
           {metaItems.map((item) => (
             <div key={item.l} style={{ textAlign: "right" }}>
               <div style={{
-                fontFamily: BODY, fontSize: "10px", fontWeight: 600,
+                fontFamily: BODY, fontSize: "12px", fontWeight: 600,
                 color: "#6b7280", marginBottom: "2px",
                 textTransform: "uppercase", letterSpacing: "0.06em",
               }}>
                 {item.l}
               </div>
-              <div style={{ fontFamily: BODY, fontSize: "13px", fontWeight: 500, color: "#e5e7eb" }}>
+              <div style={{ fontFamily: BODY, fontSize: "12px", fontWeight: 500, color: "#e5e7eb" }}>
                 {item.v}
               </div>
             </div>
@@ -271,7 +271,7 @@ function SetupCardUI({ s }: { s: SetupCard }) {
             }}>
               {s.tags.map((tag) => (
                 <span key={tag} style={{
-                  fontFamily: BODY, fontSize: "11px", fontWeight: 500,
+                  fontFamily: BODY, fontSize: "12px", fontWeight: 500,
                   color: "#6b7280", border: "1px solid rgba(107,114,128,0.25)",
                   backgroundColor: "rgba(107,114,128,0.08)",
                   borderRadius: "9999px", padding: "3px 10px",
@@ -299,7 +299,7 @@ export default function SetupsGrid({ setups }: { setups: SetupCard[] }) {
     }}>
       <div style={{ marginBottom: "20px" }}>
         <p style={{
-          fontFamily: BODY, fontSize: "11px", fontWeight: 600,
+          fontFamily: BODY, fontSize: "12px", fontWeight: 600,
           color: "#6b7280", marginBottom: "6px",
           textTransform: "uppercase", letterSpacing: "0.06em",
         }}>

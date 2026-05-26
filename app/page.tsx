@@ -25,7 +25,7 @@ function StatCard({ label, value, color = "#ffffff" }: {
   return (
     <div className="card-glow" style={{ ...CARD, padding: "20px 24px", display: "flex", flexDirection: "column", gap: "8px" }}>
       <span style={{
-        fontFamily: BODY, fontSize: "10px", fontWeight: 600,
+        fontFamily: BODY, fontSize: "12px", fontWeight: 600,
         color: "#6b7280", textTransform: "uppercase", letterSpacing: "0.08em",
       }}>
         {label}
@@ -88,7 +88,7 @@ export default async function HomePage() {
             <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
               <span className="live-dot" />
               <span style={{
-                fontFamily: BODY, fontSize: "11px", fontWeight: 600,
+                fontFamily: BODY, fontSize: "12px", fontWeight: 600,
                 color: "#6b7280", letterSpacing: "0.1em", textTransform: "uppercase",
               }}>
                 LIVE · {new Date().getFullYear()}

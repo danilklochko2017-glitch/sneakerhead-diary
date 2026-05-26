@@ -47,7 +47,7 @@ function ReviewCard({ r }: { r: MonthlyReview }) {
           ].map((item) => (
             <div key={item.l} style={{ textAlign: "right" }}>
               <div style={{
-                fontFamily: BODY, fontSize: "10px", fontWeight: 600,
+                fontFamily: BODY, fontSize: "12px", fontWeight: 600,
                 color: "#6b7280", marginBottom: "2px",
                 textTransform: "uppercase", letterSpacing: "0.06em",
               }}>
@@ -89,7 +89,7 @@ function ReviewCard({ r }: { r: MonthlyReview }) {
             ].map((item) => (
               <div key={item.l} style={{ padding: "16px 20px", backgroundColor: INNER }}>
                 <div style={{
-                  fontFamily: BODY, fontSize: "10px", fontWeight: 600,
+                  fontFamily: BODY, fontSize: "12px", fontWeight: 600,
                   color: "#6b7280", textTransform: "uppercase",
                   letterSpacing: "0.06em", marginBottom: "6px",
                 }}>
@@ -116,13 +116,13 @@ function ReviewCard({ r }: { r: MonthlyReview }) {
             ].map((item) => (
               <div key={item.l} style={{ padding: "20px", backgroundColor: INNER }}>
                 <div style={{
-                  fontFamily: BODY, fontSize: "10px", fontWeight: 600,
+                  fontFamily: BODY, fontSize: "12px", fontWeight: 600,
                   color: item.accent, textTransform: "uppercase",
                   letterSpacing: "0.06em", marginBottom: "10px",
                 }}>
                   {item.l}
                 </div>
-                <p style={{ fontFamily: BODY, fontSize: "13px", lineHeight: "1.65", color: "#6b7280" }}>
+                <p style={{ fontFamily: BODY, fontSize: "12px", lineHeight: "1.65", color: "#6b7280" }}>
                   {item.body}
                 </p>
               </div>
@@ -149,7 +149,7 @@ export default function MonthlyReviews({ reviews }: MonthlyReviewsProps) {
       {/* Header */}
       <div style={{ marginBottom: "20px" }}>
         <p style={{
-          fontFamily: BODY, fontSize: "11px", fontWeight: 600,
+          fontFamily: BODY, fontSize: "12px", fontWeight: 600,
           color: "#6b7280", marginBottom: "6px",
           textTransform: "uppercase", letterSpacing: "0.06em",
         }}>

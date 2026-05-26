@@ -29,7 +29,7 @@ function CustomTooltip({ active, payload }: TooltipProps) {
       boxShadow: "0 8px 32px rgba(0,0,0,0.4)",
     }}>
       <div style={{ fontFamily: BODY, fontSize: "12px", color: "#6b7280", marginBottom: "6px" }}>{fmt(point.date)}</div>
-      <div style={{ fontFamily: MONO, fontSize: "13px", display: "flex", flexDirection: "column", gap: "3px" }}>
+      <div style={{ fontFamily: MONO, fontSize: "12px", display: "flex", flexDirection: "column", gap: "3px" }}>
         <span style={{ color: point.rr >= 0 ? "#34d399" : "#f87171", fontWeight: 600 }}>
           {point.rr >= 0 ? "+" : ""}{point.rr.toFixed(2)}R
         </span>
@@ -79,7 +79,7 @@ export default function HeroChart({ data }: { data: EquityPoint[] }) {
     return (
       <div style={{
         flex: 1, display: "flex", alignItems: "center", justifyContent: "center",
-        fontFamily: BODY, fontSize: "13px", color: "#6b7280",
+        fontFamily: BODY, fontSize: "12px", color: "#6b7280",
       }}>
         No trade data yet
       </div>
@@ -97,7 +97,7 @@ export default function HeroChart({ data }: { data: EquityPoint[] }) {
         flexWrap: "wrap", gap: "8px",
       }}>
         <div style={{
-          fontFamily: BODY, fontSize: "11px", color: "#6b7280",
+          fontFamily: BODY, fontSize: "12px", color: "#6b7280",
           textTransform: "uppercase", letterSpacing: "0.07em", fontWeight: 600,
           display: "flex", alignItems: "center", gap: "8px",
         }}>
@@ -115,7 +115,7 @@ export default function HeroChart({ data }: { data: EquityPoint[] }) {
                   key={m.key}
                   onClick={() => setActiveMonth(m.key)}
                   style={{
-                    fontFamily: BODY, fontSize: "11px", fontWeight: 600,
+                    fontFamily: BODY, fontSize: "12px", fontWeight: 600,
                     padding: "3px 10px", borderRadius: "9999px",
                     border: `1px solid ${isActive ? "rgba(255,249,60,0.4)" : "#3a3a3f"}`,
                     backgroundColor: isActive ? "rgba(255,249,60,0.10)" : "transparent",
@@ -159,12 +159,12 @@ export default function HeroChart({ data }: { data: EquityPoint[] }) {
                 return p ? fmt(p.date) : "";
               }}
               stroke="transparent"
-              tick={{ fill: "#6b7280", fontSize: 11, fontFamily: "var(--font-mono)" }}
+              tick={{ fill: "#6b7280", fontSize: 12, fontFamily: "var(--font-mono)" }}
               tickLine={false} axisLine={false} dy={6}
             />
             <YAxis
               stroke="transparent"
-              tick={{ fill: "#6b7280", fontSize: 11, fontFamily: "var(--font-mono)" }}
+              tick={{ fill: "#6b7280", fontSize: 12, fontFamily: "var(--font-mono)" }}
               tickLine={false} axisLine={false}
               tickFormatter={v => `${v >= 0 ? "+" : ""}${v}R`}
               width={52} dx={0}
