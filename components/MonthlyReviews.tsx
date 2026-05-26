@@ -3,8 +3,8 @@
 import { useState } from "react";
 import type { MonthlyReview } from "@/types/trade";
 
-const DISPLAY = "var(--font-space-grotesk), sans-serif";
-const BODY    = "var(--font-space-grotesk), sans-serif";
+const DISPLAY = "var(--font-space-mono), monospace";
+const BODY    = "var(--font-space-mono), monospace";
 const MONO    = "var(--font-space-mono), monospace";
 const INNER   = "#22242A";
 

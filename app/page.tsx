@@ -9,8 +9,8 @@ import type { Trade, SetupCard, MonthlyReview } from "@/types/trade";
 
 export const revalidate = 60;
 
-const DISPLAY = "var(--font-space-grotesk), sans-serif";
-const BODY    = "var(--font-space-grotesk), sans-serif";
+const DISPLAY = "var(--font-space-mono), monospace";
+const BODY    = "var(--font-space-mono), monospace";
 const MONO    = "var(--font-space-mono), monospace";
 
 const CARD: React.CSSProperties = {
@@ -98,15 +98,15 @@ export default async function HomePage() {
             {/* Bottom: headline + desc */}
             <div>
               <h1 style={{
-                fontFamily: DISPLAY, fontWeight: 900,
-                fontSize: "54px", lineHeight: 1.0, letterSpacing: "-0.02em",
+                fontFamily: DISPLAY, fontWeight: 700,
+                fontSize: "76px", lineHeight: 1.0, letterSpacing: "-0.03em",
                 marginBottom: "16px",
                 background: "linear-gradient(180deg, #ffffff 0%, #ffffff 30%, #FFF93C 100%)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
               }}>
-                Trading<br />Journal.
+                Trading<br />Journal
               </h1>
               <p style={{
                 fontFamily: BODY, fontSize: "14px", lineHeight: 1.6,

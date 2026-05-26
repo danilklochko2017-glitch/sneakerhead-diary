@@ -3,7 +3,7 @@
 import { useEffect, useState, useCallback } from "react";
 import type { Trade } from "@/types/trade";
 
-const BODY = "var(--font-space-grotesk), sans-serif";
+const BODY = "var(--font-space-mono), monospace";
 const MONO: React.CSSProperties = {
   fontFamily: "var(--font-space-mono), monospace",
 };

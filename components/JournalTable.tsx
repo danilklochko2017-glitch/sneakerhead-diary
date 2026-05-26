@@ -5,8 +5,8 @@ import type { Trade, TradeStats } from "@/types/trade";
 import { formatRR, formatWinRate, calculateStats } from "@/lib/calculations";
 import TradeModal from "@/components/TradeModal";
 
-const DISPLAY = "var(--font-space-grotesk), sans-serif";
-const BODY    = "var(--font-space-grotesk), sans-serif";
+const DISPLAY = "var(--font-space-mono), monospace";
+const BODY    = "var(--font-space-mono), monospace";
 const MONO    = "var(--font-space-mono), monospace";
 
 function Tag({ label, color = "#6b7280" }: { label: string; color?: string }) {

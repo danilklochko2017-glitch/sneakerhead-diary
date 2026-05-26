@@ -4,8 +4,8 @@ import { useState } from "react";
 import type { SetupCard } from "@/types/trade";
 import Image from "next/image";
 
-const DISPLAY = "var(--font-space-grotesk), sans-serif";
-const BODY    = "var(--font-space-grotesk), sans-serif";
+const DISPLAY = "var(--font-space-mono), monospace";
+const BODY    = "var(--font-space-mono), monospace";
 const INNER   = "#22242A";
 
 // ─── Inline markdown renderer ────────────────────────────────────────────────

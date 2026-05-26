@@ -7,7 +7,7 @@ import {
 } from "recharts";
 import type { EquityPoint } from "@/types/trade";
 
-const BODY = "var(--font-space-grotesk), sans-serif";
+const BODY = "var(--font-space-mono), monospace";
 const MONO = "var(--font-space-mono), monospace";
 
 interface TooltipProps {
