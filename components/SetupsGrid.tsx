@@ -189,16 +189,8 @@ function SetupCardUI({ s }: { s: SetupCard }) {
       >
         <div style={{ display: "flex", alignItems: "center", gap: "12px", flexWrap: "wrap" }}>
           <span style={{
-            fontFamily: BODY, fontSize: "12px", fontWeight: 600,
-            color: "#FFF93C", border: "1px solid rgba(255,249,60,0.4)",
-            backgroundColor: "rgba(255,249,60,0.10)",
-            borderRadius: "9999px", padding: "3px 10px",
-          }}>
-            {s.instrument}
-          </span>
-          <span style={{
-            fontFamily: DISPLAY, fontWeight: 700, fontSize: "15px",
-            lineHeight: 1.2, color: "#ffffff", letterSpacing: "-0.01em",
+            fontFamily: DISPLAY, fontWeight: 700, fontSize: "18px",
+            lineHeight: 1.1, color: "#ffffff", letterSpacing: "-0.01em",
           }}>
             {s.name}
           </span>

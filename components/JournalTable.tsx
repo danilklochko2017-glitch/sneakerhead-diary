@@ -215,14 +215,8 @@ export default function JournalTable({ trades }: { trades: Trade[]; stats: Trade
                       );
                     }}
                   >
-                    <td style={{ ...TD, backgroundColor: rowBg }}>
-                      <span style={{
-                        fontFamily: BODY, fontSize: "12px", fontWeight: 600,
-                        color: "#FFF93C", border: "1px solid rgba(255,249,60,0.3)",
-                        backgroundColor: "rgba(255,249,60,0.07)",
-                        borderRadius: "9999px", padding: "2px 8px",
-                        whiteSpace: "nowrap",
-                      }}>{t.instrument}</span>
+                    <td style={{ ...TD, fontSize: "12px", fontWeight: 600, color: "#6b7280", backgroundColor: rowBg, whiteSpace: "nowrap" }}>
+                      {t.instrument}
                     </td>
                     <td style={{ ...TD, fontSize: "12px", color: "#6b7280", backgroundColor: rowBg }}>{formatDate(t.date)}</td>
                     <td style={{ ...TD, fontSize: "12px", fontWeight: 500, backgroundColor: rowBg,

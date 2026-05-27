@@ -239,7 +239,7 @@ export async function fetchSetupPage(): Promise<SetupCard | null> {
 
     return {
       id: pageId,
-      name: "GFM",
+      name: "Guarded Flow Model",
       description: GFM_DESCRIPTION,
       instrument: "GER40",
       timeframe: "1H / 15M / 1M",
@@ -250,7 +250,7 @@ export async function fetchSetupPage(): Promise<SetupCard | null> {
   } catch {
     return {
       id: "ger40-gfm",
-      name: "GFM",
+      name: "Guarded Flow Model",
       description: GFM_DESCRIPTION,
       instrument: "GER40",
       timeframe: "1H / 15M / 1M",
