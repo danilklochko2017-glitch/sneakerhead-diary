@@ -186,7 +186,7 @@ export default function JournalTable({ trades }: { trades: Trade[]; stats: Trade
             <table style={{ width: "100%", borderCollapse: "collapse", minWidth: "640px" }}>
               <thead>
                 <tr>
-                  {["", "Date", "Direction", "Session", "Entry Setup", "Note", "RR", "Risk %", "Result"].map(h => (
+                  {["Asset", "Date", "Direction", "Session", "Entry Setup", "Note", "RR", "Risk %", "Result"].map(h => (
                     <th key={h} style={TH}>{h}</th>
                   ))}
                 </tr>
