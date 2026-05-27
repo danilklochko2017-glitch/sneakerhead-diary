@@ -100,7 +100,6 @@ export default async function HomePage() {
               <h1 style={{
                 fontFamily: DISPLAY, fontWeight: 700,
                 fontSize: "76px", lineHeight: 1.0, letterSpacing: "-0.03em",
-                marginBottom: "16px",
                 background: "linear-gradient(180deg, #ffffff 0%, #ffffff 30%, #FFF93C 100%)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
