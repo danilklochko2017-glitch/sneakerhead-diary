@@ -73,8 +73,27 @@ export default function JournalTable({ trades }: { trades: Trade[]; stats: Trade
   const [active, setActive]         = useState<Trade | null>(null);
   const [page, setPage]             = useState(1);
   const [session, setSession]       = useState<SessionFilter>("All");
+  const [month, setMonth]           = useState<string>("all");
 
-  const filtered     = session === "All" ? trades : trades.filter(t => t.session === session);
+  // Derive sorted month list from all trades
+  const months = useMemo(() => {
+    const seen = new Set<string>();
+    trades.forEach(t => { if (t.date) seen.add(t.date.substring(0, 7)); });
+    return Array.from(seen).sort().reverse().map(key => {
+      const [y, m] = key.split("-");
+      const d = new Date(Number(y), Number(m) - 1, 1);
+      const label = d.toLocaleDateString("en-US", { month: "short", year: "2-digit" });
+      return { key, label };
+    });
+  }, [trades]);
+
+  const filtered = useMemo(() => {
+    let result = trades;
+    if (session !== "All") result = result.filter(t => t.session === session);
+    if (month !== "all")   result = result.filter(t => t.date?.startsWith(month));
+    return result;
+  }, [trades, session, month]);
+
   const filteredStats: TradeStats = useMemo(() => calculateStats(filtered), [filtered]);
 
   const totalPages  = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
@@ -113,7 +132,7 @@ export default function JournalTable({ trades }: { trades: Trade[]; stats: Trade
             </h2>
           </div>
 
-          <div style={{ display: "flex", alignItems: "center", gap: "16px", flexWrap: "wrap" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap" }}>
             {/* Session tabs */}
             <div style={{ display: "flex", gap: "6px" }}>
               {SESSION_TABS.map(tab => {
@@ -132,6 +151,32 @@ export default function JournalTable({ trades }: { trades: Trade[]; stats: Trade
                 );
               })}
             </div>
+
+            {/* Separator */}
+            {months.length > 0 && (
+              <div style={{ width: "1px", height: "18px", backgroundColor: "#3a3a3f", flexShrink: 0 }} />
+            )}
+
+            {/* Month tabs */}
+            {months.length > 0 && (
+              <div style={{ display: "flex", gap: "6px", flexWrap: "wrap" }}>
+                {[{ key: "all", label: "All" }, ...months].map(m => {
+                  const isActive = m.key === month;
+                  return (
+                    <button key={m.key} onClick={() => { setMonth(m.key); setPage(1); }} style={{
+                      fontFamily: BODY, fontSize: "12px", fontWeight: 600,
+                      padding: "4px 12px", borderRadius: "9999px",
+                      border: `1px solid ${isActive ? "rgba(255,249,60,0.4)" : "#3a3a3f"}`,
+                      backgroundColor: isActive ? "rgba(255,249,60,0.10)" : "transparent",
+                      color: isActive ? "#FFF93C" : "#6b7280",
+                      cursor: "pointer", transition: "all 0.15s",
+                    }}>
+                      {m.label}
+                    </button>
+                  );
+                })}
+              </div>
+            )}
           </div>
         </div>
 
