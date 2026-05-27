@@ -141,7 +141,7 @@ export default function JournalTable({ trades }: { trades: Trade[]; stats: Trade
             <table style={{ width: "100%", borderCollapse: "collapse", minWidth: "640px" }}>
               <thead>
                 <tr>
-                  {["Date", "Direction", "Session", "Entry Setup", "Note", "RR", "Risk %", "Result"].map(h => (
+                  {["", "Date", "Direction", "Session", "Entry Setup", "Note", "RR", "Risk %", "Result"].map(h => (
                     <th key={h} style={TH}>{h}</th>
                   ))}
                 </tr>
@@ -149,7 +149,7 @@ export default function JournalTable({ trades }: { trades: Trade[]; stats: Trade
               <tbody>
                 {pageTrades.length === 0 ? (
                   <tr>
-                    <td colSpan={8} style={{ ...TD, textAlign: "center", color: "#6b7280", padding: "48px", borderBottom: "none" }}>
+                    <td colSpan={9} style={{ ...TD, textAlign: "center", color: "#6b7280", padding: "48px", borderBottom: "none" }}>
                       {filtered.length === 0 && session !== "All" ? `Нет сделок по сессии ${session}` : "Нет сделок"}
                     </td>
                   </tr>
@@ -170,6 +170,15 @@ export default function JournalTable({ trades }: { trades: Trade[]; stats: Trade
                       );
                     }}
                   >
+                    <td style={{ ...TD, backgroundColor: rowBg }}>
+                      <span style={{
+                        fontFamily: BODY, fontSize: "12px", fontWeight: 600,
+                        color: "#FFF93C", border: "1px solid rgba(255,249,60,0.3)",
+                        backgroundColor: "rgba(255,249,60,0.07)",
+                        borderRadius: "9999px", padding: "2px 8px",
+                        whiteSpace: "nowrap",
+                      }}>{t.instrument}</span>
+                    </td>
                     <td style={{ ...TD, fontSize: "12px", color: "#6b7280", backgroundColor: rowBg }}>{formatDate(t.date)}</td>
                     <td style={{ ...TD, fontSize: "12px", fontWeight: 500, backgroundColor: rowBg,
                       color: t.direction === "Long" ? "#34d399" : t.direction === "Short" ? "#f87171" : "#6b7280" }}>
@@ -206,7 +215,7 @@ export default function JournalTable({ trades }: { trades: Trade[]; stats: Trade
               {/* Footer */}
               <tfoot>
                 <tr style={{ backgroundColor: "#1c1e24", borderTop: "1px solid #3a3a3f" }}>
-                  <td colSpan={5} style={{ ...TD, fontSize: "14px", fontWeight: 600, color: "#FFF93C", borderBottom: "none", backgroundColor: "#1c1e24" }}>
+                  <td colSpan={6} style={{ ...TD, fontSize: "14px", fontWeight: 600, color: "#FFF93C", borderBottom: "none", backgroundColor: "#1c1e24" }}>
                     {filteredStats.totalTrades} trades · средний R {filteredStats.avgRR >= 0 ? "+" : ""}{filteredStats.avgRR.toFixed(2)}
                   </td>
                   <td style={{ ...TD, fontSize: "14px", fontWeight: 700, borderBottom: "none", backgroundColor: "#1c1e24",
