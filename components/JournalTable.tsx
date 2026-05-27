@@ -207,7 +207,7 @@ export default function JournalTable({ trades }: { trades: Trade[]; stats: Trade
               <tfoot>
                 <tr style={{ backgroundColor: "#1c1e24", borderTop: "1px solid #3a3a3f" }}>
                   <td colSpan={5} style={{ ...TD, fontSize: "14px", fontWeight: 600, color: "#FFF93C", borderBottom: "none", backgroundColor: "#1c1e24" }}>
-                    {filteredStats.totalTrades} trades · avg {filteredStats.avgRR >= 0 ? "+" : ""}{filteredStats.avgRR.toFixed(2)}R
+                    {filteredStats.totalTrades} trades · средний R {filteredStats.avgRR >= 0 ? "+" : ""}{filteredStats.avgRR.toFixed(2)}
                   </td>
                   <td style={{ ...TD, fontSize: "14px", fontWeight: 700, borderBottom: "none", backgroundColor: "#1c1e24",
                     color: filteredStats.netPnL >= 0 ? "#34d399" : "#f87171" }}>
