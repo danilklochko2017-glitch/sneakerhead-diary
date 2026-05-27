@@ -108,12 +108,6 @@ export default async function HomePage() {
               }}>
                 TRADING<br />JOURNAL
               </h1>
-              <p style={{
-                fontFamily: BODY, fontSize: "14px", lineHeight: 1.6,
-                color: "#6b7280", maxWidth: "300px",
-              }}>
-                Каждая сделка на GER40 — без правок и отбора. Честные данные с реальных сессий.
-              </p>
             </div>
           </div>
 
