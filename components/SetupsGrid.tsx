@@ -4,9 +4,9 @@ import { useState } from "react";
 import type { SetupCard } from "@/types/trade";
 import Image from "next/image";
 
-const D = "var(--font-display)";  // Instrument Serif
-const M = "var(--font-mono)";     // DM Mono
-const B = "var(--font-body)";     // Geist
+const D = "var(--font-display)";
+const M = "var(--font-mono)";
+const B = "var(--font-body)";
 const AQUA = "#19d0e8";
 const INNER = "#141414";
 
@@ -67,176 +67,165 @@ function renderSectionLines(lines: string[]) {
       const numM = line.match(/^(\d+)\.\s+(.+)/);
       if (numM) return (
         <div key={idx} style={{ display: "flex", gap: "10px", marginBottom: "5px" }}>
-          <span style={{ color: AQUA, fontWeight: 500, flexShrink: 0, fontFamily: M, fontSize: "13px", minWidth: "14px" }}>
+          <span style={{ color: AQUA, fontWeight: 500, flexShrink: 0, fontFamily: M, fontSize: "12px", minWidth: "14px" }}>
             {numM[1]}.
           </span>
-          <span style={{ fontFamily: B, fontSize: "13px", color: "var(--color-near-white)", lineHeight: "1.65", letterSpacing: "-0.01em" }}>
+          <span style={{ fontFamily: B, fontSize: "12px", color: "var(--color-near-white)", lineHeight: "1.65", letterSpacing: "-0.01em" }}>
             {renderInline(numM[2])}
           </span>
         </div>
       );
       if (line.startsWith("- ")) return (
         <div key={idx} style={{ display: "flex", gap: "10px", marginBottom: "5px" }}>
-          <span style={{ color: AQUA, flexShrink: 0, fontFamily: M, fontSize: "13px" }}>–</span>
-          <span style={{ fontFamily: B, fontSize: "13px", color: "var(--color-near-white)", lineHeight: "1.65", letterSpacing: "-0.01em" }}>
+          <span style={{ color: AQUA, flexShrink: 0, fontFamily: M, fontSize: "12px" }}>–</span>
+          <span style={{ fontFamily: B, fontSize: "12px", color: "var(--color-near-white)", lineHeight: "1.65", letterSpacing: "-0.01em" }}>
             {renderInline(line.slice(2))}
           </span>
         </div>
       );
       if (line.trim() === "") return <div key={idx} style={{ height: "4px" }} />;
       return (
-        <p key={idx} style={{ fontFamily: B, fontSize: "13px", lineHeight: "1.65", color: "var(--color-near-white)", letterSpacing: "-0.01em" }}>
+        <p key={idx} style={{ fontFamily: B, fontSize: "12px", lineHeight: "1.65", color: "var(--color-near-white)", letterSpacing: "-0.01em" }}>
           {renderInline(line)}
         </p>
       );
     });
 }
 
-function renderDescriptionBlocks(text: string) {
-  const sections = parseDescriptionSections(text);
-  const backtest = sections.find(s => s.link)?.link;
-  const contentSections = sections.filter(s => s.title || s.lines.some(l => l.trim()));
+// ─── Detail panel ─────────────────────────────────────────────────────────────
+
+function SetupDetail({ s }: { s: SetupCard }) {
+  const sections = parseDescriptionSections(s.description);
+  const backtest = sections.find(sec => sec.link)?.link;
+  const contentSections = sections.filter(sec => sec.title || sec.lines.some(l => l.trim()));
 
   return (
-    <div>
-      <div style={{ display: "flex", flexDirection: "column", gap: "1px", backgroundColor: "#0a0a0a" }}>
-        {contentSections.map((section, i) => (
-          <div key={i} style={{ padding: "14px 16px", backgroundColor: INNER }}>
-            {section.title && (
-              <div style={{
-                fontFamily: M, fontSize: "10px", fontWeight: 500,
-                color: "var(--color-ash-gray)", textTransform: "uppercase",
-                letterSpacing: "0.12em", marginBottom: "8px",
-              }}>
-                {section.title}
-              </div>
-            )}
-            {renderSectionLines(section.lines)}
-          </div>
-        ))}
-      </div>
+    <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
 
-      {/* Backtest link */}
-      {backtest && (
-        <div style={{
-          marginTop: "1px", padding: "12px 16px",
-          backgroundColor: INNER,
-          display: "flex", alignItems: "center", gap: "10px",
+      {/* Header */}
+      <div style={{ padding: "16px 20px 14px", borderBottom: "1px solid #0a0a0a", flexShrink: 0 }}>
+        <h3 style={{
+          fontFamily: D, fontWeight: 400, fontSize: "22px",
+          lineHeight: 1.1, color: "var(--color-near-white)",
+          letterSpacing: "-0.02em", marginBottom: "10px",
         }}>
-          <span style={{ fontFamily: M, fontSize: "10px", fontWeight: 500, color: "var(--color-ash-gray)", textTransform: "uppercase", letterSpacing: "0.12em" }}>
-            {backtest.label}
-          </span>
-          <a
-            href={backtest.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              fontFamily: M, fontSize: "10px", fontWeight: 500,
-              color: AQUA, textDecoration: "none",
-              border: "1px solid rgba(25,208,232,0.4)",
-              backgroundColor: "rgba(25,208,232,0.08)",
-              borderRadius: "var(--radius-buttons)", padding: "2px 10px",
-              letterSpacing: "0.05em",
-            }}
-          >
-            Open ↗
-          </a>
-        </div>
-      )}
-    </div>
-  );
-}
-
-// ─── Setup Card ───────────────────────────────────────────────────────────────
-
-function SetupCardUI({ s }: { s: SetupCard }) {
-  const [open, setOpen] = useState(false);
-
-  return (
-    <div style={{ backgroundColor: INNER, borderRadius: "var(--radius-default)", overflow: "hidden" }}>
-      <button
-        onClick={() => setOpen(v => !v)}
-        style={{
-          width: "100%", background: "none", border: "none",
-          padding: "0 16px", minHeight: "64px", cursor: "pointer",
-          display: "flex", alignItems: "center",
-          justifyContent: "space-between", gap: "12px",
-          flexWrap: "wrap", textAlign: "left",
-        }}
-      >
-        <div style={{ display: "flex", alignItems: "center", gap: "12px", flexWrap: "wrap" }}>
-          <span style={{
-            fontFamily: D, fontWeight: 400, fontSize: "18px",
-            lineHeight: 1.1, color: "var(--color-near-white)", letterSpacing: "-0.02em",
-          }}>
-            {s.name}
-          </span>
-        </div>
-
-        <div style={{ display: "flex", alignItems: "center", gap: "20px", flexWrap: "wrap" }}>
-          {[{ l: "Timeframes", v: s.timeframe }, { l: "Sessions", v: s.session }].map(item => (
-            <div key={item.l} style={{ textAlign: "right" }}>
-              <div style={{ fontFamily: M, fontSize: "10px", fontWeight: 500, color: "var(--color-ash-gray)", marginBottom: "2px", textTransform: "uppercase", letterSpacing: "0.1em" }}>
+          {s.name}
+        </h3>
+        <div style={{ display: "flex", gap: "6px", flexWrap: "wrap" }}>
+          {[{ l: "Timeframe", v: s.timeframe }, { l: "Session", v: s.session }].map(item => (
+            <div key={item.l} style={{
+              display: "flex", alignItems: "center", gap: "6px",
+              padding: "3px 10px",
+              border: "1px solid rgba(255,255,255,0.08)",
+              borderRadius: "var(--radius-buttons)",
+              backgroundColor: "rgba(255,255,255,0.04)",
+            }}>
+              <span style={{ fontFamily: M, fontSize: "9px", fontWeight: 500, color: "var(--color-ash-gray)", textTransform: "uppercase", letterSpacing: "0.12em" }}>
                 {item.l}
-              </div>
-              <div style={{ fontFamily: M, fontSize: "11px", fontWeight: 400, color: "var(--color-near-white)" }}>
+              </span>
+              <span style={{ fontFamily: M, fontSize: "10px", fontWeight: 500, color: "var(--color-near-white)" }}>
                 {item.v}
-              </div>
+              </span>
             </div>
           ))}
+        </div>
+      </div>
 
-          <div style={{
-            width: "24px", height: "24px", borderRadius: "9999px",
-            border: "1px solid var(--color-dark-charcoal)",
-            display: "flex", alignItems: "center", justifyContent: "center",
-            transition: "transform 0.25s",
-            transform: open ? "rotate(180deg)" : "rotate(0deg)",
-            flexShrink: 0,
-          }}>
-            <svg width="10" height="10" viewBox="0 0 12 12" fill="none">
-              <path d="M2 4.5L6 7.5L10 4.5" stroke="var(--color-ash-gray)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
+      {/* Scrollable body */}
+      <div style={{ flex: 1, overflowY: "auto", padding: "0" }}>
+
+        {/* Description sections */}
+        {contentSections.length > 0 && (
+          <div style={{ display: "flex", flexDirection: "column", gap: "1px", backgroundColor: "#0a0a0a" }}>
+            {contentSections.map((section, i) => (
+              <div key={i} style={{ padding: "12px 20px", backgroundColor: INNER }}>
+                {section.title && (
+                  <div style={{
+                    fontFamily: M, fontSize: "9px", fontWeight: 500,
+                    color: "var(--color-ash-gray)", textTransform: "uppercase",
+                    letterSpacing: "0.12em", marginBottom: "8px",
+                  }}>
+                    {section.title}
+                  </div>
+                )}
+                {renderSectionLines(section.lines)}
+              </div>
+            ))}
           </div>
-        </div>
-      </button>
+        )}
 
-      {open && (
-        <div style={{ borderTop: "1px solid #0a0a0a" }}>
-          {renderDescriptionBlocks(s.description)}
+        {/* Backtest link */}
+        {backtest && (
+          <div style={{
+            marginTop: "1px", padding: "10px 20px",
+            backgroundColor: INNER,
+            display: "flex", alignItems: "center", gap: "10px",
+          }}>
+            <span style={{ fontFamily: M, fontSize: "9px", fontWeight: 500, color: "var(--color-ash-gray)", textTransform: "uppercase", letterSpacing: "0.12em" }}>
+              {backtest.label}
+            </span>
+            <a
+              href={backtest.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                fontFamily: M, fontSize: "10px", fontWeight: 500,
+                color: AQUA, textDecoration: "none",
+                border: "1px solid rgba(25,208,232,0.4)",
+                backgroundColor: "rgba(25,208,232,0.08)",
+                borderRadius: "var(--radius-buttons)", padding: "2px 10px",
+                letterSpacing: "0.05em",
+              }}
+            >
+              Open ↗
+            </a>
+          </div>
+        )}
 
-          {s.imageUrls.length > 0 && (
-            <div style={{
-              padding: "0 16px 16px",
-              display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gap: "8px",
-            }}>
-              {s.imageUrls.map((url, i) => (
-                <div key={i} style={{
-                  borderRadius: "var(--radius-default)", overflow: "hidden",
-                  aspectRatio: "16/9", position: "relative",
-                  backgroundColor: "var(--surface-canvas)", border: "1px solid var(--color-dark-charcoal)",
-                }}>
-                  <Image src={url} alt={`${s.name} chart ${i + 1}`} fill style={{ objectFit: "cover" }} unoptimized />
-                </div>
-              ))}
-            </div>
-          )}
+        {/* Images */}
+        {s.imageUrls.length > 0 && (
+          <div style={{
+            marginTop: "1px",
+            padding: "12px 20px",
+            backgroundColor: INNER,
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fill, minmax(160px, 1fr))",
+            gap: "6px",
+          }}>
+            {s.imageUrls.map((url, i) => (
+              <div key={i} style={{
+                borderRadius: "var(--radius-small)", overflow: "hidden",
+                aspectRatio: "16/9", position: "relative",
+                backgroundColor: "var(--surface-canvas)",
+                border: "1px solid var(--color-dark-charcoal)",
+              }}>
+                <Image src={url} alt={`${s.name} chart ${i + 1}`} fill style={{ objectFit: "cover" }} unoptimized />
+              </div>
+            ))}
+          </div>
+        )}
 
-          {s.tags.length > 0 && (
-            <div style={{ padding: "12px 16px", borderTop: "1px solid #0a0a0a", display: "flex", gap: "6px", flexWrap: "wrap" }}>
-              {s.tags.map(tag => (
-                <span key={tag} style={{
-                  fontFamily: M, fontSize: "10px", fontWeight: 500,
-                  color: "var(--color-ash-gray)", border: "1px solid var(--color-dark-charcoal)",
-                  backgroundColor: "transparent",
-                  borderRadius: "var(--radius-buttons)", padding: "2px 10px",
-                }}>
-                  {tag}
-                </span>
-              ))}
-            </div>
-          )}
-        </div>
-      )}
+        {/* Tags */}
+        {s.tags.length > 0 && (
+          <div style={{
+            marginTop: "1px", padding: "10px 20px",
+            backgroundColor: INNER,
+            display: "flex", gap: "6px", flexWrap: "wrap",
+          }}>
+            {s.tags.map(tag => (
+              <span key={tag} style={{
+                fontFamily: M, fontSize: "9px", fontWeight: 500,
+                color: "var(--color-ash-gray)",
+                border: "1px solid var(--color-dark-charcoal)",
+                backgroundColor: "transparent",
+                borderRadius: "var(--radius-buttons)", padding: "2px 10px",
+              }}>
+                {tag}
+              </span>
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 }
@@ -244,12 +233,16 @@ function SetupCardUI({ s }: { s: SetupCard }) {
 // ─── Grid ─────────────────────────────────────────────────────────────────────
 
 export default function SetupsGrid({ setups }: { setups: SetupCard[] }) {
+  const [selectedId, setSelectedId] = useState<string>(setups[0]?.id ?? "");
+  const selected = setups.find(s => s.id === selectedId) ?? setups[0] ?? null;
+
   return (
     <div id="setups" className="card-glow" style={{
       backgroundColor: "var(--surface-card)",
       borderRadius: "var(--radius-cards)",
       padding: "var(--card-padding)",
     }}>
+      {/* Eyebrow */}
       <div style={{ marginBottom: "16px" }}>
         <p style={{ fontFamily: M, fontSize: "10px", fontWeight: 500, color: "var(--color-ash-gray)", textTransform: "uppercase", letterSpacing: "0.12em" }}>
           Setups
@@ -265,8 +258,76 @@ export default function SetupsGrid({ setups }: { setups: SetupCard[] }) {
           No setups loaded.
         </div>
       ) : (
-        <div style={{ display: "flex", flexDirection: "column", gap: "1px", backgroundColor: "#0a0a0a", borderRadius: "var(--radius-default)", overflow: "hidden" }}>
-          {setups.map(s => <SetupCardUI key={s.id} s={s} />)}
+        <div style={{
+          display: "grid",
+          gridTemplateColumns: "180px 1fr",
+          borderRadius: "var(--radius-default)",
+          overflow: "hidden",
+          border: "1px solid #111",
+          minHeight: "360px",
+        }}>
+
+          {/* ── Left: setup list ── */}
+          <div style={{
+            display: "flex", flexDirection: "column",
+            gap: "1px", backgroundColor: "#0a0a0a",
+            borderRight: "1px solid #0a0a0a",
+          }}>
+            {setups.map(s => {
+              const active = s.id === selectedId;
+              return (
+                <button
+                  key={s.id}
+                  onClick={() => setSelectedId(s.id)}
+                  style={{
+                    all: "unset",
+                    display: "flex", flexDirection: "column",
+                    gap: "4px",
+                    padding: "14px 16px",
+                    cursor: "pointer",
+                    backgroundColor: active ? "#1c1c1c" : INNER,
+                    borderLeft: `2px solid ${active ? AQUA : "transparent"}`,
+                    transition: "background 0.15s, border-color 0.15s",
+                  }}
+                  onMouseEnter={e => {
+                    if (!active) (e.currentTarget as HTMLElement).style.backgroundColor = "#181818";
+                  }}
+                  onMouseLeave={e => {
+                    if (!active) (e.currentTarget as HTMLElement).style.backgroundColor = INNER;
+                  }}
+                >
+                  <span style={{
+                    fontFamily: D, fontWeight: 400, fontSize: "15px",
+                    lineHeight: 1.15, letterSpacing: "-0.02em",
+                    color: active ? "var(--color-near-white)" : "var(--color-ash-gray)",
+                    transition: "color 0.15s",
+                  }}>
+                    {s.name}
+                  </span>
+                  <span style={{
+                    fontFamily: M, fontSize: "9px", fontWeight: 500,
+                    color: active ? AQUA : "#404040",
+                    letterSpacing: "0.08em", textTransform: "uppercase",
+                    transition: "color 0.15s",
+                  }}>
+                    {s.timeframe}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* ── Right: detail panel ── */}
+          <div style={{ backgroundColor: INNER, overflow: "hidden" }}>
+            {selected ? (
+              <SetupDetail s={selected} />
+            ) : (
+              <div style={{ padding: "48px", textAlign: "center", fontFamily: M, fontSize: "12px", color: "var(--color-ash-gray)" }}>
+                Select a setup
+              </div>
+            )}
+          </div>
+
         </div>
       )}
     </div>
