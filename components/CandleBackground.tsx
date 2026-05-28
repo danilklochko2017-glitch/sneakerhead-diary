@@ -78,9 +78,8 @@ export default function CandleBackground() {
         ctx!.stroke();
 
         // body
-        bull
-          ? ctx!.fillRect(x, bTop, CW, bH)
-          : ctx!.strokeRect(x, bTop, CW, bH);
+        if (bull) ctx!.fillRect(x, bTop, CW, bH);
+        else       ctx!.strokeRect(x, bTop, CW, bH);
       }
 
       // grow pool when running low
