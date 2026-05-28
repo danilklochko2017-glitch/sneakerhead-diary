@@ -31,14 +31,14 @@ function ReviewCard({ r }: { r: MonthlyReview }) {
           {r.month} {r.year}
         </h3>
 
-        <div style={{ display: "flex", alignItems: "center", gap: "20px", flexWrap: "wrap" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "12px", flexShrink: 0 }}>
           {[
             { l: "Net RR",   v: `${r.netRR >= 0 ? "+" : ""}${r.netRR.toFixed(1)}R`,  c: rrColor },
             { l: "Win Rate", v: `${r.winRate.toFixed(1)}%`,                           c: "var(--color-near-white)" },
             { l: "Trades",   v: String(r.trades),                                     c: "var(--color-near-white)" },
           ].map(item => (
             <div key={item.l} style={{ textAlign: "right" }}>
-              <div style={{ fontFamily: M, fontSize: "12px", fontWeight: 500, color: "var(--color-ash-gray)", marginBottom: "2px", textTransform: "uppercase", letterSpacing: "0.1em" }}>
+              <div style={{ fontFamily: M, fontSize: "12px", fontWeight: 500, color: "var(--color-ash-gray)", marginBottom: "2px", textTransform: "uppercase", letterSpacing: "0.08em" }}>
                 {item.l}
               </div>
               <div style={{ fontFamily: M, fontSize: "12px", fontWeight: 500, color: item.c }}>
