@@ -5,39 +5,54 @@ import type { Trade, TradeStats } from "@/types/trade";
 import { formatRR, formatWinRate, calculateStats } from "@/lib/calculations";
 import TradeModal from "@/components/TradeModal";
 
-const DISPLAY = "var(--font-mono)";
-const BODY    = "var(--font-mono)";
-const MONO    = "var(--font-mono)";
+const D = "var(--font-display)";   // Instrument Serif
+const M = "var(--font-mono)";      // DM Mono
+const AQUA = "#19d0e8";
 
-function Tag({ label, color = "#6b7280" }: { label: string; color?: string }) {
-  const isNeutral = color === "#6b7280";
-  const bg = isNeutral
-    ? "rgba(107,114,128,0.08)"
-    : color === "#34d399" ? "rgba(52,211,153,0.12)"
-    : color === "#f87171" ? "rgba(248,113,113,0.12)"
-    : color === "#fcd34d" ? "rgba(252,211,77,0.12)"
-    : color === "#FFF93C" ? "rgba(255,249,60,0.10)"
-    : "rgba(107,114,128,0.08)";
-  const border = isNeutral ? "rgba(107,114,128,0.25)" : color;
+// ── Result tag ────────────────────────────────────────────────────────────────
+
+function ResultTag({ result }: { result: Trade["result"] }) {
+  const map = {
+    Win:     { label: "TP", color: "var(--color-win)",  bg: "rgba(52,211,153,0.10)",  border: "rgba(52,211,153,0.3)"  },
+    Loss:    { label: "SL", color: "var(--color-loss)", bg: "rgba(248,113,113,0.10)", border: "rgba(248,113,113,0.3)" },
+    BE:      { label: "BE", color: "var(--color-be)",   bg: "rgba(252,211,77,0.10)",  border: "rgba(252,211,77,0.3)"  },
+    Pending: { label: "—",  color: "var(--color-ash-gray)", bg: "transparent", border: "var(--color-dark-charcoal)" },
+  };
+  const s = map[result] ?? map.Pending;
   return (
     <span style={{
-      display: "inline-block", padding: "2px 10px",
-      border: `1px solid ${border}`,
-      borderRadius: "9999px", fontSize: "12px",
-      fontFamily: BODY, fontWeight: 500, color,
-      backgroundColor: bg,
-      whiteSpace: "nowrap",
+      fontFamily: M, fontSize: "10px", fontWeight: 500,
+      color: s.color, backgroundColor: s.bg,
+      border: `1px solid ${s.border}`,
+      borderRadius: "var(--radius-buttons)",
+      padding: "2px 10px", whiteSpace: "nowrap",
+      letterSpacing: "0.05em",
     }}>
-      {label}
+      {s.label}
     </span>
   );
 }
 
-function ResultTag({ result }: { result: Trade["result"] }) {
-  if (result === "Win")  return <Tag label="TP" color="#34d399" />;
-  if (result === "Loss") return <Tag label="SL" color="#f87171" />;
-  if (result === "BE")   return <Tag label="BE" color="#fcd34d" />;
-  return <Tag label="—" />;
+function SessionTag({ session }: { session: Trade["session"] }) {
+  const map: Record<string, { color: string; bg: string; border: string }> = {
+    "London":   { color: "#60a5fa", bg: "rgba(96,165,250,0.10)",  border: "rgba(96,165,250,0.3)"  },
+    "New York": { color: "#f97316", bg: "rgba(249,115,22,0.10)",  border: "rgba(249,115,22,0.3)"  },
+    "Asian":    { color: "#a78bfa", bg: "rgba(167,139,250,0.10)", border: "rgba(167,139,250,0.3)" },
+  };
+  const s = map[session];
+  if (!s) return <span style={{ color: "var(--color-dark-charcoal)" }}>—</span>;
+  return (
+    <span style={{
+      fontFamily: M, fontSize: "10px", fontWeight: 500,
+      color: s.color, backgroundColor: s.bg,
+      border: `1px solid ${s.border}`,
+      borderRadius: "var(--radius-buttons)",
+      padding: "2px 10px", whiteSpace: "nowrap",
+      letterSpacing: "0.05em",
+    }}>
+      {session}
+    </span>
+  );
 }
 
 function formatDate(d: string) {
@@ -45,23 +60,24 @@ function formatDate(d: string) {
   return new Date(d).toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" });
 }
 
-const INNER     = "#1c1e24"; // matches table header
-const INNER_ALT = "#282B33"; // zebra — slightly lighter
+// ── Table styles ──────────────────────────────────────────────────────────────
+
+const ROW_A = "#191919";  // Carbon Black
+const ROW_B = "#141414";  // slightly darker
 
 const TH: React.CSSProperties = {
-  fontFamily: BODY, fontSize: "12px",
-  color: "#6b7280", fontWeight: 600, textTransform: "uppercase",
-  letterSpacing: "0.06em", padding: "12px 16px",
+  fontFamily: M, fontSize: "10px", fontWeight: 500,
+  color: "var(--color-ash-gray)", textTransform: "uppercase",
+  letterSpacing: "0.12em", padding: "10px 14px",
   textAlign: "left", whiteSpace: "nowrap",
-  borderBottom: "1px solid #3a3a3f",
-  backgroundColor: "#1c1e24",
+  borderBottom: `1px solid var(--color-dark-charcoal)`,
+  backgroundColor: "var(--surface-canvas)",
 };
 
 const TD: React.CSSProperties = {
-  fontFamily: BODY, fontSize: "14px",
-  color: "#e5e7eb", padding: "14px 16px",
-  borderBottom: "1px solid #282a36",
-  // backgroundColor set per-row for zebra
+  fontFamily: M, fontSize: "12px",
+  color: "var(--color-near-white)", padding: "12px 14px",
+  borderBottom: "1px solid #111",
 };
 
 const PAGE_SIZE = 10;
@@ -69,13 +85,33 @@ const PAGE_SIZE = 10;
 type SessionFilter = "All" | "London" | "New York";
 const SESSION_TABS: SessionFilter[] = ["All", "London", "New York"];
 
-export default function JournalTable({ trades }: { trades: Trade[]; stats: TradeStats }) {
-  const [active, setActive]         = useState<Trade | null>(null);
-  const [page, setPage]             = useState(1);
-  const [session, setSession]       = useState<SessionFilter>("All");
-  const [month, setMonth]           = useState<string>("all");
+// ── Pill tab button ───────────────────────────────────────────────────────────
 
-  // Derive sorted month list from all trades
+function PillTab({ label, active, onClick }: { label: string; active: boolean; onClick: () => void }) {
+  return (
+    <button onClick={onClick} style={{
+      fontFamily: M, fontSize: "10px", fontWeight: 500,
+      padding: "3px 12px",
+      borderRadius: "var(--radius-buttons)",
+      border: `1px solid ${active ? "rgba(25,208,232,0.5)" : "var(--color-dark-charcoal)"}`,
+      backgroundColor: active ? "rgba(25,208,232,0.10)" : "transparent",
+      color: active ? AQUA : "var(--color-ash-gray)",
+      cursor: "pointer", transition: "all 0.15s",
+      textTransform: "uppercase", letterSpacing: "0.06em",
+    }}>
+      {label}
+    </button>
+  );
+}
+
+// ── Component ─────────────────────────────────────────────────────────────────
+
+export default function JournalTable({ trades }: { trades: Trade[]; stats: TradeStats }) {
+  const [active, setActive]   = useState<Trade | null>(null);
+  const [page, setPage]       = useState(1);
+  const [session, setSession] = useState<SessionFilter>("All");
+  const [month, setMonth]     = useState<string>("all");
+
   const months = useMemo(() => {
     const seen = new Set<string>();
     trades.forEach(t => { if (t.date) seen.add(t.date.substring(0, 7)); });
@@ -96,92 +132,67 @@ export default function JournalTable({ trades }: { trades: Trade[]; stats: Trade
 
   const filteredStats: TradeStats = useMemo(() => calculateStats(filtered), [filtered]);
 
-  const totalPages  = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
-  const safePage    = Math.min(page, totalPages);
-  const pageTrades  = filtered.slice((safePage - 1) * PAGE_SIZE, safePage * PAGE_SIZE);
+  const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
+  const safePage   = Math.min(page, totalPages);
+  const pageTrades = filtered.slice((safePage - 1) * PAGE_SIZE, safePage * PAGE_SIZE);
 
   return (
     <>
       {active && <TradeModal trade={active} onClose={() => setActive(null)} />}
 
-      {/* Card — no section wrapper */}
       <div id="journal" className="card-glow" style={{
-        backgroundColor: "#14151a",
-        borderRadius: "12px",
-        boxShadow: "0 8px 48px rgba(0,0,0,0.4), 0 2px 8px rgba(0,0,0,0.2)",
-        padding: "32px",
+        backgroundColor: "var(--surface-card)",
+        borderRadius: "var(--radius-cards)",
+        padding: "var(--card-padding)",
       }}>
-        {/* Header */}
+        {/* ── Header ── */}
         <div style={{
           display: "flex", alignItems: "flex-end",
           justifyContent: "space-between", flexWrap: "wrap",
-          gap: "16px", marginBottom: "20px",
+          gap: "12px", marginBottom: "16px",
         }}>
           <div>
             <p style={{
-              fontFamily: BODY, fontSize: "12px", fontWeight: 600,
-              color: "#6b7280", marginBottom: "6px",
-              textTransform: "uppercase", letterSpacing: "0.06em",
+              fontFamily: M, fontSize: "10px", fontWeight: 500,
+              color: "var(--color-ash-gray)", marginBottom: "6px",
+              textTransform: "uppercase", letterSpacing: "0.12em",
             }}>All Trades</p>
             <h2 style={{
-              fontFamily: DISPLAY, fontWeight: 700,
-              fontSize: "24px", lineHeight: 1.1, color: "#ffffff",
-              letterSpacing: "-0.01em",
+              fontFamily: D, fontWeight: 400,
+              fontSize: "32px", lineHeight: 1.1, color: "var(--color-near-white)",
+              letterSpacing: "-0.02em",
             }}>
               Trade Journal
             </h2>
           </div>
 
+          {/* Filters */}
           <div style={{ display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap" }}>
             {/* Session tabs */}
-            <div style={{ display: "flex", gap: "6px" }}>
-              {SESSION_TABS.map(tab => {
-                const isActive = tab === session;
-                return (
-                  <button key={tab} onClick={() => { setSession(tab); setPage(1); }} style={{
-                    fontFamily: BODY, fontSize: "12px", fontWeight: 600,
-                    padding: "4px 12px", borderRadius: "9999px",
-                    border: `1px solid ${isActive ? "rgba(255,249,60,0.4)" : "#3a3a3f"}`,
-                    backgroundColor: isActive ? "rgba(255,249,60,0.10)" : "transparent",
-                    color: isActive ? "#FFF93C" : "#6b7280",
-                    cursor: "pointer", transition: "all 0.15s",
-                  }}>
-                    {tab}
-                  </button>
-                );
-              })}
+            <div style={{ display: "flex", gap: "4px" }}>
+              {SESSION_TABS.map(tab => (
+                <PillTab key={tab} label={tab} active={tab === session} onClick={() => { setSession(tab); setPage(1); }} />
+              ))}
             </div>
 
             {/* Separator */}
             {months.length > 0 && (
-              <div style={{ width: "1px", height: "18px", backgroundColor: "#3a3a3f", flexShrink: 0 }} />
+              <div style={{ width: "1px", height: "16px", backgroundColor: "var(--color-dark-charcoal)", flexShrink: 0 }} />
             )}
 
             {/* Month tabs */}
             {months.length > 0 && (
-              <div style={{ display: "flex", gap: "6px", flexWrap: "wrap" }}>
-                {[{ key: "all", label: "All" }, ...months].map(m => {
-                  const isActive = m.key === month;
-                  return (
-                    <button key={m.key} onClick={() => { setMonth(m.key); setPage(1); }} style={{
-                      fontFamily: BODY, fontSize: "12px", fontWeight: 600,
-                      padding: "4px 12px", borderRadius: "9999px",
-                      border: `1px solid ${isActive ? "rgba(255,249,60,0.4)" : "#3a3a3f"}`,
-                      backgroundColor: isActive ? "rgba(255,249,60,0.10)" : "transparent",
-                      color: isActive ? "#FFF93C" : "#6b7280",
-                      cursor: "pointer", transition: "all 0.15s",
-                    }}>
-                      {m.label}
-                    </button>
-                  );
-                })}
+              <div style={{ display: "flex", gap: "4px", flexWrap: "wrap" }}>
+                {[{ key: "all", label: "All" }, ...months].map(m => (
+                  <PillTab key={m.key} label={m.label} active={m.key === month} onClick={() => { setMonth(m.key); setPage(1); }} />
+                ))}
               </div>
             )}
           </div>
         </div>
 
-        {/* Table inside inner card */}
-        <div style={{ borderRadius: "10px", overflow: "hidden" }}>
+        {/* ── Table ── */}
+        <div style={{ borderRadius: "var(--radius-default)", overflow: "hidden", border: "1px solid #111" }}>
           <div style={{ overflowX: "auto" }}>
             <table style={{ width: "100%", borderCollapse: "collapse", minWidth: "640px" }}>
               <thead>
@@ -191,78 +202,83 @@ export default function JournalTable({ trades }: { trades: Trade[]; stats: Trade
                   ))}
                 </tr>
               </thead>
+
               <tbody>
                 {pageTrades.length === 0 ? (
                   <tr>
-                    <td colSpan={9} style={{ ...TD, textAlign: "center", color: "#6b7280", padding: "48px", borderBottom: "none" }}>
-                      {filtered.length === 0 && session !== "All" ? `Нет сделок по сессии ${session}` : "Нет сделок"}
+                    <td colSpan={9} style={{ ...TD, textAlign: "center", color: "var(--color-ash-gray)", padding: "48px", borderBottom: "none" }}>
+                      {filtered.length === 0 && session !== "All" ? `No trades for session ${session}` : "No trades"}
                     </td>
                   </tr>
                 ) : pageTrades.map((t, i) => {
-                  const rowBg = i % 2 === 0 ? INNER : INNER_ALT;
+                  const rowBg = i % 2 === 0 ? ROW_A : ROW_B;
                   return (
-                  <tr key={t.id}
-                    onClick={() => setActive(t)}
-                    style={{ cursor: "pointer", transition: "background-color 0.12s" }}
-                    onMouseEnter={e => {
-                      Array.from(e.currentTarget.cells).forEach(
-                        (c) => ((c as HTMLTableCellElement).style.backgroundColor = "#2c2e38")
-                      );
-                    }}
-                    onMouseLeave={e => {
-                      Array.from(e.currentTarget.cells).forEach(
-                        (c) => ((c as HTMLTableCellElement).style.backgroundColor = rowBg)
-                      );
-                    }}
-                  >
-                    <td style={{ ...TD, fontSize: "12px", fontWeight: 600, color: "#6b7280", backgroundColor: rowBg, whiteSpace: "nowrap" }}>
-                      {t.instrument}
-                    </td>
-                    <td style={{ ...TD, fontSize: "12px", color: "#6b7280", backgroundColor: rowBg }}>{formatDate(t.date)}</td>
-                    <td style={{ ...TD, fontSize: "12px", fontWeight: 500, backgroundColor: rowBg,
-                      color: t.direction === "Long" ? "#34d399" : t.direction === "Short" ? "#f87171" : "#6b7280" }}>
-                      {t.direction === "Long" ? "▲ Long" : t.direction === "Short" ? "▼ Short" : "—"}
-                    </td>
-                    <td style={{ ...TD, backgroundColor: rowBg }}>
-                      {t.session === "London"   ? <Tag label="London"   color="#60a5fa" /> :
-                       t.session === "New York" ? <Tag label="New York" color="#f97316" /> :
-                       t.session === "Asian"    ? <Tag label="Asian"    color="#a78bfa" /> :
-                       <span style={{ color: "#6b7280" }}>—</span>}
-                    </td>
-                    <td style={{ ...TD, fontSize: "12px", color: "#e5e7eb", backgroundColor: rowBg }}>{t.setup || t.notes || "—"}</td>
-                    <td style={{
-                      ...TD, fontSize: "12px", color: "#9ca3af", backgroundColor: rowBg,
-                      maxWidth: "200px", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap",
-                    }} title={t.note}>
-                      {t.note || <span style={{ color: "#3a3a3f" }}>—</span>}
-                    </td>
-                    <td style={{
-                      ...TD, fontFamily: MONO, fontSize: "12px", fontWeight: 700, backgroundColor: rowBg,
-                      color: t.rr > 0 ? "#34d399" : t.rr < 0 ? "#f87171" : "#6b7280",
-                    }}>
-                      {t.rr > 0 ? "+" : ""}{t.rr.toFixed(2)}R
-                    </td>
-                    <td style={{ ...TD, fontFamily: MONO, fontSize: "12px", color: "#6b7280", backgroundColor: rowBg }}>
-                      {t.riskPct != null ? `${t.riskPct}%` : "—"}
-                    </td>
-                    <td style={{ ...TD, backgroundColor: rowBg }}><ResultTag result={t.result} /></td>
-                  </tr>
+                    <tr key={t.id}
+                      onClick={() => setActive(t)}
+                      style={{ cursor: "pointer", transition: "background 0.1s" }}
+                      onMouseEnter={e => Array.from(e.currentTarget.cells).forEach(c => ((c as HTMLTableCellElement).style.backgroundColor = "#222"))}
+                      onMouseLeave={e => Array.from(e.currentTarget.cells).forEach(c => ((c as HTMLTableCellElement).style.backgroundColor = rowBg))}
+                    >
+                      {/* Asset */}
+                      <td style={{ ...TD, fontSize: "11px", fontWeight: 500, color: "var(--color-ash-gray)", backgroundColor: rowBg, whiteSpace: "nowrap" }}>
+                        {t.instrument}
+                      </td>
+                      {/* Date */}
+                      <td style={{ ...TD, fontSize: "11px", color: "var(--color-ash-gray)", backgroundColor: rowBg }}>
+                        {formatDate(t.date)}
+                      </td>
+                      {/* Direction */}
+                      <td style={{ ...TD, fontSize: "11px", fontWeight: 500, backgroundColor: rowBg,
+                        color: t.direction === "Long" ? "var(--color-win)" : t.direction === "Short" ? "var(--color-loss)" : "var(--color-ash-gray)" }}>
+                        {t.direction === "Long" ? "▲ Long" : t.direction === "Short" ? "▼ Short" : "—"}
+                      </td>
+                      {/* Session */}
+                      <td style={{ ...TD, backgroundColor: rowBg }}>
+                        <SessionTag session={t.session} />
+                      </td>
+                      {/* Setup */}
+                      <td style={{ ...TD, fontSize: "11px", color: "var(--color-near-white)", backgroundColor: rowBg }}>
+                        {t.setup || t.notes || <span style={{ color: "var(--color-dark-charcoal)" }}>—</span>}
+                      </td>
+                      {/* Note */}
+                      <td style={{
+                        ...TD, fontSize: "11px", color: "var(--color-ash-gray)", backgroundColor: rowBg,
+                        maxWidth: "180px", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap",
+                      }} title={t.note}>
+                        {t.note || <span style={{ color: "var(--color-dark-charcoal)" }}>—</span>}
+                      </td>
+                      {/* RR */}
+                      <td style={{
+                        ...TD, fontSize: "12px", fontWeight: 500, backgroundColor: rowBg,
+                        color: t.rr > 0 ? "var(--color-win)" : t.rr < 0 ? "var(--color-loss)" : "var(--color-ash-gray)",
+                      }}>
+                        {t.rr > 0 ? "+" : ""}{t.rr.toFixed(2)}R
+                      </td>
+                      {/* Risk % */}
+                      <td style={{ ...TD, fontSize: "11px", color: "var(--color-ash-gray)", backgroundColor: rowBg }}>
+                        {t.riskPct != null ? `${t.riskPct}%` : <span style={{ color: "var(--color-dark-charcoal)" }}>—</span>}
+                      </td>
+                      {/* Result */}
+                      <td style={{ ...TD, backgroundColor: rowBg }}>
+                        <ResultTag result={t.result} />
+                      </td>
+                    </tr>
                   );
                 })}
               </tbody>
 
               {/* Footer */}
               <tfoot>
-                <tr style={{ backgroundColor: "#1c1e24", borderTop: "1px solid #3a3a3f" }}>
-                  <td colSpan={6} style={{ ...TD, fontSize: "14px", fontWeight: 600, color: "#FFF93C", borderBottom: "none", backgroundColor: "#1c1e24" }}>
-                    {filteredStats.totalTrades} trades · средний R {filteredStats.avgRR >= 0 ? "+" : ""}{filteredStats.avgRR.toFixed(2)}
+                <tr style={{ backgroundColor: "var(--surface-canvas)", borderTop: "1px solid var(--color-dark-charcoal)" }}>
+                  <td colSpan={6} style={{ ...TD, fontSize: "12px", fontWeight: 500, color: AQUA, borderBottom: "none", backgroundColor: "var(--surface-canvas)" }}>
+                    {filteredStats.totalTrades} trades · avg {filteredStats.avgRR >= 0 ? "+" : ""}{filteredStats.avgRR.toFixed(2)}R
                   </td>
-                  <td style={{ ...TD, fontSize: "14px", fontWeight: 700, borderBottom: "none", backgroundColor: "#1c1e24",
-                    color: filteredStats.netPnL >= 0 ? "#34d399" : "#f87171" }}>
+                  <td style={{ ...TD, fontSize: "13px", fontWeight: 500, borderBottom: "none", backgroundColor: "var(--surface-canvas)",
+                    color: filteredStats.netPnL >= 0 ? "var(--color-win)" : "var(--color-loss)" }}>
                     {formatRR(filteredStats.netPnL)}
                   </td>
-                  <td style={{ ...TD, borderBottom: "none", color: "#6b7280", backgroundColor: "#1c1e24" }} />
-                  <td style={{ ...TD, fontSize: "14px", fontWeight: 600, color: "#e5e7eb", borderBottom: "none", backgroundColor: "#1c1e24" }}>
+                  <td style={{ ...TD, borderBottom: "none", backgroundColor: "var(--surface-canvas)" }} />
+                  <td style={{ ...TD, fontSize: "12px", fontWeight: 500, color: "var(--color-near-white)", borderBottom: "none", backgroundColor: "var(--surface-canvas)" }}>
                     {formatWinRate(filteredStats.winRate)} WR
                   </td>
                 </tr>
@@ -271,38 +287,35 @@ export default function JournalTable({ trades }: { trades: Trade[]; stats: Trade
           </div>
         </div>
 
-        {/* Pagination */}
+        {/* ── Pagination ── */}
         {totalPages > 1 && (
           <div style={{
             display: "flex", alignItems: "center", justifyContent: "space-between",
-            marginTop: "16px", fontFamily: BODY, fontSize: "12px", color: "#6b7280",
+            marginTop: "14px", fontFamily: M, fontSize: "10px", color: "var(--color-ash-gray)",
           }}>
             <span>
-              {(safePage - 1) * PAGE_SIZE + 1}–{Math.min(safePage * PAGE_SIZE, filtered.length)} из {filtered.length} сделок
+              {(safePage - 1) * PAGE_SIZE + 1}–{Math.min(safePage * PAGE_SIZE, filtered.length)} of {filtered.length}
             </span>
-            <div style={{ display: "flex", gap: "6px", alignItems: "center" }}>
+            <div style={{ display: "flex", gap: "4px", alignItems: "center" }}>
               <button
                 onClick={() => setPage(p => Math.max(1, p - 1))}
                 disabled={safePage === 1}
                 style={{
-                  width: "32px", height: "32px", borderRadius: "8px",
-                  border: "1px solid #3a3a3f", background: "none",
-                  color: safePage === 1 ? "#3a3a3f" : "#e5e7eb",
+                  width: "28px", height: "28px", borderRadius: "var(--radius-default)",
+                  border: "1px solid var(--color-dark-charcoal)", background: "none",
+                  color: safePage === 1 ? "var(--color-dark-charcoal)" : "var(--color-near-white)",
                   cursor: safePage === 1 ? "default" : "pointer",
-                  display: "flex", alignItems: "center", justifyContent: "center",
-                  fontSize: "14px",
+                  display: "flex", alignItems: "center", justifyContent: "center", fontSize: "12px",
                 }}
-              >
-                ←
-              </button>
+              >←</button>
 
               {Array.from({ length: totalPages }, (_, i) => i + 1).map(n => (
                 <button key={n} onClick={() => setPage(n)} style={{
-                  width: "32px", height: "32px", borderRadius: "8px",
-                  border: `1px solid ${n === safePage ? "rgba(255,249,60,0.4)" : "#3a3a3f"}`,
-                  backgroundColor: n === safePage ? "rgba(255,249,60,0.10)" : "transparent",
-                  color: n === safePage ? "#FFF93C" : "#6b7280",
-                  cursor: "pointer", fontFamily: BODY, fontSize: "12px", fontWeight: 600,
+                  width: "28px", height: "28px", borderRadius: "var(--radius-default)",
+                  border: `1px solid ${n === safePage ? "rgba(25,208,232,0.5)" : "var(--color-dark-charcoal)"}`,
+                  backgroundColor: n === safePage ? "rgba(25,208,232,0.10)" : "transparent",
+                  color: n === safePage ? AQUA : "var(--color-ash-gray)",
+                  cursor: "pointer", fontFamily: M, fontSize: "10px", fontWeight: 500,
                 }}>
                   {n}
                 </button>
@@ -312,16 +325,13 @@ export default function JournalTable({ trades }: { trades: Trade[]; stats: Trade
                 onClick={() => setPage(p => Math.min(totalPages, p + 1))}
                 disabled={safePage === totalPages}
                 style={{
-                  width: "32px", height: "32px", borderRadius: "8px",
-                  border: "1px solid #3a3a3f", background: "none",
-                  color: safePage === totalPages ? "#3a3a3f" : "#e5e7eb",
+                  width: "28px", height: "28px", borderRadius: "var(--radius-default)",
+                  border: "1px solid var(--color-dark-charcoal)", background: "none",
+                  color: safePage === totalPages ? "var(--color-dark-charcoal)" : "var(--color-near-white)",
                   cursor: safePage === totalPages ? "default" : "pointer",
-                  display: "flex", alignItems: "center", justifyContent: "center",
-                  fontSize: "14px",
+                  display: "flex", alignItems: "center", justifyContent: "center", fontSize: "12px",
                 }}
-              >
-                →
-              </button>
+              >→</button>
             </div>
           </div>
         )}

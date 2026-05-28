@@ -1,54 +1,87 @@
-@import url('https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500;1,400&family=Geist:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  /* Colors */
-  --color-midnight-core:   #0d0e11;
-  --color-obsidian-base:   #14151a;
-  --color-charcoal-canvas: #282a36;
-  --color-slate-border:    #3a3a3f;
-  --color-ash-text:        #6b7280;
-  --color-silver-text:     #e5e7eb;
-  --color-polar-white:     #ffffff;
-  --color-cyber-pink:      #FFF93C;
-  --color-magenta-glow:    #FFF93C;
-  --color-system-green:    #34d399;
-  --color-warning-yellow:  #fcd34d;
-  --color-danger-red:      #f87171;
+  /* ── Colors — DESIGN.md ── */
+  --color-absolute-zero:  #000000;
+  --color-deep-graphite:  #010101;
+  --color-carbon-black:   #191919;
+  --color-dark-charcoal:  #282828;
+  --color-slate-gray:     #3f3f3f;
+  --color-ash-gray:       #7f7f7f;
+  --color-near-white:     #ffffff;
+  --color-sea-glass:      #062f34;
+  --color-electric-aqua:  #19d0e8;
+  --color-sky-burst:      #44ccff;
 
-  /* Typography — all Geist Mono */
-  --font-display: 'Geist Mono', monospace;
-  --font-body:    'Geist Mono', monospace;
-  --font-mono:    'Geist Mono', monospace;
+  /* ── Gradients ── */
+  --gradient-deep-graphite: linear-gradient(rgb(50, 50, 50) 0%, rgb(1, 1, 1) 100%);
 
-  /* Layout */
-  --page-max-width: 1360px;
+  /* ── Surfaces ── */
+  --surface-canvas:      #000000;
+  --surface-base:        #010101;
+  --surface-card:        #191919;
+  --surface-interactive: #282828;
+
+  /* ── Shadows ── */
+  --shadow-subtle:   rgba(0,0,0,0.7) 3px 3px 2px 0px inset, rgba(255,255,255,0.25) 3px 2px 2px 0px;
+  --shadow-sm:       rgba(0,0,0,0.25) 0px 4px 4px 0px, rgba(255,255,255,0.25) 1px 1px 2px 0px, rgba(0,0,0,0.5) 1px 1px 1px 0px inset, rgba(0,0,0,0.7) 2px 2px 12px 0px inset;
+  --shadow-subtle-2: rgba(0,0,0,0.63) 0px 0px 0px 1px;
+  --shadow-md:       rgb(14,93,102) 6px 6px 10px 0px inset, rgba(255,255,255,0.2) 4px 4px 4px 0px, rgba(255,255,255,0.25) 1px 1px 2px 0px;
+
+  /* ── Typography ── */
+  --font-display: 'Instrument Serif', ui-serif, Georgia, Cambria, serif;
+  --font-mono:    'DM Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --font-body:    'Geist', ui-sans-serif, system-ui, -apple-system, sans-serif;
+
+  /* ── Type scale ── */
+  --text-caption:    10px;  --leading-caption:    1.4; --tracking-caption:    0.2px;
+  --text-body:       16px;  --leading-body:       1.5; --tracking-body:       -0.096px;
+  --text-subheading: 20px;  --leading-subheading: 1.2; --tracking-subheading: -0.16px;
+  --text-heading:    40px;  --leading-heading:    1.1; --tracking-heading:    -0.8px;
+  --text-display:    96px;  --leading-display:    0.9; --tracking-display:    -3.84px;
+
+  /* ── Layout ── */
+  --page-max-width: 1200px;
+  --section-gap:    40px;
+  --card-padding:   16px;
+  --element-gap:    10px;
+
+  /* ── Border radius ── */
+  --radius-cards:        10px;
+  --radius-buttons:      100000px;
+  --radius-default:      8px;
+  --radius-small:        4px;
+  --radius-large-cards:  40px;
+
+  /* ── Semantic trade colors ── */
+  --color-win:  #34d399;
+  --color-loss: #f87171;
+  --color-be:   #fcd34d;
 }
 
 /* ─── Reset ─── */
-* { box-sizing: border-box; margin: 0; padding: 0; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; scrollbar-gutter: stable; }
 
 /* ─── Base ─── */
 body {
-  background-color: var(--color-midnight-core);
-  background-image: radial-gradient(circle, rgba(255,255,255,0.07) 1px, transparent 1px);
-  background-size: 28px 28px;
-  color: var(--color-silver-text);
-  font-family: var(--font-mono);
-  font-size: 16px;
-  line-height: 1.5;
+  background-color: var(--surface-canvas);
+  color: var(--color-near-white);
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  line-height: var(--leading-body);
+  letter-spacing: var(--tracking-body);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-
-/* ─── Live dot — pulsing green ping ─── */
+/* ─── Live dot — Electric Aqua ping ─── */
 @keyframes live-ping {
-  0%   { transform: scale(1); opacity: 0.7; }
+  0%   { transform: scale(1); opacity: 0.8; }
   100% { transform: scale(3); opacity: 0;   }
 }
 
@@ -56,11 +89,11 @@ body {
   position: relative;
   display: inline-block;
   flex-shrink: 0;
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
   border-radius: 9999px;
-  background-color: #34d399;
-  box-shadow: 0 0 6px 2px rgba(52, 211, 153, 0.45);
+  background-color: var(--color-electric-aqua);
+  box-shadow: 0 0 6px 2px rgba(25, 208, 232, 0.4);
 }
 
 .live-dot::after {
@@ -68,8 +101,15 @@ body {
   position: absolute;
   inset: 0;
   border-radius: 9999px;
-  background-color: #34d399;
+  background-color: var(--color-electric-aqua);
   animation: live-ping 1.8s ease-out infinite;
 }
 
-
+/* ─── Card glow — aqua ─── */
+.card-glow {
+  box-shadow: var(--shadow-subtle-2);
+  transition: box-shadow 0.2s ease;
+}
+.card-glow:hover {
+  box-shadow: rgba(25,208,232,0.08) 0px 0px 0px 1px, rgba(0,0,0,0.63) 0px 0px 0px 1px;
+}

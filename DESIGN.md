@@ -1,219 +1,230 @@
-# Bun — Style Reference
-> Synthwave dark lab – precision code illuminated by neon accents.
+# Monologue — Style Reference
+> Midnight Terminal with Aqua Glow. A luminous aqua cursor on a deep, textured black screen, where retro-futuristic forms hint at precision and understated power.
 
 **Theme:** dark
 
-This design system conjures a high-tech laboratory vibe, a 'synthesized chaos' where sophisticated functionality meets playful, almost neon, branding. The dominant dark charcoal background creates a stark stage for bursts of vivid pinks and violets. Careful use of these vibrant chromatic accents for interactive elements and key messaging prevents visual fatigue, while subtle textural gradients and inner borders add depth to an otherwise flat dark aesthetic. The fusion of precise monospace code snippets with the broader system font reflects the dual nature of developer tools: serious, technical work presented with an engaging, almost futuristic flair.
+Monologue evokes a 'hacker garage at midnight' aesthetic, blending retro tech charm with modern dark mode sophistication. The design utilizes a deep, multi-layered neutral palette of dark grays and blacks as its canvas, punctuated by selective, vivid aqua accents. Typography combines a classic serif for imposing headlines with a monospaced font for functional elements, creating a distinctive contrast. Components are minimal, often transparent or outlined, and sparingly employ subtle inner shadows for depth rather than heavy elevation.
 
 ## Tokens — Colors
 
 | Name | Value | Token | Role |
 |------|-------|-------|------|
-| Midnight Core | `#0d0e11` | `--color-midnight-core` | Page background, primary dark surface. |
-| Obsidian Base | `#14151a` | `--color-obsidian-base` | Card backgrounds, section backgrounds, deeper surface level. |
-| Charcoal Canvas | `#282a36` | `--color-charcoal-canvas` | Component backgrounds, code blocks, secondary dark surfaces. |
-| Slate Border | `#3a3a3f` | `--color-slate-border` | Subtle borders, dividers, subtle active states. |
-| Graphite Accent | `#3b3f4b` | `--color-graphite-accent` | Accent borders, button outlines, subtle hover states. |
-| Ash Text | `#6b7280` | `--color-ash-text` | Secondary body text, disabled states. |
-| Silver Text | `#e5e7eb` | `--color-silver-text` | Primary body text, labels, icons. |
-| Polar White | `#ffffff` | `--color-polar-white` | High-contrast text, primary headers, active elements. |
-| Cyber Pink | `#f472b6` | `--color-cyber-pink` | Primary brand accent, interactive elements (buttons, links), highlight text for 'fast', 'toolkit'. |
-| Neon Violet | `#a855f7` | `--color-neon-violet` | Secondary brand accent, highlight boxes, specific callouts. |
-| Faded Rose | `#fbcfe8` | `--color-faded-rose` | Subtle highlight text, often paired with Cyber Pink for larger headings. |
-| Magenta Glow | `#ec4899` | `--color-magenta-glow` | Call-to-action button backgrounds, strong interactive elements. |
-| Electric Cyan | `#22d3ee` | `--color-electric-cyan` | Highlight text for specific data points or status indicators. |
-| Virtual Violet | `#c084fc` | `--color-virtual-violet` | Interactive text like tooltips or active filters. |
-| System Green | `#34d399` | `--color-system-green` | Success states, positive indicators, checkmarks. |
-| Warning Yellow | `#fcd34d` | `--color-warning-yellow` | Warning messages, caution indicators. |
-| Danger Red | `#f87171` | `--color-danger-red` | Error messages, destructive actions. |
-| Gradient Pink Pulse | `linear-gradient(to right, rgba(0, 0, 0, 0), rgba(236, 72, 153, 0.5), rgba(0, 0, 0, 0))` | `--color-gradient-pink-pulse` | Decorative gradients creating a subtle pulse effect around key content, drawing attention without being overly aggressive. |
-| Gradient Pink Fade | `linear-gradient(rgba(244, 114, 182, 0.03), rgba(20, 21, 26, 0.5))` | `--color-gradient-pink-fade` | Background gradient for certain elevated sections, providing a soft transition from the Cyber Pink hue. |
-| Gradient Sunset | `linear-gradient(to right, rgb(230, 126, 34), rgb(243, 156, 18))` | `--color-gradient-sunset` | Illustration accent, indicating energy or speed. |
-| Gradient Cosmos | `radial-gradient(134.26% 244.64% at 42.92% -80.36%, rgb(179, 1, 179) 25.45%, rgb(56, 29, 189) 100%)` | `--color-gradient-cosmos` | Illustration accent, adding depth and visual interest. |
+| Absolute Zero | `#000000` | `--color-absolute-zero` | Dark borders and separators for elevated surfaces and inverted UI. Do not promote it to the primary CTA color |
+| Deep Graphite | `linear-gradient(rgb(50, 50, 50) 0%, rgb(1, 1, 1) 100%)` | `--color-deep-graphite` | Deep canvas for dark sections, primary dark surfaces, and high-contrast framing. Do not promote it to the primary CTA color; Background texture for visual depth, especially in header regions |
+| Carbon Black | `#191919` | `--color-carbon-black` | Secondary surface background, subtle elevated elements |
+| Dark Charcoal | `#282828` | `--color-dark-charcoal` | Filled button backgrounds, body text with low contrast, interactive element backgrounds |
+| Slate Gray | `#3f3f3f` | `--color-slate-gray` | Card backgrounds, subtle background textures |
+| Ash Gray | `#7f7f7f` | `--color-ash-gray` | Subtle shadow tints, secondary text elements |
+| Near White | `#ffffff` | `--color-near-white` | Primary headings and body text, accent borders, button text on dark backgrounds |
+| Sea Glass | `#062f34` | `--color-sea-glass` | Card background for emphasized informational blocks |
+| Electric Aqua | `#19d0e8` | `--color-electric-aqua` | Interactive link text, highlighted text, subtle decorative borders, functional icon accents |
+| Sky Burst | `#44ccff` | `--color-sky-burst` | Accented card backgrounds, decorative elements |
 
 ## Tokens — Typography
 
-### system-ui — Primary text font for all UI elements, body copy, headings, and navigation. Uses various weights and sizes to establish hierarchy, with weight 800 often used for bold declarations within headlines. · `--font-system-ui`
-- **Substitute:** Inter
-- **Weights:** 300, 400, 500, 600, 700, 800
-- **Sizes:** 12px, 13px, 14px, 16px, 18px, 20px, 21px, 24px, 48px, 53px, 60px
-- **Line height:** 1.00, 1.20, 1.33, 1.40, 1.43, 1.50, 1.54, 1.56, 1.63, 1.78, 1.85
-- **Letter spacing:** normal
-- **OpenType features:** `"kern"`
-- **Role:** Primary text font for all UI elements, body copy, headings, and navigation. Uses various weights and sizes to establish hierarchy, with weight 800 often used for bold declarations within headlines.
+### sans-serif — sans-serif — detected in extracted data but not described by AI · `--font-sans-serif`
+- **Weights:** 400
+- **Sizes:** 12px
+- **Line height:** 1.2
+- **Role:** sans-serif — detected in extracted data but not described by AI
 
-### JetBrains Mono — Monospace font specifically for code snippets, command line inputs, and technical details, reinforcing the developer-centric nature of the product. · `--font-jetbrains-mono`
-- **Substitute:** Fira Code
-- **Weights:** 400, 500, 600, 700
-- **Sizes:** 12px, 13px, 14px, 16px, 18px, 19px
-- **Line height:** 1.11, 1.33, 1.43, 1.50, 1.51, 1.54, 1.60, 1.63
+### Instrument Serif — Display and primary headings – large, expressive serif that commands attention and establishes brand presence. Use with tight tracking for impact. · `--font-instrument-serif`
+- **Weights:** 400
+- **Sizes:** 28px, 30px, 32px, 40px, 48px, 64px, 70px, 72px, 96px, 393px, 403px
+- **Line height:** 0.90, 1.00, 1.10, 1.20, 1.30, 1.40
+- **Letter spacing:** -0.04em, -0.03em, -0.007em, -0.003em, -0.002em, 0.008em
+- **Role:** Display and primary headings – large, expressive serif that commands attention and establishes brand presence. Use with tight tracking for impact.
+
+### DM Mono — Monospaced text for code blocks, secondary headings, and functional UI elements – providing a retro-tech feel and clear information hierarchy. · `--font-dm-mono`
+- **Weights:** 400
+- **Sizes:** 10px, 12px, 14px, 15px, 16px, 18px, 20px, 32px
+- **Line height:** 0.80, 1.00, 1.20, 1.40, 1.50
+- **Letter spacing:** -0.05em, -0.01em, -0.008em, -0.007em, -0.006em, 0.015em, 0.017em, 0.019em, 0.020em, 0.021em
+- **Role:** Monospaced text for code blocks, secondary headings, and functional UI elements – providing a retro-tech feel and clear information hierarchy.
+
+### Geist — Primary body text – a modern sans-serif for clear readability and informational content. · `--font-geist`
+- **Substitute:** Inter
+- **Weights:** 400
+- **Sizes:** 17px
+- **Line height:** 1.40
 - **Letter spacing:** normal
-- **OpenType features:** `"kern"`
-- **Role:** Monospace font specifically for code snippets, command line inputs, and technical details, reinforcing the developer-centric nature of the product.
+- **Role:** Primary body text – a modern sans-serif for clear readability and informational content.
+
+### SF Pro Display Regular — Secondary body text and detailed descriptive elements – for compact and precise information presentation consistent with Apple's ecosystem. · `--font-sf-pro-display-regular`
+- **Substitute:** SF Pro Text
+- **Weights:** 400
+- **Sizes:** 16px
+- **Line height:** 1.40
+- **Letter spacing:** -0.006em
+- **Role:** Secondary body text and detailed descriptive elements – for compact and precise information presentation consistent with Apple's ecosystem.
+
+### system-ui — system-ui — detected in extracted data but not described by AI · `--font-system-ui`
+- **Weights:** 400
+- **Sizes:** 16px
+- **Line height:** 1.5
+- **Role:** system-ui — detected in extracted data but not described by AI
 
 ### Type Scale
 
 | Role | Size | Line Height | Letter Spacing | Token |
 |------|------|-------------|----------------|-------|
-| caption | 12px | 1.5 | — | `--text-caption` |
-| body | 14px | 1.43 | — | `--text-body` |
-| heading | 20px | 1.4 | — | `--text-heading` |
-| heading-lg | 24px | 1.33 | — | `--text-heading-lg` |
-| display | 60px | 1 | — | `--text-display` |
+| caption | 10px | 1.4 | 0.2px | `--text-caption` |
+| body | 16px | 1.5 | -0.096px | `--text-body` |
+| subheading | 20px | 1.2 | -0.16px | `--text-subheading` |
+| heading | 40px | 1.1 | -0.8px | `--text-heading` |
+| display | 96px | 0.9 | -3.84px | `--text-display` |
 
 ## Tokens — Spacing & Shapes
 
-**Base unit:** 4px
-
-**Density:** comfortable
+**Density:** compact
 
 ### Spacing Scale
 
 | Name | Value | Token |
 |------|-------|-------|
-| 4 | 4px | `--spacing-4` |
+| 5 | 5px | `--spacing-5` |
+| 6 | 6px | `--spacing-6` |
 | 8 | 8px | `--spacing-8` |
+| 9 | 9px | `--spacing-9` |
+| 10 | 10px | `--spacing-10` |
+| 11 | 11px | `--spacing-11` |
 | 12 | 12px | `--spacing-12` |
+| 14 | 14px | `--spacing-14` |
 | 16 | 16px | `--spacing-16` |
+| 18 | 18px | `--spacing-18` |
+| 19 | 19px | `--spacing-19` |
 | 20 | 20px | `--spacing-20` |
 | 24 | 24px | `--spacing-24` |
 | 32 | 32px | `--spacing-32` |
-| 36 | 36px | `--spacing-36` |
 | 40 | 40px | `--spacing-40` |
-| 48 | 48px | `--spacing-48` |
-| 64 | 64px | `--spacing-64` |
-| 80 | 80px | `--spacing-80` |
-| 96 | 96px | `--spacing-96` |
-| 120 | 120px | `--spacing-120` |
-| 128 | 128px | `--spacing-128` |
+| 72 | 72px | `--spacing-72` |
 
 ### Border Radius
 
 | Element | Value |
 |---------|-------|
-| badge | 9999px |
-| input | 7px |
-| buttons | 8px |
+| cards | 10px |
+| avatars | 900px |
+| buttons | 100000px |
 | default | 8px |
+| largeCards | 40px |
+| smallElements | 4px |
 
 ### Shadows
 
 | Name | Value | Token |
 |------|-------|-------|
-| xl | `rgba(0, 0, 0, 0.25) 0px 25px 50px -12px` | `--shadow-xl` |
-| md | `rgba(131, 24, 67, 0.1) 0px 10px 15px -3px, rgba(131, 24, ...` | `--shadow-md` |
+| subtle | `rgba(0, 0, 0, 0.7) 3px 3px 2px 0px inset, rgba(255, 255, ...` | `--shadow-subtle` |
+| sm | `rgba(0, 0, 0, 0.25) 0px 4px 4px 0px, rgba(255, 255, 255, ...` | `--shadow-sm` |
+| subtle-2 | `rgba(0, 0, 0, 0.63) 0px 0px 0px 1px` | `--shadow-subtle-2` |
+| md | `rgb(14, 93, 102) 6px 6px 10px 0px inset, rgba(255, 255, 2...` | `--shadow-md` |
 
 ### Layout
 
-- **Page max-width:** 1280px
-- **Section gap:** 128px
-- **Element gap:** 8px
+- **Page max-width:** 1200px
+- **Section gap:** 40px
+- **Card padding:** 16px
+- **Element gap:** 10px
 
 ## Components
 
-### Primary CTA Button
-**Role:** Main call-to-action.
+### Filled Dark Button
+**Role:** Primary action button
 
-Background: Magenta Glow (#ec4899), Text: Polar White (#ffffff), Radius: 8px, Padding: 16px 36px (implies min-width).
+Solid `Dark Charcoal` (#282828) background with `Near White` (#ffffff) text, using a generous `100000px` border-radius for a pill shape. Padding is `18px` horizontal and `20px` vertical.
 
-### Ghost Navigation Button
-**Role:** Secondary navigation or filter items.
+### Ghost Accent Button
+**Role:** Secondary action or featured link
 
-Background: transparent (rgba(0,0,0,0)), Text: Silver Text (#d1d5db), Border: Charcoal Canvas (#282a36), Radius: 7px 7px 0px 0px, Padding: 16px.
+Transparent background with a `100000px` border-radius and a `Absolute Zero` (#000000) border of `6px` width. Text color uses the browser default link color, which is a rare artifact not part of the brand palette. **A brand-consistent approach would be to use Electric Aqua for text.**
 
-### Text Accent Button
-**Role:** Tertiary actions or category toggles.
+### Info Card
+**Role:** Content container for features or testimonials
 
-Background: transparent (rgba(0,0,0,0)), Text: Polar White (#ffffff), Border: rgba(255, 255, 255, 0.16), Radius: 6px, Padding: 4px.
+Uses `Carbon Black` (#191919) as background with `10px` border-radius and `16px` padding on all sides. No visible box shadow, achieving a flat, embedded aesthetic.
 
-### Large Feature Card
-**Role:** Prominent feature display.
+### Highlight Card - Sea Glass
+**Role:** Emphasized feature card
 
-Background: transparent (rgba(0,0,0,0)), Text: Polar White (#ffffff), Border: Graphite Accent (#3b3f4b), Radius: 5px, Padding: 32px.
+Features a `Sea Glass` (#062f34) background with `16px` padding and `10px` border-radius. Used for informational blocks that require a subtle, calm highlight.
 
-### Command Line Input
-**Role:** Code snippets for user interaction.
+### Highlight Card - Sky Burst
+**Role:** Prominent feature card
 
-Background: Charcoal Canvas (#282a36), Text: Polar White (#ffffff), Border: Slate Border (#3a3a3f), Radius: 8px, Padding: 16px.
+Utilizes a `Sky Burst` (#44ccff) background with `16px` padding and `10px` border-radius. Provides a more vivid, attention-grabbing background for key features.
 
-### Performance Bar Graph
-**Role:** Visual representation of data.
+### Media Player Card
+**Role:** Distinctive object container, often for media
 
-Background: Obsidian Base (#14151a), individual bars use Cyber Pink (#f472b6) with a subtle shadow: rgba(0,0,0,0.25) 0px 25px 50px -12px, Text: Silver Text (#e5e7eb) for labels, Polar White (#ffffff) for values. Radius: 4px.
+Has a `Slate Gray` (#3f3f3f) background with prominent `52px` border-radius. Features a complex inset box shadow creating depth and a glossy effect. Padding is `12px` on all sides.
 
-### Code Block
-**Role:** Displaying source code.
+### Text Input Container
+**Role:** Container for form inputs or code snippets
 
-Background: Charcoal Canvas (#282a36), Text: various syntax-highlighted colors (e.g., Faded Rose #fbcfe8 for keywords, Electric Cyan #22d3ee for types, Polar White #ffffff for general code), Font: JetBrains Mono. Radius: 8px, Padding: 16px.
-
-### Highlight Badge (Replaces)
-**Role:** Emphasizing replacements or comparisons.
-
-Background: Cyber Pink (#f472b6) variants or Neon Violet (#a855f7) variants, Text: Polar White (#ffffff), Radius: 9999px (pill shape), Padding: 4px 8px.
+Features a transparent background with `Near White` (#ffffff) borders and `10px` border-radius. Padding is `16px` on all sides. When in an active state, it's typically highlighted by the `Electric Aqua` accent.
 
 ## Do's and Don'ts
 
 ### Do
-- Use Midnight Core (#0d0e11) as the base page background.
-- Apply Charcoal Canvas (#282a36) for card surfaces and code blocks.
-- Highlight primary calls-to-action with Magenta Glow (#ec4899) background and Polar White (#ffffff) text.
-- Maintain high contrast text with Polar White (#ffffff) for headings and Silver Text (#e5e7eb) for body copy against dark backgrounds.
-- Utilize 9999px radius for small interactive elements like tags and badges, creating a soft pill shape.
-- Reserve JetBrains Mono for all code-related content, including command-line interfaces and code snippets.
-- Use Cyber Pink (#f472b6) and Neon Violet (#a855f7) sparingly for key accents, interactive states, and important highlights.
+- Prioritize `Absolute Zero` (#000000) or `Deep Graphite` (#010101) as primary background colors for large sections.
+- Use `Instrument Serif` for all primary headlines, leveraging its unique character and impactful size variations.
+- Apply `DM Mono` for any code snippets, secondary headings, or UI labels to maintain the retro-tech aesthetic.
+- Incorporate `Electric Aqua` (#19d0e8) sparingly for interactive elements, links, and small functional accents to provide a 'switched-on' feel.
+- Use `10px` border-radius for cards and content containers, and `100000px` for all buttons to achieve a consistent pill shape.
+- Employ the subtle inner shadow `rgba(0, 0, 0, 0.7) 3px 3px 2px 0px inset, rgba(255, 255, 255, 0.25) 3px 2px 2px 0px` on surfaces to add depth rather than heavy external shadows.
+- Maintain a conservative compact density, using `10px` as a default `elementGap` between UI elements and `16px` for `cardPadding`.
 
 ### Don't
-- Avoid using light backgrounds; the theme is exclusively dark, leveraging specific dark neutrals.
-- Do not introduce strong shadows on most elements, as depth is primarily created through varying dark surface colors and subtle inner borders.
-- Do not deviate from the system-ui for general text content; save JetBrains Mono for code only.
-- Avoid overuse of chromatic colors; they are accents, not primary content colors.
-- Do not use generic button styles; always apply the specified padding, border, and radius for each button variant.
-- Avoid any radius value other than 4px, 8px, 12px, 30px, or 9999px, as these define the system's shape language.
+- Avoid using bright or overly saturated colors outside of the designated `Electric Aqua` and `Sky Burst` accents.
+- Do not introduce heavy drop shadows or strong external elevation as the design favors subtle inset shadows for depth.
+- Refrain from using generic sans-serif fonts for headlines; `Instrument Serif` is key to the brand's typographic identity.
+- Avoid large, content-heavy image banners; imagery should be contained, illustrative, or product-focused within the dark UI.
+- Do not use multiple accent colors; stick to the `Electric Aqua` and `Sky Burst` for highlights to maintain focus.
+- Avoid excessive use of gradients; if used, they should be subtle dark-to-dark transitions for background textures, not vivid multi-color displays.
+- Do not use sharp corners; the design consistently uses rounded corners, with `10px` or `8px` being common for main containers and `100000px` for interactive elements.
 
 ## Surfaces
 
 | Level | Name | Value | Purpose |
 |-------|------|-------|---------|
-| 0 | Midnight Core | `#0d0e11` | Primary page background. |
-| 1 | Obsidian Base | `#14151a` | Base for cards and primary content sections. |
-| 2 | Charcoal Canvas | `#282a36` | Code blocks, component backgrounds, and interactive elements. |
+| 1 | Canvas | `#000000` | Primary page background, deepest layer. |
+| 2 | Base Surface | `#010101` | Dominant background for content sections and large panels. |
+| 3 | Card Surface | `#191919` | Background for individual cards and feature blocks. |
+| 4 | Interactive Surface | `#282828` | Background for filled buttons and active input fields. |
 
 ## Elevation
 
-- **Card/Container Shadow:** `rgba(0, 0, 0, 0.25) 0px 25px 50px -12px`
-- **Highlight Badge Shadow:** `rgba(131, 24, 67, 0.1) 0px 10px 15px -3px, rgba(131, 24, 67, 0.1) 0px 4px 6px -4px`
+- **Media Player Card:** `rgba(0, 0, 0, 0.25) 0px 5.0405px 10.207px 0px, rgba(201, 201, 201, 0.15) 0px 21.9128px 7.30426px 0px inset, rgba(0, 0, 0, 0.15) 0px -24.3475px 6.33036px 0px inset`
+- **Subtle Inner Shadow:** `rgba(0, 0, 0, 0.7) 3px 3px 2px 0px inset, rgba(255, 255, 255, 0.25) 3px 2px 2px 0px`
 
 ## Imagery
 
-The visual language for imagery is primarily functional and illustrative, designed to complement the dark UI. Graphics are a mix of abstract shapes, data visualizations, and code snippets. Product imagery is absent; instead, performance graphs, command-line outputs, and code blocks serve as the primary visual content. Icons are monocolor, typically in Polar White or an accent color, following an outlined or filled style without complex gradients, used functionally (e.g., checkmarks, arrows). Sparse, vibrant, geometric 'bug' illustrations or abstract shapes (like stars or splashes of color) add a playful, almost animated energy, often acting as badges or highlights. Density is moderate, with visuals strategically placed to break up text-heavy sections or to illustrate technical concepts directly.
+The visual language focuses on stylized product representations and abstract tech-inspired graphics. Photography is minimal, if present, and would likely be high-contrast and monochrome. Illustrations are flat, geometric, and often incorporate the vivid `Electric Aqua` accent color, suggesting digital interfaces or data visualization. Icons are outlined, simple, and functional, maintaining a high stroke weight for clarity within the dark theme. Imagery serves both decorative atmosphere and explanatory content, often highlighting product features or conceptual processes. The density is medium, with visuals integrated into content blocks rather than full-bleed, ensuring the UI remains the primary focus.
 
 ## Layout
 
-The layout is primarily a max-width 1280px centered content model, providing ample breathing room against the full-bleed dark background. The hero section features a centered headline over a dark background, flanked by call-to-action buttons. Subsequent sections typically alternate between centered text blocks and asymmetric compositions, often with text on one side and a visual (like a code block or graph) on the other. Vertical rhythm is established by section gaps, emphasizing content blocks. There are instances of 2-column and 3-column card grids for features, breaking the vertical flow. Navigation is a sticky top bar, minimal and focused, integrating a primary 'Build' CTA with links and Discord access. The overall density is balanced, prioritizing clarity and direct information presentation.
+The page primarily uses a max-width contained layout, likely around `1200px`, centered on the screen. The hero section is full-bleed dark, featuring prominent `Instrument Serif` headlines and a central product graphic or media player, with call-to-action buttons below it. Content sections often follow an alternating pattern of text on one side and a product screenshot/illustration on the other. Feature lists and other information are arranged in vertically stacked blocks, sometimes within cards. The overall rhythm is consistent vertical spacing between sections. Navigation is a sticky top bar, likely minimal in appearance. The density is compact, prioritizing information without feeling cramped, with clear visual separation between content blocks.
 
 ## Agent Prompt Guide
 
-1. **Quick Color Reference:**
-   - Text (primary): #ffffff
-   - Text (secondary): #e5e7eb
-   - Background (page): #0d0e11
-   - Background (card): #14151a
-   - CTA: #ec4899
-   - Border (subtle): #3a3a3f
-   - Accent: #f472b6
+**Quick Color Reference:**
+- text: #ffffff
+- background: #000000
+- border: #000000
+- accent: #19d0e8
+- primary action: #282828 (filled action)
 
-2. **Example Component Prompts:**
-   - Create a hero section: background Midnight Core (#0d0e11). Headline 'Bun is a fast JavaScript all-in-one toolkit' using system-ui, weight 800 for 'fast' and 'all-in-one toolkit' color Cyber Pink (#f472b6), size 60px, line-height 1.0. Body text Silver Text (#e5e7eb) at 16px, line-height 1.5. Include a Primary CTA Button labeled 'Try it'.
-   - Generate a 'Bundling Performance' card: background Obsidian Base (#14151a), padding 16px. Title 'Bundling 10,000 React components' text Polar White (#ffffff), size 20px, weight 700. Inside, add a Performance Bar Graph with bars colored Cyber Pink (#f472b6) and labels Silver Text (#e5e7eb), code values Polar White (#ffffff).
-   - Design a command line input: background Charcoal Canvas (#282a36), border Slate Border (#3a3a3f), radius 8px, padding 16px. Placeholder text 'bun ./index.ts' using JetBrains Mono, Silver Text (#e5e7eb), 16px. Place a Cyber Pink (#f472b6) highlight badge with 'REPLACES NPM' text to its right, using 9999px radius and 4px 8px padding.
+**3-5 Example Component Prompts:**
+1. Create a hero section: `Absolute Zero` (#000000) background transitioned with `Monologue Gradient Dark` in `linear-gradient(rgb(50, 50, 50) 0%, rgb(1, 1, 1) 100%)`. Headline 'Effortless voice dictation' in `Instrument Serif` at 70px, `Near White` (#ffffff), letter-spacing -0.03em. Subtext in `Geist` at 17px, `Near White` (#ffffff). Include a 'Download' button: `Dark Charcoal` (#282828) background, `Near White` (#ffffff) text, `100000px` border-radius, `20px 18px` padding.
+2. Design a feature card: `Carbon Black` (#191919) background, `10px` border-radius, `16px` padding. Headline in `DM Mono` at 20px, `Near White` (#ffffff), letter-spacing 0.019em. Body text in `Geist` at 17px, `Near White` (#ffffff).
+3. Create an emphasized media player card: `Slate Gray` (#3f3f3f) background, `52px` border-radius, `12px` padding, with the box-shadow `rgba(0, 0, 0, 0.25) 0px 5.0405px 10.207px 0px, rgba(201, 201, 201, 0.15) 0px 21.9128px 7.30426px 0px inset, rgba(0, 0, 0, 0.15) 0px -24.3475px 6.33036px 0px inset`. 
 
 ## Similar Brands
 
-- **Vercel** — Similar dark-mode aesthetic with strong emphasis on developer tools, high-contrast text, and subtle use of brand accents.
-- **GitHub** — Dark UI, code-centric design, and the use of monospace fonts for technical content.
-- **linear.app** — Structured dark interface with a focus on efficiency, subtle gradients, and high-quality typography for technical users.
-- **Tailwind UI (dark themes)** — Dark neutral palettes with distinct accent colors and component styling that prioritizes functionality and readability.
-- **Stripe (developer docs)** — Clear separation of code examples and explanatory text, a strong dark theme, and a professional, yet inviting, visual tone.
+- **Raycast** — Dark-mode UI with a focus on productivity, compact component design, and a strong emphasis on typography for visual hierarchy.
+- **Linear** — Minimalist dark theme, subtle use of primary accent color for interactive states, and emphasis on clear, functional typography.
+- **Notion (dark mode)** — Structured dark interface, use of varied text sizes for information density within a neutral palette, and subtle card-based layouts.
+- **Figma (dark mode)** — Dark interface for creative tools, relying on grayscale definition and minimal color accents for functionality, with a lean towards monospaced or functional fonts.
 
 ## Quick Start
 
@@ -222,100 +233,103 @@ The layout is primarily a max-width 1280px centered content model, providing amp
 ```css
 :root {
   /* Colors */
-  --color-midnight-core: #0d0e11;
-  --color-obsidian-base: #14151a;
-  --color-charcoal-canvas: #282a36;
-  --color-slate-border: #3a3a3f;
-  --color-graphite-accent: #3b3f4b;
-  --color-ash-text: #6b7280;
-  --color-silver-text: #e5e7eb;
-  --color-polar-white: #ffffff;
-  --color-cyber-pink: #f472b6;
-  --color-neon-violet: #a855f7;
-  --color-faded-rose: #fbcfe8;
-  --color-magenta-glow: #ec4899;
-  --color-electric-cyan: #22d3ee;
-  --color-virtual-violet: #c084fc;
-  --color-system-green: #34d399;
-  --color-warning-yellow: #fcd34d;
-  --color-danger-red: #f87171;
-  --color-gradient-pink-pulse: #ec4899;
-  --gradient-gradient-pink-pulse: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(236, 72, 153, 0.5), rgba(0, 0, 0, 0));
-  --color-gradient-pink-fade: #f472b6;
-  --gradient-gradient-pink-fade: linear-gradient(rgba(244, 114, 182, 0.03), rgba(20, 21, 26, 0.5));
-  --color-gradient-sunset: #e67e22;
-  --gradient-gradient-sunset: linear-gradient(to right, rgb(230, 126, 34), rgb(243, 156, 18));
-  --color-gradient-cosmos: #b301b3;
-  --gradient-gradient-cosmos: radial-gradient(134.26% 244.64% at 42.92% -80.36%, rgb(179, 1, 179) 25.45%, rgb(56, 29, 189) 100%);
+  --color-absolute-zero: #000000;
+  --color-deep-graphite: #010101;
+  --gradient-deep-graphite: linear-gradient(rgb(50, 50, 50) 0%, rgb(1, 1, 1) 100%);
+  --color-carbon-black: #191919;
+  --color-dark-charcoal: #282828;
+  --color-slate-gray: #3f3f3f;
+  --color-ash-gray: #7f7f7f;
+  --color-near-white: #ffffff;
+  --color-sea-glass: #062f34;
+  --color-electric-aqua: #19d0e8;
+  --color-sky-burst: #44ccff;
 
   /* Typography — Font Families */
+  --font-sans-serif: 'sans-serif', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-instrument-serif: 'Instrument Serif', ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  --font-dm-mono: 'DM Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --font-geist: 'Geist', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-sf-pro-display-regular: 'SF Pro Display Regular', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-system-ui: 'system-ui', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-jetbrains-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 
   /* Typography — Scale */
-  --text-caption: 12px;
-  --leading-caption: 1.5;
-  --text-body: 14px;
-  --leading-body: 1.43;
-  --text-heading: 20px;
-  --leading-heading: 1.4;
-  --text-heading-lg: 24px;
-  --leading-heading-lg: 1.33;
-  --text-display: 60px;
-  --leading-display: 1;
+  --text-caption: 10px;
+  --leading-caption: 1.4;
+  --tracking-caption: 0.2px;
+  --text-body: 16px;
+  --leading-body: 1.5;
+  --tracking-body: -0.096px;
+  --text-subheading: 20px;
+  --leading-subheading: 1.2;
+  --tracking-subheading: -0.16px;
+  --text-heading: 40px;
+  --leading-heading: 1.1;
+  --tracking-heading: -0.8px;
+  --text-display: 96px;
+  --leading-display: 0.9;
+  --tracking-display: -3.84px;
 
   /* Typography — Weights */
-  --font-weight-light: 300;
   --font-weight-regular: 400;
-  --font-weight-medium: 500;
-  --font-weight-semibold: 600;
-  --font-weight-bold: 700;
-  --font-weight-extrabold: 800;
 
   /* Spacing */
-  --spacing-unit: 4px;
-  --spacing-4: 4px;
+  --spacing-5: 5px;
+  --spacing-6: 6px;
   --spacing-8: 8px;
+  --spacing-9: 9px;
+  --spacing-10: 10px;
+  --spacing-11: 11px;
   --spacing-12: 12px;
+  --spacing-14: 14px;
   --spacing-16: 16px;
+  --spacing-18: 18px;
+  --spacing-19: 19px;
   --spacing-20: 20px;
   --spacing-24: 24px;
   --spacing-32: 32px;
-  --spacing-36: 36px;
   --spacing-40: 40px;
-  --spacing-48: 48px;
-  --spacing-64: 64px;
-  --spacing-80: 80px;
-  --spacing-96: 96px;
-  --spacing-120: 120px;
-  --spacing-128: 128px;
+  --spacing-72: 72px;
 
   /* Layout */
-  --page-max-width: 1280px;
-  --section-gap: 128px;
-  --element-gap: 8px;
+  --page-max-width: 1200px;
+  --section-gap: 40px;
+  --card-padding: 16px;
+  --element-gap: 10px;
 
   /* Border Radius */
   --radius-md: 4px;
   --radius-lg: 8px;
   --radius-xl: 12px;
-  --radius-3xl: 30px;
-  --radius-full: 9999px;
+  --radius-2xl: 18px;
+  --radius-3xl: 24px;
+  --radius-3xl-2: 40px;
+  --radius-full: 52px;
+  --radius-full-2: 56px;
+  --radius-full-3: 60px;
+  --radius-full-4: 100px;
+  --radius-full-5: 900px;
+  --radius-full-6: 100000px;
 
   /* Named Radii */
-  --radius-badge: 9999px;
-  --radius-input: 7px;
-  --radius-buttons: 8px;
+  --radius-cards: 10px;
+  --radius-avatars: 900px;
+  --radius-buttons: 100000px;
   --radius-default: 8px;
+  --radius-largecards: 40px;
+  --radius-smallelements: 4px;
 
   /* Shadows */
-  --shadow-xl: rgba(0, 0, 0, 0.25) 0px 25px 50px -12px;
-  --shadow-md: rgba(131, 24, 67, 0.1) 0px 10px 15px -3px, rgba(131, 24, 67, 0.1) 0px 4px 6px -4px;
+  --shadow-subtle: rgba(0, 0, 0, 0.7) 3px 3px 2px 0px inset, rgba(255, 255, 255, 0.25) 3px 2px 2px 0px;
+  --shadow-sm: rgba(0, 0, 0, 0.25) 0px 4px 4px 0px, rgba(255, 255, 255, 0.25) 1px 1px 2px 0px, rgba(0, 0, 0, 0.5) 1px 1px 1px 0px inset, rgba(0, 0, 0, 0.7) 2px 2px 12px 0px inset;
+  --shadow-subtle-2: rgba(0, 0, 0, 0.63) 0px 0px 0px 1px;
+  --shadow-md: rgb(14, 93, 102) 6px 6px 10px 0px inset, rgba(255, 255, 255, 0.2) 4px 4px 4px 0px, rgba(255, 255, 255, 0.25) 1px 1px 2px 0px;
 
   /* Surfaces */
-  --surface-midnight-core: #0d0e11;
-  --surface-obsidian-base: #14151a;
-  --surface-charcoal-canvas: #282a36;
+  --surface-canvas: #000000;
+  --surface-base-surface: #010101;
+  --surface-card-surface: #191919;
+  --surface-interactive-surface: #282828;
 }
 ```
 
@@ -324,70 +338,78 @@ The layout is primarily a max-width 1280px centered content model, providing amp
 ```css
 @theme {
   /* Colors */
-  --color-midnight-core: #0d0e11;
-  --color-obsidian-base: #14151a;
-  --color-charcoal-canvas: #282a36;
-  --color-slate-border: #3a3a3f;
-  --color-graphite-accent: #3b3f4b;
-  --color-ash-text: #6b7280;
-  --color-silver-text: #e5e7eb;
-  --color-polar-white: #ffffff;
-  --color-cyber-pink: #f472b6;
-  --color-neon-violet: #a855f7;
-  --color-faded-rose: #fbcfe8;
-  --color-magenta-glow: #ec4899;
-  --color-electric-cyan: #22d3ee;
-  --color-virtual-violet: #c084fc;
-  --color-system-green: #34d399;
-  --color-warning-yellow: #fcd34d;
-  --color-danger-red: #f87171;
-  --color-gradient-pink-pulse: #ec4899;
-  --color-gradient-pink-fade: #f472b6;
-  --color-gradient-sunset: #e67e22;
-  --color-gradient-cosmos: #b301b3;
+  --color-absolute-zero: #000000;
+  --color-deep-graphite: #010101;
+  --color-carbon-black: #191919;
+  --color-dark-charcoal: #282828;
+  --color-slate-gray: #3f3f3f;
+  --color-ash-gray: #7f7f7f;
+  --color-near-white: #ffffff;
+  --color-sea-glass: #062f34;
+  --color-electric-aqua: #19d0e8;
+  --color-sky-burst: #44ccff;
 
   /* Typography */
+  --font-sans-serif: 'sans-serif', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-instrument-serif: 'Instrument Serif', ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  --font-dm-mono: 'DM Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --font-geist: 'Geist', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-sf-pro-display-regular: 'SF Pro Display Regular', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-system-ui: 'system-ui', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-jetbrains-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 
   /* Typography — Scale */
-  --text-caption: 12px;
-  --leading-caption: 1.5;
-  --text-body: 14px;
-  --leading-body: 1.43;
-  --text-heading: 20px;
-  --leading-heading: 1.4;
-  --text-heading-lg: 24px;
-  --leading-heading-lg: 1.33;
-  --text-display: 60px;
-  --leading-display: 1;
+  --text-caption: 10px;
+  --leading-caption: 1.4;
+  --tracking-caption: 0.2px;
+  --text-body: 16px;
+  --leading-body: 1.5;
+  --tracking-body: -0.096px;
+  --text-subheading: 20px;
+  --leading-subheading: 1.2;
+  --tracking-subheading: -0.16px;
+  --text-heading: 40px;
+  --leading-heading: 1.1;
+  --tracking-heading: -0.8px;
+  --text-display: 96px;
+  --leading-display: 0.9;
+  --tracking-display: -3.84px;
 
   /* Spacing */
-  --spacing-4: 4px;
+  --spacing-5: 5px;
+  --spacing-6: 6px;
   --spacing-8: 8px;
+  --spacing-9: 9px;
+  --spacing-10: 10px;
+  --spacing-11: 11px;
   --spacing-12: 12px;
+  --spacing-14: 14px;
   --spacing-16: 16px;
+  --spacing-18: 18px;
+  --spacing-19: 19px;
   --spacing-20: 20px;
   --spacing-24: 24px;
   --spacing-32: 32px;
-  --spacing-36: 36px;
   --spacing-40: 40px;
-  --spacing-48: 48px;
-  --spacing-64: 64px;
-  --spacing-80: 80px;
-  --spacing-96: 96px;
-  --spacing-120: 120px;
-  --spacing-128: 128px;
+  --spacing-72: 72px;
 
   /* Border Radius */
   --radius-md: 4px;
   --radius-lg: 8px;
   --radius-xl: 12px;
-  --radius-3xl: 30px;
-  --radius-full: 9999px;
+  --radius-2xl: 18px;
+  --radius-3xl: 24px;
+  --radius-3xl-2: 40px;
+  --radius-full: 52px;
+  --radius-full-2: 56px;
+  --radius-full-3: 60px;
+  --radius-full-4: 100px;
+  --radius-full-5: 900px;
+  --radius-full-6: 100000px;
 
   /* Shadows */
-  --shadow-xl: rgba(0, 0, 0, 0.25) 0px 25px 50px -12px;
-  --shadow-md: rgba(131, 24, 67, 0.1) 0px 10px 15px -3px, rgba(131, 24, 67, 0.1) 0px 4px 6px -4px;
+  --shadow-subtle: rgba(0, 0, 0, 0.7) 3px 3px 2px 0px inset, rgba(255, 255, 255, 0.25) 3px 2px 2px 0px;
+  --shadow-sm: rgba(0, 0, 0, 0.25) 0px 4px 4px 0px, rgba(255, 255, 255, 0.25) 1px 1px 2px 0px, rgba(0, 0, 0, 0.5) 1px 1px 1px 0px inset, rgba(0, 0, 0, 0.7) 2px 2px 12px 0px inset;
+  --shadow-subtle-2: rgba(0, 0, 0, 0.63) 0px 0px 0px 1px;
+  --shadow-md: rgb(14, 93, 102) 6px 6px 10px 0px inset, rgba(255, 255, 255, 0.2) 4px 4px 4px 0px, rgba(255, 255, 255, 0.25) 1px 1px 2px 0px;
 }
 ```

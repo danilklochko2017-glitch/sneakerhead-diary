@@ -64,27 +64,39 @@ string BuildPayload(const MqlTradeTransaction& trans) {
    string symbol     = trans.symbol;
    double volume     = trans.volume;
 
-   // Fetch deal details from history
+   // Fetch closing deal details from history
    if (!HistoryDealSelect(ticket)) return "";
 
-   double openPrice  = HistoryDealGetDouble(ticket, DEAL_PRICE_OPEN);
    double closePrice = HistoryDealGetDouble(ticket, DEAL_PRICE);
-   double sl         = HistoryDealGetDouble(ticket, DEAL_SL);
-   double tp         = HistoryDealGetDouble(ticket, DEAL_TP);
    double profit     = HistoryDealGetDouble(ticket, DEAL_PROFIT)
                      + HistoryDealGetDouble(ticket, DEAL_SWAP)
                      + HistoryDealGetDouble(ticket, DEAL_COMMISSION);
+   datetime closeTime = (datetime)HistoryDealGetInteger(ticket, DEAL_TIME);
+   string comment     = EscapeJson(HistoryDealGetString(ticket, DEAL_COMMENT));
+   long   positionId  = HistoryDealGetInteger(ticket, DEAL_POSITION_ID);
 
-   datetime openTime  = (datetime)HistoryDealGetInteger(ticket, DEAL_TIME_MSC) / 1000;
-   datetime closeTime = (datetime)HistoryDealGetInteger(ticket, DEAL_TIME)     ;
-
+   // OUT deal: SELL closes a Long, BUY closes a Short
    ENUM_DEAL_TYPE dealType = (ENUM_DEAL_TYPE)HistoryDealGetInteger(ticket, DEAL_TYPE);
-   string direction = (dealType == DEAL_TYPE_BUY) ? "Long" : "Short";
+   string direction = (dealType == DEAL_TYPE_SELL) ? "Long" : "Short";
 
-   string comment = EscapeJson(HistoryDealGetString(ticket, DEAL_COMMENT));
+   // Find the IN deal for this position to get open price, SL, TP, open time
+   double   openPrice = closePrice; // fallback
+   double   sl        = 0.0;
+   double   tp        = 0.0;
+   datetime openTime  = closeTime;
 
-   // Use open price from position if deal doesn't have it (fallback)
-   if (openPrice == 0.0) openPrice = closePrice;
+   int totalDeals = HistoryDealsTotal();
+   for (int i = 0; i < totalDeals; i++) {
+      ulong d = HistoryDealGetTicket(i);
+      if (HistoryDealGetInteger(d, DEAL_POSITION_ID) != positionId) continue;
+      ENUM_DEAL_ENTRY de = (ENUM_DEAL_ENTRY)HistoryDealGetInteger(d, DEAL_ENTRY);
+      if (de != DEAL_ENTRY_IN) continue;
+      openPrice = HistoryDealGetDouble(d, DEAL_PRICE);
+      sl        = HistoryDealGetDouble(d, DEAL_SL);
+      tp        = HistoryDealGetDouble(d, DEAL_TP);
+      openTime  = (datetime)HistoryDealGetInteger(d, DEAL_TIME);
+      break;
+   }
 
    string payload = StringFormat(
       "{"

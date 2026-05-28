@@ -4,21 +4,22 @@ import { useState } from "react";
 import type { SetupCard } from "@/types/trade";
 import Image from "next/image";
 
-const DISPLAY = "var(--font-mono)";
-const BODY    = "var(--font-mono)";
-const INNER   = "#22242A";
+const D = "var(--font-display)";  // Instrument Serif
+const M = "var(--font-mono)";     // DM Mono
+const B = "var(--font-body)";     // Geist
+const AQUA = "#19d0e8";
+const INNER = "#141414";
 
-// ─── Inline markdown renderer ────────────────────────────────────────────────
+// ─── Inline markdown renderer ─────────────────────────────────────────────────
 
 function renderInline(text: string): React.ReactNode[] {
   const result: React.ReactNode[] = [];
   const boldRx = /\*\*(.+?)\*\*/g;
-  let last = 0;
-  let m: RegExpExecArray | null;
+  let last = 0, m: RegExpExecArray | null;
   while ((m = boldRx.exec(text)) !== null) {
     if (m.index > last) result.push(text.slice(last, m.index));
     result.push(
-      <strong key={m.index} style={{ color: "#FFF93C", fontWeight: 700 }}>
+      <strong key={m.index} style={{ color: AQUA, fontWeight: 500 }}>
         {m[1]}
       </strong>
     );
@@ -28,7 +29,7 @@ function renderInline(text: string): React.ReactNode[] {
   return result;
 }
 
-// ─── Section parser (splits on ### headings) ────────────────────────────────
+// ─── Section parser ───────────────────────────────────────────────────────────
 
 interface Section {
   title: string;
@@ -42,62 +43,49 @@ function parseDescriptionSections(text: string): Section[] {
 
   for (const line of text.split("\n")) {
     if (line.startsWith("### ")) {
-      if (current.title || current.lines.some((l) => l.trim())) {
-        sections.push(current);
-      }
+      if (current.title || current.lines.some(l => l.trim())) sections.push(current);
       current = { title: line.slice(4).trim(), lines: [] };
     } else {
-      // detect backtest link anywhere
       const linkM = line.match(/^(.+?):\s+Link\s+\((.+?)\)\s*$/);
-      if (linkM) {
-        current.link = { label: linkM[1], url: linkM[2] };
-      } else {
-        current.lines.push(line);
-      }
+      if (linkM) current.link = { label: linkM[1], url: linkM[2] };
+      else current.lines.push(line);
     }
   }
-  if (current.title || current.lines.some((l) => l.trim())) {
-    sections.push(current);
-  }
+  if (current.title || current.lines.some(l => l.trim())) sections.push(current);
   return sections;
 }
 
 function renderSectionLines(lines: string[]) {
   return lines
     .filter((line, i, arr) => {
-      // trim leading/trailing empty lines
       if (line.trim() !== "") return true;
-      const firstContent = arr.findIndex((l) => l.trim());
-      const lastContent  = arr.length - 1 - [...arr].reverse().findIndex((l) => l.trim());
-      return i > firstContent && i < lastContent;
+      const first = arr.findIndex(l => l.trim());
+      const last  = arr.length - 1 - [...arr].reverse().findIndex(l => l.trim());
+      return i > first && i < last;
     })
     .map((line, idx) => {
       const numM = line.match(/^(\d+)\.\s+(.+)/);
-      if (numM) {
-        return (
-          <div key={idx} style={{ display: "flex", gap: "10px", marginBottom: "5px" }}>
-            <span style={{ color: "#FFF93C", fontWeight: 700, flexShrink: 0, fontFamily: BODY, fontSize: "14px", minWidth: "14px" }}>
-              {numM[1]}.
-            </span>
-            <span style={{ fontFamily: BODY, fontSize: "14px", color: "#e5e7eb", lineHeight: "1.7" }}>
-              {renderInline(numM[2])}
-            </span>
-          </div>
-        );
-      }
-      if (line.startsWith("- ")) {
-        return (
-          <div key={idx} style={{ display: "flex", gap: "10px", marginBottom: "5px" }}>
-            <span style={{ color: "#FFF93C", flexShrink: 0, fontFamily: BODY, fontSize: "14px" }}>—</span>
-            <span style={{ fontFamily: BODY, fontSize: "14px", color: "#e5e7eb", lineHeight: "1.7" }}>
-              {renderInline(line.slice(2))}
-            </span>
-          </div>
-        );
-      }
+      if (numM) return (
+        <div key={idx} style={{ display: "flex", gap: "10px", marginBottom: "5px" }}>
+          <span style={{ color: AQUA, fontWeight: 500, flexShrink: 0, fontFamily: M, fontSize: "13px", minWidth: "14px" }}>
+            {numM[1]}.
+          </span>
+          <span style={{ fontFamily: B, fontSize: "13px", color: "var(--color-near-white)", lineHeight: "1.65", letterSpacing: "-0.01em" }}>
+            {renderInline(numM[2])}
+          </span>
+        </div>
+      );
+      if (line.startsWith("- ")) return (
+        <div key={idx} style={{ display: "flex", gap: "10px", marginBottom: "5px" }}>
+          <span style={{ color: AQUA, flexShrink: 0, fontFamily: M, fontSize: "13px" }}>–</span>
+          <span style={{ fontFamily: B, fontSize: "13px", color: "var(--color-near-white)", lineHeight: "1.65", letterSpacing: "-0.01em" }}>
+            {renderInline(line.slice(2))}
+          </span>
+        </div>
+      );
       if (line.trim() === "") return <div key={idx} style={{ height: "4px" }} />;
       return (
-        <p key={idx} style={{ fontFamily: BODY, fontSize: "14px", lineHeight: "1.7", color: "#e5e7eb" }}>
+        <p key={idx} style={{ fontFamily: B, fontSize: "13px", lineHeight: "1.65", color: "var(--color-near-white)", letterSpacing: "-0.01em" }}>
           {renderInline(line)}
         </p>
       );
@@ -106,25 +94,19 @@ function renderSectionLines(lines: string[]) {
 
 function renderDescriptionBlocks(text: string) {
   const sections = parseDescriptionSections(text);
-
-  // collect any link from any section
-  const backtest = sections.find((s) => s.link)?.link;
-
-  const contentSections = sections.filter((s) => s.title || s.lines.some((l) => l.trim()));
+  const backtest = sections.find(s => s.link)?.link;
+  const contentSections = sections.filter(s => s.title || s.lines.some(l => l.trim()));
 
   return (
     <div>
-      <div style={{
-        display: "flex", flexDirection: "column",
-        gap: "1px", backgroundColor: "#3a3a3f",
-      }}>
+      <div style={{ display: "flex", flexDirection: "column", gap: "1px", backgroundColor: "#0a0a0a" }}>
         {contentSections.map((section, i) => (
-          <div key={i} style={{ padding: "16px 20px", backgroundColor: INNER }}>
+          <div key={i} style={{ padding: "14px 16px", backgroundColor: INNER }}>
             {section.title && (
               <div style={{
-                fontFamily: BODY, fontSize: "12px", fontWeight: 700,
-                color: "#6b7280", textTransform: "uppercase",
-                letterSpacing: "0.06em", marginBottom: "10px",
+                fontFamily: M, fontSize: "10px", fontWeight: 500,
+                color: "var(--color-ash-gray)", textTransform: "uppercase",
+                letterSpacing: "0.12em", marginBottom: "8px",
               }}>
                 {section.title}
               </div>
@@ -134,14 +116,14 @@ function renderDescriptionBlocks(text: string) {
         ))}
       </div>
 
-      {/* Backtest link — own block at the bottom */}
+      {/* Backtest link */}
       {backtest && (
         <div style={{
-          marginTop: "1px", padding: "14px 20px",
+          marginTop: "1px", padding: "12px 16px",
           backgroundColor: INNER,
           display: "flex", alignItems: "center", gap: "10px",
         }}>
-          <span style={{ fontFamily: BODY, fontSize: "12px", fontWeight: 600, color: "#6b7280", textTransform: "uppercase", letterSpacing: "0.06em" }}>
+          <span style={{ fontFamily: M, fontSize: "10px", fontWeight: 500, color: "var(--color-ash-gray)", textTransform: "uppercase", letterSpacing: "0.12em" }}>
             {backtest.label}
           </span>
           <a
@@ -149,14 +131,15 @@ function renderDescriptionBlocks(text: string) {
             target="_blank"
             rel="noopener noreferrer"
             style={{
-              fontFamily: BODY, fontSize: "12px", fontWeight: 600,
-              color: "#FFF93C", textDecoration: "none",
-              border: "1px solid rgba(255,249,60,0.4)",
-              backgroundColor: "rgba(255,249,60,0.08)",
-              borderRadius: "9999px", padding: "2px 10px",
+              fontFamily: M, fontSize: "10px", fontWeight: 500,
+              color: AQUA, textDecoration: "none",
+              border: "1px solid rgba(25,208,232,0.4)",
+              backgroundColor: "rgba(25,208,232,0.08)",
+              borderRadius: "var(--radius-buttons)", padding: "2px 10px",
+              letterSpacing: "0.05em",
             }}
           >
-            Открыть ↗
+            Open ↗
           </a>
         </div>
       )}
@@ -164,24 +147,18 @@ function renderDescriptionBlocks(text: string) {
   );
 }
 
-// ─── Setup Card (accordion) ──────────────────────────────────────────────────
+// ─── Setup Card ───────────────────────────────────────────────────────────────
 
 function SetupCardUI({ s }: { s: SetupCard }) {
   const [open, setOpen] = useState(false);
 
-  const metaItems = [
-    { l: "Timeframes", v: s.timeframe },
-    { l: "Sessions",   v: s.session   },
-  ];
-
   return (
-    <div style={{ backgroundColor: INNER, borderRadius: "10px", overflow: "hidden" }}>
-      {/* ── Header ── */}
+    <div style={{ backgroundColor: INNER, borderRadius: "var(--radius-default)", overflow: "hidden" }}>
       <button
-        onClick={() => setOpen((v) => !v)}
+        onClick={() => setOpen(v => !v)}
         style={{
           width: "100%", background: "none", border: "none",
-          padding: "0 20px", minHeight: "72px", cursor: "pointer",
+          padding: "0 16px", minHeight: "64px", cursor: "pointer",
           display: "flex", alignItems: "center",
           justifyContent: "space-between", gap: "12px",
           flexWrap: "wrap", textAlign: "left",
@@ -189,84 +166,69 @@ function SetupCardUI({ s }: { s: SetupCard }) {
       >
         <div style={{ display: "flex", alignItems: "center", gap: "12px", flexWrap: "wrap" }}>
           <span style={{
-            fontFamily: DISPLAY, fontWeight: 700, fontSize: "18px",
-            lineHeight: 1.1, color: "#ffffff", letterSpacing: "-0.01em",
+            fontFamily: D, fontWeight: 400, fontSize: "18px",
+            lineHeight: 1.1, color: "var(--color-near-white)", letterSpacing: "-0.02em",
           }}>
             {s.name}
           </span>
         </div>
 
         <div style={{ display: "flex", alignItems: "center", gap: "20px", flexWrap: "wrap" }}>
-          {metaItems.map((item) => (
+          {[{ l: "Timeframes", v: s.timeframe }, { l: "Sessions", v: s.session }].map(item => (
             <div key={item.l} style={{ textAlign: "right" }}>
-              <div style={{
-                fontFamily: BODY, fontSize: "12px", fontWeight: 600,
-                color: "#6b7280", marginBottom: "2px",
-                textTransform: "uppercase", letterSpacing: "0.06em",
-              }}>
+              <div style={{ fontFamily: M, fontSize: "10px", fontWeight: 500, color: "var(--color-ash-gray)", marginBottom: "2px", textTransform: "uppercase", letterSpacing: "0.1em" }}>
                 {item.l}
               </div>
-              <div style={{ fontFamily: BODY, fontSize: "12px", fontWeight: 500, color: "#e5e7eb" }}>
+              <div style={{ fontFamily: M, fontSize: "11px", fontWeight: 400, color: "var(--color-near-white)" }}>
                 {item.v}
               </div>
             </div>
           ))}
 
           <div style={{
-            width: "26px", height: "26px", borderRadius: "9999px",
-            border: "1px solid #3a3a3f",
+            width: "24px", height: "24px", borderRadius: "9999px",
+            border: "1px solid var(--color-dark-charcoal)",
             display: "flex", alignItems: "center", justifyContent: "center",
             transition: "transform 0.25s",
             transform: open ? "rotate(180deg)" : "rotate(0deg)",
             flexShrink: 0,
           }}>
-            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-              <path d="M2 4.5L6 7.5L10 4.5" stroke="#6b7280" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            <svg width="10" height="10" viewBox="0 0 12 12" fill="none">
+              <path d="M2 4.5L6 7.5L10 4.5" stroke="var(--color-ash-gray)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </div>
         </div>
       </button>
 
-      {/* ── Expanded body ── */}
       {open && (
-        <div style={{ borderTop: "1px solid #3a3a3f" }}>
-          {/* Description blocks */}
+        <div style={{ borderTop: "1px solid #0a0a0a" }}>
           {renderDescriptionBlocks(s.description)}
 
-          {/* Images */}
           {s.imageUrls.length > 0 && (
             <div style={{
-              padding: "0 20px 20px",
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))",
-              gap: "10px",
+              padding: "0 16px 16px",
+              display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gap: "8px",
             }}>
               {s.imageUrls.map((url, i) => (
                 <div key={i} style={{
-                  borderRadius: "8px", overflow: "hidden",
+                  borderRadius: "var(--radius-default)", overflow: "hidden",
                   aspectRatio: "16/9", position: "relative",
-                  backgroundColor: "#14151a", border: "1px solid #3a3a3f",
+                  backgroundColor: "var(--surface-canvas)", border: "1px solid var(--color-dark-charcoal)",
                 }}>
-                  <Image src={url} alt={`${s.name} chart ${i + 1}`}
-                    fill style={{ objectFit: "cover" }} unoptimized />
+                  <Image src={url} alt={`${s.name} chart ${i + 1}`} fill style={{ objectFit: "cover" }} unoptimized />
                 </div>
               ))}
             </div>
           )}
 
-          {/* Tags */}
           {s.tags.length > 0 && (
-            <div style={{
-              padding: "16px 20px",
-              borderTop: "1px solid #3a3a3f",
-              display: "flex", gap: "8px", flexWrap: "wrap",
-            }}>
-              {s.tags.map((tag) => (
+            <div style={{ padding: "12px 16px", borderTop: "1px solid #0a0a0a", display: "flex", gap: "6px", flexWrap: "wrap" }}>
+              {s.tags.map(tag => (
                 <span key={tag} style={{
-                  fontFamily: BODY, fontSize: "12px", fontWeight: 500,
-                  color: "#6b7280", border: "1px solid rgba(107,114,128,0.25)",
-                  backgroundColor: "rgba(107,114,128,0.08)",
-                  borderRadius: "9999px", padding: "3px 10px",
+                  fontFamily: M, fontSize: "10px", fontWeight: 500,
+                  color: "var(--color-ash-gray)", border: "1px solid var(--color-dark-charcoal)",
+                  backgroundColor: "transparent",
+                  borderRadius: "var(--radius-buttons)", padding: "2px 10px",
                 }}>
                   {tag}
                 </span>
@@ -279,43 +241,35 @@ function SetupCardUI({ s }: { s: SetupCard }) {
   );
 }
 
-// ─── Grid ────────────────────────────────────────────────────────────────────
+// ─── Grid ─────────────────────────────────────────────────────────────────────
 
 export default function SetupsGrid({ setups }: { setups: SetupCard[] }) {
   return (
     <div id="setups" className="card-glow" style={{
-      backgroundColor: "#14151a",
-      borderRadius: "12px",
-      boxShadow: "0 8px 48px rgba(0,0,0,0.4), 0 2px 8px rgba(0,0,0,0.2)",
-      padding: "32px",
+      backgroundColor: "var(--surface-card)",
+      borderRadius: "var(--radius-cards)",
+      padding: "var(--card-padding)",
     }}>
-      <div style={{ marginBottom: "20px" }}>
-        <p style={{
-          fontFamily: BODY, fontSize: "12px", fontWeight: 600,
-          color: "#6b7280", marginBottom: "6px",
-          textTransform: "uppercase", letterSpacing: "0.06em",
-        }}>
+      <div style={{ marginBottom: "16px" }}>
+        <p style={{ fontFamily: M, fontSize: "10px", fontWeight: 500, color: "var(--color-ash-gray)", marginBottom: "6px", textTransform: "uppercase", letterSpacing: "0.12em" }}>
           Playbook
         </p>
-        <h2 style={{
-          fontFamily: DISPLAY, fontWeight: 700, fontSize: "24px",
-          lineHeight: 1.1, color: "#ffffff", letterSpacing: "-0.01em",
-        }}>
+        <h2 style={{ fontFamily: D, fontWeight: 400, fontSize: "32px", lineHeight: 1.1, color: "var(--color-near-white)", letterSpacing: "-0.02em" }}>
           Setups
         </h2>
       </div>
 
       {setups.length === 0 ? (
         <div style={{
-          borderRadius: "10px", padding: "48px",
-          textAlign: "center", fontFamily: BODY, fontSize: "14px",
-          color: "#6b7280", backgroundColor: INNER,
+          borderRadius: "var(--radius-default)", padding: "48px",
+          textAlign: "center", fontFamily: M, fontSize: "12px",
+          color: "var(--color-ash-gray)", backgroundColor: INNER,
         }}>
           No setups loaded.
         </div>
       ) : (
-        <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-          {setups.map((s) => <SetupCardUI key={s.id} s={s} />)}
+        <div style={{ display: "flex", flexDirection: "column", gap: "1px", backgroundColor: "#0a0a0a", borderRadius: "var(--radius-default)", overflow: "hidden" }}>
+          {setups.map(s => <SetupCardUI key={s.id} s={s} />)}
         </div>
       )}
     </div>

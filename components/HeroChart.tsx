@@ -7,13 +7,12 @@ import {
 } from "recharts";
 import type { EquityPoint } from "@/types/trade";
 
-const BODY = "var(--font-mono)";
-const MONO = "var(--font-mono)";
+const M = "var(--font-mono)";   // DM Mono
+const AQUA = "#19d0e8";
 
 interface TooltipProps {
   active?: boolean;
   payload?: { payload: EquityPoint; value: number }[];
-  label?: string;
 }
 
 function CustomTooltip({ active, payload }: TooltipProps) {
@@ -24,16 +23,20 @@ function CustomTooltip({ active, payload }: TooltipProps) {
     : "";
   return (
     <div style={{
-      backgroundColor: "#14151a", border: "1px solid #3a3a3f",
-      borderRadius: "8px", padding: "10px 14px",
-      boxShadow: "0 8px 32px rgba(0,0,0,0.4)",
+      backgroundColor: "#191919",
+      border: "1px solid #282828",
+      borderRadius: "var(--radius-default)",
+      padding: "10px 14px",
+      boxShadow: "var(--shadow-sm)",
     }}>
-      <div style={{ fontFamily: BODY, fontSize: "12px", color: "#6b7280", marginBottom: "6px" }}>{fmt(point.date)}</div>
-      <div style={{ fontFamily: MONO, fontSize: "12px", display: "flex", flexDirection: "column", gap: "3px" }}>
-        <span style={{ color: point.rr >= 0 ? "#34d399" : "#f87171", fontWeight: 600 }}>
+      <div style={{ fontFamily: M, fontSize: "10px", color: "var(--color-ash-gray)", marginBottom: "6px", textTransform: "uppercase", letterSpacing: "0.1em" }}>
+        {fmt(point.date)}
+      </div>
+      <div style={{ fontFamily: M, fontSize: "12px", display: "flex", flexDirection: "column", gap: "3px" }}>
+        <span style={{ color: point.rr >= 0 ? "var(--color-win)" : "var(--color-loss)", fontWeight: 500 }}>
           {point.rr >= 0 ? "+" : ""}{point.rr.toFixed(2)}R
         </span>
-        <span style={{ color: "#FFF93C", fontWeight: 500 }}>
+        <span style={{ color: AQUA, fontWeight: 500 }}>
           {point.cumulative >= 0 ? "+" : ""}{point.cumulative.toFixed(2)}R total
         </span>
       </div>
@@ -47,26 +50,21 @@ export default function HeroChart({ data }: { data: EquityPoint[] }) {
     return new Date(d).toLocaleDateString("en-GB", { day: "2-digit", month: "short" });
   };
 
-  // Derive available months from data
   const months = useMemo(() => {
     const seen = new Set<string>();
     data.forEach((p) => { if (p.date) seen.add(p.date.substring(0, 7)); });
-    return Array.from(seen)
-      .sort()
-      .map((key) => {
-        const [y, m] = key.split("-");
-        const d = new Date(Number(y), Number(m) - 1, 1);
-        const label = d.toLocaleDateString("en-US", { month: "short", year: "2-digit" }); // "May '26"
-        return { key, label };
-      });
+    return Array.from(seen).sort().map((key) => {
+      const [y, m] = key.split("-");
+      const d = new Date(Number(y), Number(m) - 1, 1);
+      const label = d.toLocaleDateString("en-US", { month: "short", year: "2-digit" });
+      return { key, label };
+    });
   }, [data]);
 
-  // Default to latest month; "all" = show every data point
   const latestMonth = months.length > 0 ? months[months.length - 1].key : "";
   const [activeMonth, setActiveMonth] = useState<string>("");
   const currentMonth = activeMonth || latestMonth;
 
-  // Delay last-dot visibility to match line animation duration (1500ms)
   const [dotVisible, setDotVisible] = useState(false);
   useEffect(() => {
     setDotVisible(false);
@@ -78,8 +76,6 @@ export default function HeroChart({ data }: { data: EquityPoint[] }) {
     const base = (!currentMonth || currentMonth === "all")
       ? data
       : data.filter((p) => p.date && p.date.startsWith(currentMonth));
-    // Add a numeric index so each trade gets its own X position
-    // even when multiple trades share the same date
     return base.map((p, i) => ({ ...p, _idx: i }));
   }, [data, currentMonth]);
 
@@ -87,7 +83,7 @@ export default function HeroChart({ data }: { data: EquityPoint[] }) {
     return (
       <div style={{
         flex: 1, display: "flex", alignItems: "center", justifyContent: "center",
-        fontFamily: BODY, fontSize: "12px", color: "#6b7280",
+        fontFamily: M, fontSize: "12px", color: "var(--color-ash-gray)",
       }}>
         No trade data yet
       </div>
@@ -96,20 +92,20 @@ export default function HeroChart({ data }: { data: EquityPoint[] }) {
 
   return (
     <div style={{ display: "flex", flexDirection: "column", flex: 1, minHeight: 0 }}>
-      {/* Top row: label + month tabs */}
+      {/* Top row */}
       <div style={{
         display: "flex", alignItems: "center",
         justifyContent: "space-between",
-        marginBottom: "8px", flexShrink: 0,
+        marginBottom: "10px", flexShrink: 0,
         paddingLeft: "56px", paddingRight: "16px",
         flexWrap: "wrap", gap: "8px",
       }}>
         <div style={{
-          fontFamily: BODY, fontSize: "12px", color: "#6b7280",
-          textTransform: "uppercase", letterSpacing: "0.07em", fontWeight: 600,
+          fontFamily: M, fontSize: "10px", color: "var(--color-ash-gray)",
+          textTransform: "uppercase", letterSpacing: "0.15em", fontWeight: 500,
           display: "flex", alignItems: "center", gap: "8px",
         }}>
-          <span style={{ width: "14px", height: "2px", backgroundColor: "#FFF93C", display: "inline-block", borderRadius: "1px" }} />
+          <span style={{ width: "14px", height: "1.5px", backgroundColor: AQUA, display: "inline-block", borderRadius: "1px" }} />
           Equity Curve
         </div>
 
@@ -123,13 +119,16 @@ export default function HeroChart({ data }: { data: EquityPoint[] }) {
                   key={m.key}
                   onClick={() => setActiveMonth(m.key)}
                   style={{
-                    fontFamily: BODY, fontSize: "12px", fontWeight: 600,
-                    padding: "3px 10px", borderRadius: "9999px",
-                    border: `1px solid ${isActive ? "rgba(255,249,60,0.4)" : "#3a3a3f"}`,
-                    backgroundColor: isActive ? "rgba(255,249,60,0.10)" : "transparent",
-                    color: isActive ? "#FFF93C" : "#6b7280",
+                    fontFamily: M, fontSize: "10px", fontWeight: 500,
+                    padding: "3px 10px",
+                    borderRadius: "var(--radius-buttons)",
+                    border: `1px solid ${isActive ? "rgba(25,208,232,0.5)" : "var(--color-dark-charcoal)"}`,
+                    backgroundColor: isActive ? "rgba(25,208,232,0.10)" : "transparent",
+                    color: isActive ? AQUA : "var(--color-ash-gray)",
                     cursor: "pointer",
                     transition: "all 0.15s",
+                    letterSpacing: "0.05em",
+                    textTransform: "uppercase",
                   }}
                 >
                   {m.label}
@@ -146,14 +145,14 @@ export default function HeroChart({ data }: { data: EquityPoint[] }) {
           <ComposedChart data={filtered} margin={{ top: 8, right: 16, left: 8, bottom: 0 }}>
             <defs>
               <linearGradient id="equityGlow" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%"   stopColor="#FFF93C" stopOpacity={0.22} />
-                <stop offset="60%"  stopColor="#FFF93C" stopOpacity={0.04} />
-                <stop offset="100%" stopColor="#FFF93C" stopOpacity={0}    />
+                <stop offset="0%"   stopColor={AQUA} stopOpacity={0.25} />
+                <stop offset="60%"  stopColor={AQUA} stopOpacity={0.05} />
+                <stop offset="100%" stopColor={AQUA} stopOpacity={0}    />
               </linearGradient>
             </defs>
 
-            <CartesianGrid strokeDasharray="2 6" stroke="#1f2028" vertical={false} />
-            <ReferenceLine y={0} stroke="#3a3a3f" strokeWidth={1} />
+            <CartesianGrid strokeDasharray="2 6" stroke="#1a1a1a" vertical={false} />
+            <ReferenceLine y={0} stroke="#282828" strokeWidth={1} />
 
             <XAxis
               dataKey="_idx"
@@ -167,20 +166,19 @@ export default function HeroChart({ data }: { data: EquityPoint[] }) {
                 return p ? fmt(p.date) : "";
               }}
               stroke="transparent"
-              tick={{ fill: "#6b7280", fontSize: 12, fontFamily: "var(--font-mono)" }}
+              tick={{ fill: "var(--color-ash-gray)", fontSize: 10, fontFamily: M }}
               tickLine={false} axisLine={false} dy={6}
             />
             <YAxis
               stroke="transparent"
-              tick={{ fill: "#6b7280", fontSize: 12, fontFamily: "var(--font-mono)" }}
+              tick={{ fill: "var(--color-ash-gray)", fontSize: 10, fontFamily: M }}
               tickLine={false} axisLine={false}
               tickFormatter={v => `${v >= 0 ? "+" : ""}${v}R`}
-              width={52} dx={0}
+              width={48} dx={0}
             />
 
-            <Tooltip content={<CustomTooltip />} cursor={{ stroke: "#3a3a3f", strokeWidth: 1 }} />
+            <Tooltip content={<CustomTooltip />} cursor={{ stroke: "#282828", strokeWidth: 1 }} />
 
-            {/* Glow area fill */}
             <Area
               type="monotone" dataKey="cumulative"
               stroke="none" fill="url(#equityGlow)"
@@ -190,11 +188,10 @@ export default function HeroChart({ data }: { data: EquityPoint[] }) {
               animationEasing="ease"
             />
 
-            {/* Main line */}
             <Line
               type="monotone" dataKey="cumulative" name="Equity"
-              stroke="#FFF93C" strokeWidth={2.5}
-              activeDot={{ r: 5, fill: "#FFF93C", strokeWidth: 0 }}
+              stroke={AQUA} strokeWidth={2}
+              activeDot={{ r: 4, fill: AQUA, strokeWidth: 0 }}
               animationDuration={1500}
               animationEasing="ease"
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -203,15 +200,12 @@ export default function HeroChart({ data }: { data: EquityPoint[] }) {
                 if (index !== filtered.length - 1 || !dotVisible) return <g key={index} />;
                 return (
                   <g key="last-dot">
-                    {/* Pulsing ring */}
-                    <circle cx={cx} cy={cy} r={5} fill="#FFF93C">
-                      <animate attributeName="r"       from="5"  to="20" dur="1.8s" repeatCount="indefinite" />
-                      <animate attributeName="opacity" from="0.6" to="0"  dur="1.8s" repeatCount="indefinite" />
+                    <circle cx={cx} cy={cy} r={5} fill={AQUA}>
+                      <animate attributeName="r"       from="5"   to="20" dur="1.8s" repeatCount="indefinite" />
+                      <animate attributeName="opacity" from="0.5" to="0"  dur="1.8s" repeatCount="indefinite" />
                     </circle>
-                    {/* Soft glow halo */}
-                    <circle cx={cx} cy={cy} r={7} fill="#FFF93C" opacity={0.12} />
-                    {/* Core dot */}
-                    <circle cx={cx} cy={cy} r={4} fill="#FFF93C" stroke="#14151a" strokeWidth={2} />
+                    <circle cx={cx} cy={cy} r={6} fill={AQUA} opacity={0.1} />
+                    <circle cx={cx} cy={cy} r={3.5} fill={AQUA} stroke="#000" strokeWidth={1.5} />
                   </g>
                 );
               }}
