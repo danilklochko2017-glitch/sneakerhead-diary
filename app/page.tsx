@@ -70,98 +70,77 @@ export default async function HomePage() {
       <section style={{
         position: "relative",
         overflow: "hidden",
-        padding: "72px 40px 0",
+        padding: "100px 40px 0",
         backgroundImage: "linear-gradient(180deg, rgb(28,28,28) 0%, rgb(4,4,4) 50%, rgb(0,0,0) 100%)",
       }}>
         <div style={{ maxWidth: "var(--page-max-width)", margin: "0 auto" }}>
 
-          {/* Eyebrow */}
-          <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "48px" }}>
+          {/* Eyebrow — centered */}
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "8px", marginBottom: "40px" }}>
             <span className="live-dot" />
             <span style={{ fontFamily: M, fontSize: "10px", fontWeight: 500, color: "var(--color-ash-gray)", letterSpacing: "0.15em", textTransform: "uppercase" }}>
               Live · {new Date().getFullYear()}
             </span>
           </div>
 
-          {/* Main grid: headline left, chart right */}
-          <div style={{ display: "grid", gridTemplateColumns: "5fr 7fr", gap: "64px", alignItems: "start" }}>
+          {/* Headline — centered, very large */}
+          <h1 style={{
+            fontFamily: D, fontWeight: 400,
+            fontSize: "clamp(64px, 9vw, 120px)",
+            lineHeight: 0.95,
+            letterSpacing: "-0.04em",
+            color: "var(--color-near-white)",
+            textAlign: "center",
+            marginBottom: "28px",
+          }}>
+            Your trades.<br />Brutally honest.
+          </h1>
 
-            {/* Left: headline + chips */}
-            <div style={{ paddingTop: "8px" }}>
-              <h1 style={{
-                fontFamily: D, fontWeight: 400,
-                fontSize: "clamp(48px, 5.5vw, 72px)",
-                lineHeight: 1.0,
-                letterSpacing: "-0.03em",
-                color: "var(--color-near-white)",
-                marginBottom: "20px",
-              }}>
-                Your trades.<br />Brutally honest.
-              </h1>
+          {/* Subtext — centered */}
+          <p style={{
+            fontFamily: M, fontSize: "12px",
+            color: "var(--color-ash-gray)",
+            letterSpacing: "0.02em",
+            lineHeight: 1.7,
+            textAlign: "center",
+            margin: "0 auto 48px",
+            maxWidth: "380px",
+          }}>
+            GER40 · Real-time performance tracking.<br />
+            Every trade from Notion and MetaTrader 5.
+          </p>
 
-              <p style={{
-                fontFamily: M, fontSize: "12px",
-                color: "var(--color-ash-gray)",
-                letterSpacing: "0.02em",
-                lineHeight: 1.6,
-                marginBottom: "36px",
-                maxWidth: "340px",
-              }}>
-                GER40 · Real-time performance tracking.<br />
-                Every trade from Notion and MetaTrader 5.
-              </p>
-
-              {/* Stat chips */}
-              <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
-                <StatChip label="Net P&L"  value={pnlValue}                       color={pnlColor} />
-                <StatChip label="Win Rate" value={`${stats.winRate.toFixed(1)}%`} color="var(--color-electric-aqua)" />
-                <StatChip label="Avg RR"   value={avgValue} />
-              </div>
-
-              <div style={{ display: "flex", gap: "8px", flexWrap: "wrap", marginTop: "8px" }}>
-                <StatChip label="Trades"   value={String(stats.totalTrades)} />
-                <StatChip label="Max DD"   value={ddValue} color="var(--color-loss)" />
-              </div>
-            </div>
-
-            {/* Right: equity chart */}
-            <div style={{
-              backgroundColor: "var(--surface-card)",
-              borderRadius: "var(--radius-cards)",
-              border: "1px solid rgba(255,255,255,0.06)",
-              padding: "16px 12px 12px 0",
-              height: "340px",
-              display: "flex", flexDirection: "column",
-              backgroundImage: "radial-gradient(ellipse 80% 60% at 50% 110%, rgba(25,208,232,0.07) 0%, transparent 70%)",
-              boxShadow: "var(--shadow-subtle-2)",
-            }}>
-              <HeroChart data={equitySeries} />
-            </div>
+          {/* Stat chips — centered row */}
+          <div style={{ display: "flex", gap: "8px", flexWrap: "wrap", justifyContent: "center", marginBottom: "64px" }}>
+            <StatChip label="Net P&L"  value={pnlValue}                       color={pnlColor} />
+            <StatChip label="Win Rate" value={`${stats.winRate.toFixed(1)}%`} color="var(--color-electric-aqua)" />
+            <StatChip label="Avg RR"   value={avgValue} />
+            <StatChip label="Trades"   value={String(stats.totalTrades)} />
+            <StatChip label="Max DD"   value={ddValue}                        color="var(--color-loss)" />
           </div>
 
-          {/* Scroll hint */}
+          {/* Equity chart — full width, centered, tall */}
           <div style={{
-            display: "flex", justifyContent: "center",
-            paddingTop: "64px", paddingBottom: "24px",
+            backgroundColor: "var(--surface-card)",
+            borderRadius: "var(--radius-cards)",
+            border: "1px solid rgba(255,255,255,0.06)",
+            padding: "20px 16px 16px 0",
+            height: "420px",
+            display: "flex", flexDirection: "column",
+            backgroundImage: "radial-gradient(ellipse 70% 60% at 50% 110%, rgba(25,208,232,0.09) 0%, transparent 70%)",
+            boxShadow: "var(--shadow-subtle-2)",
             position: "relative", zIndex: 2,
           }}>
-            <div style={{
-              display: "flex", flexDirection: "column", alignItems: "center", gap: "6px",
-              fontFamily: M, fontSize: "10px", color: "var(--color-ash-gray)",
-              textTransform: "uppercase", letterSpacing: "0.15em",
-            }}>
-              <span>Scroll</span>
-              <span style={{ fontSize: "14px" }}>↓</span>
-            </div>
+            <HeroChart data={equitySeries} />
           </div>
         </div>
 
-        {/* Giant background text */}
+        {/* Giant background text — sits behind chart bottom */}
         <div style={{
-          position: "absolute", bottom: "-16px", left: 0, right: 0,
+          position: "absolute", bottom: "-24px", left: 0, right: 0,
           fontFamily: D, fontWeight: 400,
-          fontSize: "clamp(80px, 18vw, 240px)",
-          color: "rgba(255,255,255,0.028)",
+          fontSize: "clamp(100px, 22vw, 300px)",
+          color: "rgba(255,255,255,0.025)",
           textAlign: "center",
           lineHeight: 0.85,
           letterSpacing: "-0.04em",
