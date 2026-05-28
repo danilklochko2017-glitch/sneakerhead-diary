@@ -124,12 +124,12 @@ body {
   pointer-events: none;
   z-index: 3;
   box-shadow:
-    0 0 0 3px rgba(255,255,255,1.00),
-    0 0 10px 5px rgba(255,255,255,0.90),
-    0 0 24px 12px rgba(255,255,255,0.70),
-    0 0 60px 30px rgba(220,235,255,0.45),
-    0 0 120px 60px rgba(200,220,248,0.25),
-    0 0 220px 110px rgba(180,210,240,0.12);
+    0 0 0 3px rgba(255,255,255,0.50),
+    0 0 10px 5px rgba(255,255,255,0.45),
+    0 0 24px 12px rgba(255,255,255,0.35),
+    0 0 60px 30px rgba(220,235,255,0.22),
+    0 0 120px 60px rgba(200,220,248,0.12),
+    0 0 220px 110px rgba(180,210,240,0.06);
   animation: spotlight-breathe 5s ease-in-out infinite;
 }
 
@@ -142,26 +142,27 @@ body {
   animation: spotlight-breathe 5s ease-in-out infinite;
 }
 
-/* Soft wide halo — symmetric radial bloom */
+/* Soft wide halo — ~800px bloom */
 .hero-spotlight::before {
   content: '';
   position: absolute;
   top: 0; left: 50%;
   transform: translateX(-50%);
-  width: 1200px;
+  width: 900px;
   height: 700px;
   background: radial-gradient(
     ellipse 50% 100% at 50% 0%,
-    rgba(230, 240, 255, 0.40) 0%,
-    rgba(210, 228, 248, 0.20) 28%,
-    rgba(190, 215, 240, 0.07) 55%,
+    rgba(230, 240, 255, 0.20) 0%,
+    rgba(210, 228, 248, 0.10) 28%,
+    rgba(190, 215, 240, 0.04) 55%,
     transparent 75%
   );
 }
 
-/* Tight cone — pointing straight down.
-   from 150deg → 0-stop at 150° absolute.
-   Bright center at 30° stop = 150+30 = 180° absolute = 6 o'clock = DOWN. */
+/* Wide cone — ~800px at headline depth, pointing straight down.
+   from 145deg → 0-stop at 145° absolute.
+   Bright center at 35° stop = 145+35 = 180° absolute = DOWN.
+   Span 0°–70° gives ±35° = ~800px wide at 600px depth. */
 .hero-spotlight::after {
   content: '';
   position: absolute;
@@ -170,14 +171,14 @@ body {
   width: 2000px;
   height: 1100px;
   background: conic-gradient(
-    from 150deg at 50% 0%,
+    from 145deg at 50% 0%,
     transparent             0deg,
-    rgba(255,255,255,0.02)  14deg,
-    rgba(255,255,255,0.20)  24deg,
-    rgba(255,255,255,0.42)  30deg,
-    rgba(255,255,255,0.20)  36deg,
-    rgba(255,255,255,0.02)  46deg,
-    transparent             60deg,
+    rgba(255,255,255,0.01)  10deg,
+    rgba(255,255,255,0.10)  25deg,
+    rgba(255,255,255,0.21)  35deg,
+    rgba(255,255,255,0.10)  45deg,
+    rgba(255,255,255,0.01)  60deg,
+    transparent             70deg,
     transparent            360deg
   );
   mask-image: linear-gradient(180deg,
