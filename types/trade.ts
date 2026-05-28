@@ -13,7 +13,8 @@ export interface Trade {
   tp: number | null;      // not stored in this DB — always null
   rr: number;
   result: Result;
-  notes: string;          // entry type / setup name (e.g. "FVG Reaction")
+  notes: string;          // entry type (e.g. "1M CISD")
+  setup?: string;         // setup name from Notion "Setup" relation/select (e.g. "GFM")
   note?: string;          // free-text note from the "Note" Notion field
   riskPct?: number;       // Risk (%) column
 }

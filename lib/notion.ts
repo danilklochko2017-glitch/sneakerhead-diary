@@ -171,8 +171,12 @@ async function mapPageToTrade(page: any): Promise<Trade> {
     resultVal === "BE"   ? 0 :
     resultVal === "Win"  ? Math.abs(rrRaw) :
     rrRaw;
-  const entryType   = extractSelect(props["Entry"]);           // e.g. "FVG Reaction"
+  const entryType   = extractSelect(props["Entry"]);           // e.g. "1M CISD"
   const noteVal     = extractRichText(props["Note"]) || extractRichText(props["Notes"]);
+
+  // Setup: try select first, then relation
+  let setupVal = extractSelect(props["Setup"]);
+  if (!setupVal) setupVal = await resolveRelationTitle(props["Setup"]);
   const instrumentVal = extractTitle(props["Pair"]) || "GER40";
   const riskPct     = extractNumber(props["Risk (%)"]);
 
@@ -209,6 +213,7 @@ async function mapPageToTrade(page: any): Promise<Trade> {
     rr: rrVal,
     result: resultVal,
     notes: entryType || "",
+    setup: setupVal || undefined,
     note: noteVal || undefined,
     riskPct: riskPct ?? undefined,
   };

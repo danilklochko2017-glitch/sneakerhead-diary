@@ -186,7 +186,7 @@ export default function JournalTable({ trades }: { trades: Trade[]; stats: Trade
             <table style={{ width: "100%", borderCollapse: "collapse", minWidth: "640px" }}>
               <thead>
                 <tr>
-                  {["Asset", "Date", "Direction", "Session", "Entry Setup", "Note", "RR", "Risk %", "Result"].map(h => (
+                  {["Asset", "Date", "Direction", "Session", "Setup", "Note", "RR", "Risk %", "Result"].map(h => (
                     <th key={h} style={TH}>{h}</th>
                   ))}
                 </tr>
@@ -229,7 +229,7 @@ export default function JournalTable({ trades }: { trades: Trade[]; stats: Trade
                        t.session === "Asian"    ? <Tag label="Asian"    color="#a78bfa" /> :
                        <span style={{ color: "#6b7280" }}>—</span>}
                     </td>
-                    <td style={{ ...TD, color: "#6b7280", fontSize: "12px", backgroundColor: rowBg }}>{t.notes || "—"}</td>
+                    <td style={{ ...TD, fontSize: "12px", color: "#e5e7eb", backgroundColor: rowBg }}>{t.setup || t.notes || "—"}</td>
                     <td style={{
                       ...TD, fontSize: "12px", color: "#9ca3af", backgroundColor: rowBg,
                       maxWidth: "200px", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap",
