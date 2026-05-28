@@ -167,7 +167,7 @@ async function mapPageToTrade(page: any): Promise<Trade> {
   //     not the actual result). Win = achieved RR. BE = 0.
   const rrRaw = extractNumber(props["RR"]) ?? 0;
   const rrVal =
-    resultVal === "Loss" ? -1 :
+    resultVal === "Loss" ? -Math.abs(rrRaw || 1) :
     resultVal === "BE"   ? 0 :
     resultVal === "Win"  ? Math.abs(rrRaw) :
     rrRaw;
