@@ -1,5 +1,4 @@
 import HeroChart from "@/components/HeroChart";
-import CandleBackground from "@/components/CandleBackground";
 import JournalTable from "@/components/JournalTable";
 import SetupsGrid from "@/components/SetupsGrid";
 import MonthlyReviews from "@/components/MonthlyReviews";
@@ -94,10 +93,7 @@ export default async function HomePage() {
             position: "relative",
             overflow: "hidden",
           }}>
-            {/* Animated candlestick background */}
-            <CandleBackground />
-
-            {/* Text — above canvas */}
+            {/* Text */}
             <div style={{ position: "relative", zIndex: 1, display: "flex", alignItems: "center", gap: "8px" }}>
               <span className="live-dot" />
               <span style={{
