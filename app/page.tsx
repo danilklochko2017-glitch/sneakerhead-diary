@@ -71,7 +71,7 @@ export default async function HomePage() {
         position: "relative",
         overflow: "hidden",
         padding: "100px 40px 0",
-        backgroundImage: "linear-gradient(180deg, rgb(28,28,28) 0%, rgb(4,4,4) 50%, rgb(0,0,0) 100%)",
+        backgroundImage: "linear-gradient(180deg, rgb(22,22,22) 0%, rgb(10,10,10) 40%, rgb(0,0,0) 100%)",
       }}>
         {/* Spotlight beam from top */}
         <div className="hero-spotlight" />
