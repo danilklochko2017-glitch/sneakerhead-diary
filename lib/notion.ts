@@ -32,6 +32,51 @@ GFM — сетап, который работает внутри **трендо�
 Backtest: Link (https://best-quiver-1cd.notion.site/GER40-London-NY-01-2025-09-2025-FVG-CISD-2a15865037c180a3b826f5060c066898?source=copy_link)`;
 
 
+// ─── GER40 Breakout Setup — hardcoded markdown description ───────────────────
+const GER40_BREAKOUT_DESCRIPTION = `### Описание
+
+2M сетап на пробитие Frankfurt Open Range (IB). Торгуем только в первые 30 минут после открытия Лондона. RR 1:1
+
+### Разметка зон
+
+0 — Нижняя граница Франкфурта
+0.5 — Середина диапазона
+1 — Верхняя граница Франкфурта
+
+### Модель A — Вход с касанием 0.5
+
+- Цена касается зоны **0.5**
+- Закрепление за границу диапазона **одной свечой**
+- Вход на пробитии + закреплении
+- **Стоп:** за свечу открытия Лондона
+- БУ после 11:00
+- При пробое мы протестировали 1Ч ФТА (Фрактал, FVG) то мы ждем по ребалансировку: тест 2м FVG который сформировался при пробое, либо ретест зоны 0.5 и CISD в нужную сторону
+
+### Модель B — Вход без касания 0.5
+
+- Цена не касается зоны **0.5**
+- Закрепление за границу диапазона **двумя свечами**
+- Вход на подтверждении второй свечи
+- **Стоп:** за свечу открытия Лондона
+- БУ после 11:00
+- При пробое мы протестировали 1Ч ФТА (Фрактал, FVG) то мы ждем по ребалансировку: тест 2м FVG который сформировался при пробое, либо ретест зоны 0.5 и CISD в нужную сторону
+
+### Модель C — Reverse + CISD
+
+- Цена **пробивает** зону IB (1 или 0), но **не закрепляется** за ней
+- На **2M** формируется **CISD** в обратном направлении
+- Вход после появления 2M CISD, **до зоны 0.5** (не позже)
+- **Стоп:** за реверсал свечу
+- БУ после 11:00
+- Это разворотная модель: рынок показал ложный пробой и разворачивается внутрь диапазона
+
+### Условия пропуска сделки
+
+- Время уже вышло за рамки первых 30 минут Лондона
+- Нет чёткого закрепления за зону (требуется 1 или 2 свечи в зависимости от модели)
+
+Backtest: Link (https://best-quiver-1cd.notion.site/GER40-IB-1-1-01-2025-10-2025-2ac5865037c18029971cdadcfdf5b932?source=copy_link)`;
+
 const notion = new Client({ auth: process.env.NOTION_TOKEN });
 
 // ─── Helpers ────────────────────────────────────────────────────────────────
@@ -206,59 +251,30 @@ export async function fetchTrades(): Promise<Trade[]> {
   return trades;
 }
 
-export async function fetchSetupPage(): Promise<SetupCard | null> {
-  const pageId = process.env.NOTION_SETUP_PAGE_ID;
-  if (!pageId) return null;
+export async function fetchSetups(): Promise<SetupCard[]> {
+  const gfm: SetupCard = {
+    id: "ger40-gfm",
+    name: "Guarded Flow Model",
+    description: GFM_DESCRIPTION,
+    instrument: "GER40",
+    timeframe: "1H / 15M / 1M",
+    session: "London / NY",
+    imageUrls: [],
+    tags: [],
+  };
 
-  try {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const blocks: any = await notion.blocks.children.list({ block_id: pageId, page_size: 100 });
+  const breakout: SetupCard = {
+    id: "ger40-breakout",
+    name: "GER40 Breakout",
+    description: GER40_BREAKOUT_DESCRIPTION,
+    instrument: "GER40",
+    timeframe: "2M",
+    session: "London",
+    imageUrls: [],
+    tags: [],
+  };
 
-    let description = "";
-    const imageUrls: string[] = [];
-    const tags: string[] = [];
-    let name = "GER40 GFM";
-
-    for (const block of blocks.results) {
-      if (block.type === "heading_1" || block.type === "heading_2" || block.type === "heading_3") {
-        const key = block.type as "heading_1" | "heading_2" | "heading_3";
-        const text = block[key].rich_text.map((t: { plain_text?: string }) => t.plain_text ?? "").join("");
-        if (text && name === "GER40 GFM") name = text;
-      } else if (block.type === "paragraph") {
-        const text = block.paragraph.rich_text.map((t: { plain_text?: string }) => t.plain_text ?? "").join("");
-        if (text) description += (description ? "\n\n" : "") + text;
-      } else if (block.type === "bulleted_list_item") {
-        const text = block.bulleted_list_item.rich_text.map((t: { plain_text?: string }) => t.plain_text ?? "").join("");
-        if (text) tags.push(text);
-      } else if (block.type === "image") {
-        const img = block.image;
-        const url = img?.file?.url || img?.external?.url;
-        if (url) imageUrls.push(url);
-      }
-    }
-
-    return {
-      id: pageId,
-      name: "Guarded Flow Model",
-      description: GFM_DESCRIPTION,
-      instrument: "GER40",
-      timeframe: "1H / 15M / 1M",
-      session: "London / NY",
-      imageUrls,
-      tags: [],
-    };
-  } catch {
-    return {
-      id: "ger40-gfm",
-      name: "Guarded Flow Model",
-      description: GFM_DESCRIPTION,
-      instrument: "GER40",
-      timeframe: "1H / 15M / 1M",
-      session: "London / NY",
-      imageUrls: [],
-      tags: [],
-    };
-  }
+  return [gfm, breakout];
 }
 
 // ─── AI Monthly Reviews ───────────────────────────────────────────────────────

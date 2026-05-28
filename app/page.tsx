@@ -2,7 +2,7 @@ import HeroChart from "@/components/HeroChart";
 import JournalTable from "@/components/JournalTable";
 import SetupsGrid from "@/components/SetupsGrid";
 import MonthlyReviews from "@/components/MonthlyReviews";
-import { fetchTrades, fetchSetupPage, fetchAIReviews } from "@/lib/notion";
+import { fetchTrades, fetchSetups, fetchAIReviews } from "@/lib/notion";
 import { calculateStats, buildEquitySeries } from "@/lib/calculations";
 import { buildMonthlyReviews } from "@/lib/reviews";
 import type { Trade, SetupCard, MonthlyReview } from "@/types/trade";
@@ -42,14 +42,13 @@ function StatCard({ label, value, color = "#ffffff" }: {
 
 export default async function HomePage() {
   let trades: Trade[] = [];
-  let setup: SetupCard | null = null;
+  let setups: SetupCard[] = [];
 
   try { trades = await fetchTrades(); } catch {}
-  try { setup = await fetchSetupPage(); } catch {}
+  try { setups = await fetchSetups(); } catch {}
 
   const stats = calculateStats(trades);
   const equitySeries = buildEquitySeries(trades);
-  const setups: SetupCard[] = setup ? [setup] : [];
 
   // Build reviews: prefer AI-generated text from Notion when available
   const templateReviews = buildMonthlyReviews(trades);
