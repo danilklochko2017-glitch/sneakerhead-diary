@@ -137,10 +137,7 @@ export async function POST(request: Request) {
     "RR": {
       number: Math.abs(rr),
     },
-    // Direction select
-    "Direction": {
-      select: { name: direction },
-    },
+    // Direction is a relation in this DB — filled manually in Notion
     // Entry tag (e.g. "1M CISD") — select field
     ...(entryTag ? { "Entry": { select: { name: entryTag } } } : {}),
     // Risk %
@@ -152,6 +149,7 @@ export async function POST(request: Request) {
       rich_text: [{
         text: {
           content: [
+            direction,
             `Open: ${payload.open_price} → Close: ${payload.close_price}`,
             payload.sl ? `SL: ${payload.sl}` : "",
             `Vol: ${payload.volume}`,
