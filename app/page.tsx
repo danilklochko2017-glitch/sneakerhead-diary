@@ -76,10 +76,6 @@ export default async function HomePage() {
       overflow: "hidden",
     }}>
 
-      {/* ─── Spotlight beam ──────────────────────────────────────────────── */}
-      <div className="hero-spotlight" />
-      <div className="hero-spotlight-source" />
-
       {/* ─── Content ─────────────────────────────────────────────────────── */}
       <div style={{
         position: "relative", zIndex: 1,
