@@ -189,7 +189,7 @@ export default async function HomePage() {
 
         {/* ── Row 4: Setups (2fr) + Reviews (1fr) ── */}
         <div className="page-row-bottom">
-          <SetupsGrid setups={setups} trades={trades} />
+          <SetupsGrid setups={setups} />
           <MonthlyReviews reviews={reviews} />
         </div>
 
