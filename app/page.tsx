@@ -191,7 +191,7 @@ export default async function HomePage() {
             </h2>
           </div>
 
-          <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px", alignItems: "start" }}>
             <SetupsGrid setups={setups} />
             <MonthlyReviews reviews={reviews} />
           </div>
