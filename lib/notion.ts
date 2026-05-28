@@ -165,9 +165,12 @@ async function mapPageToTrade(page: any): Promise<Trade> {
 
   // RR: for a Loss you always lose exactly -1R (the Notion field stores planned target RR,
   //     not the actual result). Win = achieved RR. BE = 0.
-  const rrRaw = extractNumber(props["RR"]) ?? 0;
+  const rrRaw   = extractNumber(props["RR"]) ?? 0;
+  const riskPct = extractNumber(props["Risk (%)"]);
+  // For losses: use Risk (%) as actual R lost (1R = 1% risk), fallback to -1
+  const lossR = riskPct != null ? riskPct : (Math.abs(rrRaw) || 1);
   const rrVal =
-    resultVal === "Loss" ? -Math.abs(rrRaw || 1) :
+    resultVal === "Loss" ? -lossR :
     resultVal === "BE"   ? 0 :
     resultVal === "Win"  ? Math.abs(rrRaw) :
     rrRaw;
@@ -178,7 +181,6 @@ async function mapPageToTrade(page: any): Promise<Trade> {
   let setupVal = extractSelect(props["Setups"]);
   if (!setupVal) setupVal = await resolveRelationTitle(props["Setups"]);
   const instrumentVal = extractTitle(props["Pair"]) || "GER40";
-  const riskPct     = extractNumber(props["Risk (%)"]);
 
   // Session is a relation — resolve its title
   const sessionRaw = await resolveRelationTitle(props["Session"]);
