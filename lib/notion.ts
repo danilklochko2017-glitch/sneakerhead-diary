@@ -259,7 +259,7 @@ export async function fetchTrades(): Promise<Trade[]> {
 export async function fetchSetups(): Promise<SetupCard[]> {
   const gfm: SetupCard = {
     id: "ger40-gfm",
-    name: "Guarded Flow Model",
+    name: "GER40 / GFM",
     description: GFM_DESCRIPTION,
     instrument: "GER40",
     timeframe: "1H / 15M / 1M",
@@ -270,7 +270,7 @@ export async function fetchSetups(): Promise<SetupCard[]> {
 
   const breakout: SetupCard = {
     id: "ger40-breakout",
-    name: "GER40 Breakout",
+    name: "GER40 / Breakout",
     description: GER40_BREAKOUT_DESCRIPTION,
     instrument: "GER40",
     timeframe: "2M",
