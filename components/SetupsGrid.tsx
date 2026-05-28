@@ -251,12 +251,9 @@ export default function SetupsGrid({ setups }: { setups: SetupCard[] }) {
       padding: "var(--card-padding)",
     }}>
       <div style={{ marginBottom: "16px" }}>
-        <p style={{ fontFamily: M, fontSize: "10px", fontWeight: 500, color: "var(--color-ash-gray)", marginBottom: "6px", textTransform: "uppercase", letterSpacing: "0.12em" }}>
-          Playbook
-        </p>
-        <h2 style={{ fontFamily: D, fontWeight: 400, fontSize: "32px", lineHeight: 1.1, color: "var(--color-near-white)", letterSpacing: "-0.02em" }}>
+        <p style={{ fontFamily: M, fontSize: "10px", fontWeight: 500, color: "var(--color-ash-gray)", textTransform: "uppercase", letterSpacing: "0.12em" }}>
           Setups
-        </h2>
+        </p>
       </div>
 
       {setups.length === 0 ? (

@@ -5,7 +5,6 @@ import type { Trade, TradeStats } from "@/types/trade";
 import { formatRR, formatWinRate, calculateStats } from "@/lib/calculations";
 import TradeModal from "@/components/TradeModal";
 
-const D = "var(--font-display)";   // Instrument Serif
 const M = "var(--font-mono)";      // DM Mono
 const AQUA = "#19d0e8";
 
@@ -152,18 +151,9 @@ export default function JournalTable({ trades }: { trades: Trade[]; stats: Trade
           gap: "12px", marginBottom: "16px",
         }}>
           <div>
-            <p style={{
-              fontFamily: M, fontSize: "10px", fontWeight: 500,
-              color: "var(--color-ash-gray)", marginBottom: "6px",
-              textTransform: "uppercase", letterSpacing: "0.12em",
-            }}>All Trades</p>
-            <h2 style={{
-              fontFamily: D, fontWeight: 400,
-              fontSize: "32px", lineHeight: 1.1, color: "var(--color-near-white)",
-              letterSpacing: "-0.02em",
-            }}>
-              Trade Journal
-            </h2>
+            <p style={{ fontFamily: M, fontSize: "10px", fontWeight: 500, color: "var(--color-ash-gray)", textTransform: "uppercase", letterSpacing: "0.12em" }}>
+              All Trades
+            </p>
           </div>
 
           {/* Filters */}
