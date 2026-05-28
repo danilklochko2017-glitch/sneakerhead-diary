@@ -12,7 +12,6 @@ export const revalidate = 60;
 // ── Design tokens ─────────────────────────────────────────────────────────────
 const D = "var(--font-display)";   // Instrument Serif
 const M = "var(--font-mono)";      // DM Mono
-const B = "var(--font-body)";      // Geist
 
 const CARD: React.CSSProperties = {
   backgroundColor: "var(--surface-card)",   // #191919
