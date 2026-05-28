@@ -105,6 +105,72 @@ body {
   animation: live-ping 1.8s ease-out infinite;
 }
 
+/* ─── Hero spotlight — animated beam from top ─── */
+@keyframes spotlight-pulse {
+  0%   { opacity: 0.55; transform: scaleX(1);    }
+  50%  { opacity: 0.80; transform: scaleX(1.08); }
+  100% { opacity: 0.55; transform: scaleX(1);    }
+}
+
+@keyframes spotlight-flicker {
+  0%,100% { opacity: 1;    }
+  45%      { opacity: 0.92; }
+  46%      { opacity: 0.75; }
+  47%      { opacity: 0.95; }
+  70%      { opacity: 0.88; }
+  71%      { opacity: 1;    }
+}
+
+.hero-spotlight {
+  position: absolute;
+  top: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 600px;
+  height: 700px;
+  pointer-events: none;
+  z-index: 0;
+  animation: spotlight-flicker 8s ease-in-out infinite;
+}
+
+/* Wide soft halo */
+.hero-spotlight::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 900px;
+  height: 500px;
+  background: radial-gradient(
+    ellipse 50% 40% at 50% 0%,
+    rgba(255, 255, 255, 0.10) 0%,
+    rgba(255, 255, 255, 0.04) 40%,
+    transparent 70%
+  );
+  animation: spotlight-pulse 5s ease-in-out infinite;
+}
+
+/* Bright core beam */
+.hero-spotlight::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 280px;
+  height: 600px;
+  background: conic-gradient(
+    from 180deg at 50% 0%,
+    transparent 75deg,
+    rgba(255,255,255,0.13) 90deg,
+    rgba(255,255,255,0.18) 95deg,
+    rgba(255,255,255,0.13) 100deg,
+    transparent 105deg
+  );
+  mask-image: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0.3) 60%, transparent 100%);
+  -webkit-mask-image: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0.3) 60%, transparent 100%);
+  animation: spotlight-pulse 5s ease-in-out infinite;
+}
+
 /* ─── Card glow — aqua ─── */
 .card-glow {
   box-shadow: var(--shadow-subtle-2);

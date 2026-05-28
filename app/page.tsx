@@ -73,7 +73,10 @@ export default async function HomePage() {
         padding: "100px 40px 0",
         backgroundImage: "linear-gradient(180deg, rgb(28,28,28) 0%, rgb(4,4,4) 50%, rgb(0,0,0) 100%)",
       }}>
-        <div style={{ maxWidth: "var(--page-max-width)", margin: "0 auto" }}>
+        {/* Spotlight beam from top */}
+        <div className="hero-spotlight" />
+
+        <div style={{ maxWidth: "var(--page-max-width)", margin: "0 auto", position: "relative", zIndex: 1 }}>
 
           {/* Eyebrow — centered */}
           <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "8px", marginBottom: "40px" }}>
