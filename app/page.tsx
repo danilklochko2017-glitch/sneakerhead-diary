@@ -116,7 +116,7 @@ export default async function HomePage() {
                 color: "var(--color-near-white)",
                 marginBottom: "20px",
               }}>
-                Your trades.<br />Brutally<br />honest.
+                Trading<br />Journal
               </h1>
               <p style={{
                 fontFamily: M, fontSize: "11px",
