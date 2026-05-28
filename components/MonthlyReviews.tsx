@@ -38,10 +38,10 @@ function ReviewCard({ r }: { r: MonthlyReview }) {
             { l: "Trades",   v: String(r.trades),                                     c: "var(--color-near-white)" },
           ].map(item => (
             <div key={item.l} style={{ textAlign: "right" }}>
-              <div style={{ fontFamily: M, fontSize: "10px", fontWeight: 500, color: "var(--color-ash-gray)", marginBottom: "2px", textTransform: "uppercase", letterSpacing: "0.1em" }}>
+              <div style={{ fontFamily: M, fontSize: "12px", fontWeight: 500, color: "var(--color-ash-gray)", marginBottom: "2px", textTransform: "uppercase", letterSpacing: "0.1em" }}>
                 {item.l}
               </div>
-              <div style={{ fontFamily: M, fontSize: "11px", fontWeight: 500, color: item.c }}>
+              <div style={{ fontFamily: M, fontSize: "12px", fontWeight: 500, color: item.c }}>
                 {item.v}
               </div>
             </div>
@@ -73,7 +73,7 @@ function ReviewCard({ r }: { r: MonthlyReview }) {
               { l: "Worst Trade", v: `${r.worstTrade.toFixed(1)}R`, c: "var(--color-loss)" },
             ].map(item => (
               <div key={item.l} style={{ padding: "14px 16px", backgroundColor: INNER }}>
-                <div style={{ fontFamily: M, fontSize: "10px", fontWeight: 500, color: "var(--color-ash-gray)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "6px" }}>
+                <div style={{ fontFamily: M, fontSize: "12px", fontWeight: 500, color: "var(--color-ash-gray)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "6px" }}>
                   {item.l}
                 </div>
                 <div style={{ fontFamily: M, fontSize: "22px", lineHeight: 1, fontWeight: 500, color: item.c }}>
@@ -90,7 +90,7 @@ function ReviewCard({ r }: { r: MonthlyReview }) {
               { l: "What to improve", body: r.toImprove, accent: AQUA },
             ].map(item => (
               <div key={item.l} style={{ padding: "16px", backgroundColor: INNER }}>
-                <div style={{ fontFamily: M, fontSize: "10px", fontWeight: 500, color: item.accent, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "8px" }}>
+                <div style={{ fontFamily: M, fontSize: "12px", fontWeight: 500, color: item.accent, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "8px" }}>
                   {item.l}
                 </div>
                 <p style={{ fontFamily: B, fontSize: "13px", lineHeight: "1.65", color: "var(--color-near-white)", letterSpacing: "-0.01em" }}>
@@ -113,7 +113,7 @@ export default function MonthlyReviews({ reviews }: { reviews: MonthlyReview[] }
       padding: "var(--card-padding)",
     }}>
       <div style={{ marginBottom: "16px" }}>
-        <p style={{ fontFamily: M, fontSize: "10px", fontWeight: 500, color: "var(--color-ash-gray)", textTransform: "uppercase", letterSpacing: "0.12em" }}>
+        <p style={{ fontFamily: M, fontSize: "12px", fontWeight: 500, color: "var(--color-ash-gray)", textTransform: "uppercase", letterSpacing: "0.12em" }}>
           Monthly Reviews
         </p>
       </div>

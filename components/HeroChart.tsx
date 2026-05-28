@@ -29,7 +29,7 @@ function CustomTooltip({ active, payload }: TooltipProps) {
       padding: "10px 14px",
       boxShadow: "var(--shadow-sm)",
     }}>
-      <div style={{ fontFamily: M, fontSize: "10px", color: "var(--color-ash-gray)", marginBottom: "6px", textTransform: "uppercase", letterSpacing: "0.1em" }}>
+      <div style={{ fontFamily: M, fontSize: "12px", color: "var(--color-ash-gray)", marginBottom: "6px", textTransform: "uppercase", letterSpacing: "0.1em" }}>
         {fmt(point.date)}
       </div>
       <div style={{ fontFamily: M, fontSize: "12px", display: "flex", flexDirection: "column", gap: "3px" }}>
@@ -101,7 +101,7 @@ export default function HeroChart({ data }: { data: EquityPoint[] }) {
         flexWrap: "wrap", gap: "8px",
       }}>
         <div style={{
-          fontFamily: M, fontSize: "10px", color: "var(--color-ash-gray)",
+          fontFamily: M, fontSize: "12px", color: "var(--color-ash-gray)",
           textTransform: "uppercase", letterSpacing: "0.15em", fontWeight: 500,
           display: "flex", alignItems: "center", gap: "8px",
         }}>
@@ -119,7 +119,7 @@ export default function HeroChart({ data }: { data: EquityPoint[] }) {
                   key={m.key}
                   onClick={() => setActiveMonth(m.key)}
                   style={{
-                    fontFamily: M, fontSize: "10px", fontWeight: 500,
+                    fontFamily: M, fontSize: "12px", fontWeight: 500,
                     padding: "3px 10px",
                     borderRadius: "var(--radius-buttons)",
                     border: `1px solid ${isActive ? "rgba(25,208,232,0.5)" : "var(--color-dark-charcoal)"}`,

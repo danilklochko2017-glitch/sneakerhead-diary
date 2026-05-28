@@ -20,7 +20,7 @@ function ResultTag({ result }: { result: Trade["result"] }) {
   const s = map[result] ?? map.Pending;
   return (
     <span style={{
-      fontFamily: M, fontSize: "10px", fontWeight: 500,
+      fontFamily: M, fontSize: "12px", fontWeight: 500,
       color: s.color, backgroundColor: s.bg,
       border: `1px solid ${s.border}`,
       borderRadius: "var(--radius-buttons)",
@@ -42,7 +42,7 @@ function SessionTag({ session }: { session: Trade["session"] }) {
   if (!s) return <span style={{ color: "var(--color-dark-charcoal)" }}>—</span>;
   return (
     <span style={{
-      fontFamily: M, fontSize: "10px", fontWeight: 500,
+      fontFamily: M, fontSize: "12px", fontWeight: 500,
       color: s.color, backgroundColor: s.bg,
       border: `1px solid ${s.border}`,
       borderRadius: "var(--radius-buttons)",
@@ -65,7 +65,7 @@ const ROW_A = "#191919";  // Carbon Black
 const ROW_B = "#141414";  // slightly darker
 
 const TH: React.CSSProperties = {
-  fontFamily: M, fontSize: "10px", fontWeight: 500,
+  fontFamily: M, fontSize: "12px", fontWeight: 500,
   color: "var(--color-ash-gray)", textTransform: "uppercase",
   letterSpacing: "0.12em", padding: "10px 14px",
   textAlign: "left", whiteSpace: "nowrap",
@@ -89,7 +89,7 @@ const SESSION_TABS: SessionFilter[] = ["All", "London", "New York"];
 function PillTab({ label, active, onClick }: { label: string; active: boolean; onClick: () => void }) {
   return (
     <button onClick={onClick} style={{
-      fontFamily: M, fontSize: "10px", fontWeight: 500,
+      fontFamily: M, fontSize: "12px", fontWeight: 500,
       padding: "3px 12px",
       borderRadius: "var(--radius-buttons)",
       border: `1px solid ${active ? "rgba(25,208,232,0.5)" : "var(--color-dark-charcoal)"}`,
@@ -151,7 +151,7 @@ export default function JournalTable({ trades }: { trades: Trade[]; stats: Trade
           gap: "12px", marginBottom: "16px",
         }}>
           <div>
-            <p style={{ fontFamily: M, fontSize: "10px", fontWeight: 500, color: "var(--color-ash-gray)", textTransform: "uppercase", letterSpacing: "0.12em" }}>
+            <p style={{ fontFamily: M, fontSize: "12px", fontWeight: 500, color: "var(--color-ash-gray)", textTransform: "uppercase", letterSpacing: "0.12em" }}>
               All Trades
             </p>
           </div>
@@ -210,15 +210,15 @@ export default function JournalTable({ trades }: { trades: Trade[]; stats: Trade
                       onMouseLeave={e => Array.from(e.currentTarget.cells).forEach(c => ((c as HTMLTableCellElement).style.backgroundColor = rowBg))}
                     >
                       {/* Asset */}
-                      <td style={{ ...TD, fontSize: "11px", fontWeight: 500, color: "var(--color-ash-gray)", backgroundColor: rowBg, whiteSpace: "nowrap" }}>
+                      <td style={{ ...TD, fontSize: "12px", fontWeight: 500, color: "var(--color-ash-gray)", backgroundColor: rowBg, whiteSpace: "nowrap" }}>
                         {t.instrument}
                       </td>
                       {/* Date */}
-                      <td style={{ ...TD, fontSize: "11px", color: "var(--color-ash-gray)", backgroundColor: rowBg }}>
+                      <td style={{ ...TD, fontSize: "12px", color: "var(--color-ash-gray)", backgroundColor: rowBg }}>
                         {formatDate(t.date)}
                       </td>
                       {/* Direction */}
-                      <td style={{ ...TD, fontSize: "11px", fontWeight: 500, backgroundColor: rowBg,
+                      <td style={{ ...TD, fontSize: "12px", fontWeight: 500, backgroundColor: rowBg,
                         color: t.direction === "Long" ? "var(--color-win)" : t.direction === "Short" ? "var(--color-loss)" : "var(--color-ash-gray)" }}>
                         {t.direction === "Long" ? "▲ Long" : t.direction === "Short" ? "▼ Short" : "—"}
                       </td>
@@ -227,12 +227,12 @@ export default function JournalTable({ trades }: { trades: Trade[]; stats: Trade
                         <SessionTag session={t.session} />
                       </td>
                       {/* Setup */}
-                      <td style={{ ...TD, fontSize: "11px", color: "var(--color-near-white)", backgroundColor: rowBg }}>
+                      <td style={{ ...TD, fontSize: "12px", color: "var(--color-near-white)", backgroundColor: rowBg }}>
                         {t.setup || t.notes || <span style={{ color: "var(--color-dark-charcoal)" }}>—</span>}
                       </td>
                       {/* Note */}
                       <td style={{
-                        ...TD, fontSize: "11px", color: "var(--color-ash-gray)", backgroundColor: rowBg,
+                        ...TD, fontSize: "12px", color: "var(--color-ash-gray)", backgroundColor: rowBg,
                         maxWidth: "180px", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap",
                       }} title={t.note}>
                         {t.note || <span style={{ color: "var(--color-dark-charcoal)" }}>—</span>}
@@ -245,7 +245,7 @@ export default function JournalTable({ trades }: { trades: Trade[]; stats: Trade
                         {t.rr > 0 ? "+" : ""}{t.rr.toFixed(2)}R
                       </td>
                       {/* Risk % */}
-                      <td style={{ ...TD, fontSize: "11px", color: "var(--color-ash-gray)", backgroundColor: rowBg }}>
+                      <td style={{ ...TD, fontSize: "12px", color: "var(--color-ash-gray)", backgroundColor: rowBg }}>
                         {t.riskPct != null ? `${t.riskPct}%` : <span style={{ color: "var(--color-dark-charcoal)" }}>—</span>}
                       </td>
                       {/* Result */}
@@ -281,7 +281,7 @@ export default function JournalTable({ trades }: { trades: Trade[]; stats: Trade
         {totalPages > 1 && (
           <div style={{
             display: "flex", alignItems: "center", justifyContent: "space-between",
-            marginTop: "14px", fontFamily: M, fontSize: "10px", color: "var(--color-ash-gray)",
+            marginTop: "14px", fontFamily: M, fontSize: "12px", color: "var(--color-ash-gray)",
           }}>
             <span>
               {(safePage - 1) * PAGE_SIZE + 1}–{Math.min(safePage * PAGE_SIZE, filtered.length)} of {filtered.length}
@@ -305,7 +305,7 @@ export default function JournalTable({ trades }: { trades: Trade[]; stats: Trade
                   border: `1px solid ${n === safePage ? "rgba(25,208,232,0.5)" : "var(--color-dark-charcoal)"}`,
                   backgroundColor: n === safePage ? "rgba(25,208,232,0.10)" : "transparent",
                   color: n === safePage ? AQUA : "var(--color-ash-gray)",
-                  cursor: "pointer", fontFamily: M, fontSize: "10px", fontWeight: 500,
+                  cursor: "pointer", fontFamily: M, fontSize: "12px", fontWeight: 500,
                 }}>
                   {n}
                 </button>

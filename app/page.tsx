@@ -25,7 +25,7 @@ function StatCard({ label, value, color = "var(--color-near-white)" }: {
       display: "flex", flexDirection: "column", gap: "6px",
     }}>
       <span style={{
-        fontFamily: M, fontSize: "10px", fontWeight: 500,
+        fontFamily: M, fontSize: "12px", fontWeight: 500,
         color: "var(--color-ash-gray)", textTransform: "uppercase", letterSpacing: "0.12em",
       }}>
         {label}
@@ -107,7 +107,7 @@ export default async function HomePage() {
             <div style={{ position: "relative", zIndex: 1, display: "flex", alignItems: "center", gap: "8px" }}>
               <span className="live-dot" />
               <span style={{
-                fontFamily: M, fontSize: "10px", fontWeight: 500,
+                fontFamily: M, fontSize: "12px", fontWeight: 500,
                 color: "var(--color-ash-gray)", letterSpacing: "0.15em", textTransform: "uppercase",
               }}>
                 Live · {new Date().getFullYear()}
@@ -126,7 +126,7 @@ export default async function HomePage() {
                 Trading Journal
               </h1>
               <p style={{
-                fontFamily: M, fontSize: "11px",
+                fontFamily: M, fontSize: "12px",
                 color: "var(--color-ash-gray)",
                 lineHeight: 1.7, letterSpacing: "0.01em",
               }}>

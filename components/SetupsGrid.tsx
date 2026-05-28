@@ -104,7 +104,7 @@ function renderDescriptionBlocks(text: string) {
           <div key={i} style={{ padding: "14px 16px", backgroundColor: INNER }}>
             {section.title && (
               <div style={{
-                fontFamily: M, fontSize: "10px", fontWeight: 500,
+                fontFamily: M, fontSize: "12px", fontWeight: 500,
                 color: "var(--color-ash-gray)", textTransform: "uppercase",
                 letterSpacing: "0.12em", marginBottom: "8px",
               }}>
@@ -123,7 +123,7 @@ function renderDescriptionBlocks(text: string) {
           backgroundColor: INNER,
           display: "flex", alignItems: "center", gap: "10px",
         }}>
-          <span style={{ fontFamily: M, fontSize: "10px", fontWeight: 500, color: "var(--color-ash-gray)", textTransform: "uppercase", letterSpacing: "0.12em" }}>
+          <span style={{ fontFamily: M, fontSize: "12px", fontWeight: 500, color: "var(--color-ash-gray)", textTransform: "uppercase", letterSpacing: "0.12em" }}>
             {backtest.label}
           </span>
           <a
@@ -131,7 +131,7 @@ function renderDescriptionBlocks(text: string) {
             target="_blank"
             rel="noopener noreferrer"
             style={{
-              fontFamily: M, fontSize: "10px", fontWeight: 500,
+              fontFamily: M, fontSize: "12px", fontWeight: 500,
               color: AQUA, textDecoration: "none",
               border: "1px solid rgba(25,208,232,0.4)",
               backgroundColor: "rgba(25,208,232,0.08)",
@@ -176,10 +176,10 @@ function SetupCardUI({ s }: { s: SetupCard }) {
         <div style={{ display: "flex", alignItems: "center", gap: "20px", flexWrap: "wrap" }}>
           {[{ l: "Timeframes", v: s.timeframe }, { l: "Sessions", v: s.session }].map(item => (
             <div key={item.l} style={{ textAlign: "right" }}>
-              <div style={{ fontFamily: M, fontSize: "10px", fontWeight: 500, color: "var(--color-ash-gray)", marginBottom: "2px", textTransform: "uppercase", letterSpacing: "0.1em" }}>
+              <div style={{ fontFamily: M, fontSize: "12px", fontWeight: 500, color: "var(--color-ash-gray)", marginBottom: "2px", textTransform: "uppercase", letterSpacing: "0.1em" }}>
                 {item.l}
               </div>
-              <div style={{ fontFamily: M, fontSize: "11px", fontWeight: 400, color: "var(--color-near-white)" }}>
+              <div style={{ fontFamily: M, fontSize: "12px", fontWeight: 400, color: "var(--color-near-white)" }}>
                 {item.v}
               </div>
             </div>
@@ -225,7 +225,7 @@ function SetupCardUI({ s }: { s: SetupCard }) {
             <div style={{ padding: "12px 16px", borderTop: "1px solid #0a0a0a", display: "flex", gap: "6px", flexWrap: "wrap" }}>
               {s.tags.map(tag => (
                 <span key={tag} style={{
-                  fontFamily: M, fontSize: "10px", fontWeight: 500,
+                  fontFamily: M, fontSize: "12px", fontWeight: 500,
                   color: "var(--color-ash-gray)", border: "1px solid var(--color-dark-charcoal)",
                   backgroundColor: "transparent",
                   borderRadius: "var(--radius-buttons)", padding: "2px 10px",
@@ -251,7 +251,7 @@ export default function SetupsGrid({ setups }: { setups: SetupCard[] }) {
       padding: "var(--card-padding)",
     }}>
       <div style={{ marginBottom: "16px" }}>
-        <p style={{ fontFamily: M, fontSize: "10px", fontWeight: 500, color: "var(--color-ash-gray)", textTransform: "uppercase", letterSpacing: "0.12em" }}>
+        <p style={{ fontFamily: M, fontSize: "12px", fontWeight: 500, color: "var(--color-ash-gray)", textTransform: "uppercase", letterSpacing: "0.12em" }}>
           Setups
         </p>
       </div>

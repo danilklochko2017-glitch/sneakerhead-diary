@@ -77,10 +77,10 @@ export default function TradeModal({ trade, onClose }: { trade: Trade; onClose: 
               {trade.instrument}
             </span>
             {/* Date */}
-            <span style={{ fontFamily: M, fontSize: "11px", color: "var(--color-ash-gray)" }}>{fmt(trade.date)}</span>
+            <span style={{ fontFamily: M, fontSize: "12px", color: "var(--color-ash-gray)" }}>{fmt(trade.date)}</span>
             {/* Result tag */}
             <span style={{
-              fontFamily: M, fontSize: "10px", fontWeight: 500,
+              fontFamily: M, fontSize: "12px", fontWeight: 500,
               color: rs.color, border: `1px solid ${rs.border}`,
               backgroundColor: rs.bg,
               borderRadius: "var(--radius-buttons)", padding: "2px 10px", letterSpacing: "0.05em",
@@ -92,7 +92,7 @@ export default function TradeModal({ trade, onClose }: { trade: Trade; onClose: 
             {/* Entry tag */}
             {trade.notes && (
               <span style={{
-                fontFamily: M, fontSize: "10px", color: "var(--color-ash-gray)",
+                fontFamily: M, fontSize: "12px", color: "var(--color-ash-gray)",
                 border: "1px solid var(--color-dark-charcoal)",
                 backgroundColor: "transparent",
                 borderRadius: "var(--radius-buttons)", padding: "2px 10px", letterSpacing: "0.05em",
@@ -182,7 +182,7 @@ export default function TradeModal({ trade, onClose }: { trade: Trade; onClose: 
                 </div>
               )}
 
-              <div style={{ textAlign: "center", fontFamily: M, fontSize: "10px", color: "var(--color-ash-gray)", textTransform: "uppercase", letterSpacing: "0.1em" }}>
+              <div style={{ textAlign: "center", fontFamily: M, fontSize: "12px", color: "var(--color-ash-gray)", textTransform: "uppercase", letterSpacing: "0.1em" }}>
                 {idx + 1} / {urls.length} · ← → navigate · Esc close
               </div>
             </>
