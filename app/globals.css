@@ -139,58 +139,60 @@ body {
   inset: 0;
   pointer-events: none;
   z-index: 1;
-  overflow: hidden;
   animation: spotlight-breathe 5s ease-in-out infinite;
 }
 
-/* Soft wide halo */
+/* Soft wide halo — symmetric radial bloom */
 .hero-spotlight::before {
   content: '';
   position: absolute;
   top: 0; left: 50%;
   transform: translateX(-50%);
-  width: 2000px;
-  height: 800px;
+  width: 1200px;
+  height: 700px;
   background: radial-gradient(
-    ellipse 45% 55% at 50% 0%,
-    rgba(230, 240, 255, 0.42) 0%,
-    rgba(210, 228, 248, 0.22) 20%,
-    rgba(190, 215, 240, 0.10) 42%,
-    transparent 62%
+    ellipse 50% 100% at 50% 0%,
+    rgba(230, 240, 255, 0.40) 0%,
+    rgba(210, 228, 248, 0.20) 28%,
+    rgba(190, 215, 240, 0.07) 55%,
+    transparent 75%
   );
 }
 
-/* Tight cone — conic gradient from top center */
+/* Tight cone — pointing straight down.
+   from 150deg → 0-stop at 150° absolute.
+   Bright center at 30° stop = 150+30 = 180° absolute = 6 o'clock = DOWN. */
 .hero-spotlight::after {
   content: '';
   position: absolute;
   top: 0; left: 50%;
   transform: translateX(-50%);
-  width: 1600px;
-  height: 1200px;
+  width: 2000px;
+  height: 1100px;
   background: conic-gradient(
-    from 180deg at 50% 0%,
-    transparent           60deg,
-    rgba(255,255,255,0.03) 74deg,
-    rgba(255,255,255,0.18) 85deg,
-    rgba(255,255,255,0.38) 90deg,
-    rgba(255,255,255,0.18) 95deg,
-    rgba(255,255,255,0.03) 106deg,
-    transparent           120deg
+    from 150deg at 50% 0%,
+    transparent             0deg,
+    rgba(255,255,255,0.02)  14deg,
+    rgba(255,255,255,0.20)  24deg,
+    rgba(255,255,255,0.42)  30deg,
+    rgba(255,255,255,0.20)  36deg,
+    rgba(255,255,255,0.02)  46deg,
+    transparent             60deg,
+    transparent            360deg
   );
   mask-image: linear-gradient(180deg,
     white                  0%,
-    rgba(255,255,255,0.90) 20%,
-    rgba(255,255,255,0.55) 50%,
-    rgba(255,255,255,0.15) 72%,
-    transparent            88%
+    rgba(255,255,255,0.88) 22%,
+    rgba(255,255,255,0.50) 52%,
+    rgba(255,255,255,0.12) 74%,
+    transparent            90%
   );
   -webkit-mask-image: linear-gradient(180deg,
     white                  0%,
-    rgba(255,255,255,0.90) 20%,
-    rgba(255,255,255,0.55) 50%,
-    rgba(255,255,255,0.15) 72%,
-    transparent            88%
+    rgba(255,255,255,0.88) 22%,
+    rgba(255,255,255,0.50) 52%,
+    rgba(255,255,255,0.12) 74%,
+    transparent            90%
   );
 }
 
