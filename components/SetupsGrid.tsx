@@ -195,7 +195,6 @@ function SetupCardUI({ s, trades }: { s: SetupCard; trades: Trade[] }) {
           }}>
             {s.name}
           </span>
-          <WinRateBadge trades={trades} setupName={s.name} />
         </div>
 
         <div style={{ display: "flex", alignItems: "center", gap: "20px", flexWrap: "wrap" }}>

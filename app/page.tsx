@@ -137,7 +137,7 @@ export default async function HomePage() {
                 color: "var(--color-ash-gray)",
                 letterSpacing: "0.15em", textTransform: "uppercase",
               }}>
-                Live · GER40 · {now.getFullYear()}
+                Live · {now.getFullYear()}
               </span>
             </div>
 
@@ -177,13 +177,6 @@ export default async function HomePage() {
                 </div>
               </div>
 
-              <p style={{
-                fontFamily: M, fontSize: "12px",
-                color: "var(--color-ash-gray)",
-                lineHeight: 1.6, letterSpacing: "0.01em",
-              }}>
-                Every trade from Notion + MetaTrader 5.
-              </p>
             </div>
           </div>
         </div>

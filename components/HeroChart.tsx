@@ -56,7 +56,7 @@ export default function HeroChart({ data }: { data: EquityPoint[] }) {
     return Array.from(seen).sort().map((key) => {
       const [y, m] = key.split("-");
       const d = new Date(Number(y), Number(m) - 1, 1);
-      const label = d.toLocaleDateString("en-US", { month: "short", year: "2-digit" });
+      const label = `${d.toLocaleDateString("en-US", { month: "short" })} '${String(y).slice(-2)}`;
       return { key, label };
     });
   }, [data]);
