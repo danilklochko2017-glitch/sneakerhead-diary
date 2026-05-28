@@ -12,29 +12,34 @@ export const revalidate = 60;
 const D = "var(--font-display)";
 const M = "var(--font-mono)";
 
-// ── Stat chip ─────────────────────────────────────────────────────────────────
-function StatChip({ label, value, color = "var(--color-near-white)" }: {
+// ── Stat card ──────────────────────────────────────────────────────────────────
+function StatCard({ label, value, color = "var(--color-near-white)" }: {
   label: string; value: string; color?: string;
 }) {
   return (
-    <div style={{
-      display: "flex", flexDirection: "column", gap: "4px",
-      padding: "10px 16px",
-      backgroundColor: "rgba(255,255,255,0.04)",
-      border: "1px solid rgba(255,255,255,0.07)",
-      borderRadius: "var(--radius-default)",
-      backdropFilter: "blur(4px)",
+    <div className="card-glow" style={{
+      backgroundColor: "var(--surface-card)",
+      borderRadius: "var(--radius-cards)",
+      padding: "20px 24px",
+      display: "flex", flexDirection: "column", gap: "6px",
     }}>
-      <span style={{ fontFamily: M, fontSize: "10px", fontWeight: 500, color: "var(--color-ash-gray)", textTransform: "uppercase", letterSpacing: "0.15em" }}>
+      <span style={{
+        fontFamily: M, fontSize: "10px", fontWeight: 500,
+        color: "var(--color-ash-gray)", textTransform: "uppercase", letterSpacing: "0.12em",
+      }}>
         {label}
       </span>
-      <span style={{ fontFamily: M, fontSize: "16px", fontWeight: 500, color, lineHeight: 1, letterSpacing: "-0.01em" }}>
+      <span style={{
+        fontFamily: M, fontSize: "22px", fontWeight: 500,
+        color, lineHeight: 1, letterSpacing: "-0.02em",
+      }}>
         {value}
       </span>
     </div>
   );
 }
 
+// ── Page ───────────────────────────────────────────────────────────────────────
 export default async function HomePage() {
   let trades: Trade[] = [];
   let setups: SetupCard[] = [];
@@ -64,140 +69,101 @@ export default async function HomePage() {
   const avgValue = `${stats.avgRR >= 0 ? "+" : ""}${stats.avgRR.toFixed(2)}R`;
 
   return (
-    <div style={{ backgroundColor: "var(--surface-canvas)", minHeight: "100vh" }}>
+    <div style={{
+      position: "relative",
+      minHeight: "100vh",
+      backgroundColor: "var(--surface-canvas)",
+      overflow: "hidden",
+    }}>
 
-      {/* ─── HERO ─────────────────────────────────────────────────── */}
-      <section style={{
-        position: "relative",
-        overflow: "hidden",
-        padding: "100px 40px 0",
-        backgroundImage: [
-          "radial-gradient(rgba(255,255,255,0.055) 1px, transparent 1px)",
-          "linear-gradient(180deg, rgb(22,22,22) 0%, rgb(10,10,10) 40%, rgb(0,0,0) 100%)",
-        ].join(", "),
-        backgroundSize: "24px 24px, 100% 100%",
+      {/* ─── Spotlight beam ──────────────────────────────────────────────── */}
+      <div className="hero-spotlight" />
+      <div className="hero-spotlight-source" />
+
+      {/* ─── Content ─────────────────────────────────────────────────────── */}
+      <div style={{
+        position: "relative", zIndex: 1,
+        maxWidth: "var(--page-max-width)",
+        margin: "0 auto",
+        padding: "40px 40px 80px",
+        display: "flex", flexDirection: "column", gap: "10px",
       }}>
-        {/* Spotlight beam from top */}
-        <div className="hero-spotlight" />
-        <div className="hero-spotlight-source" />
 
-        <div style={{ maxWidth: "var(--page-max-width)", margin: "0 auto", position: "relative", zIndex: 1 }}>
+        {/* ── Row 1: Hero card + Chart card ── */}
+        <div style={{ display: "grid", gridTemplateColumns: "5fr 7fr", gap: "10px", alignItems: "stretch" }}>
 
-          {/* Eyebrow — centered */}
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "8px", marginBottom: "40px" }}>
-            <span className="live-dot" />
-            <span style={{ fontFamily: M, fontSize: "10px", fontWeight: 500, color: "var(--color-ash-gray)", letterSpacing: "0.15em", textTransform: "uppercase" }}>
-              Live · {new Date().getFullYear()}
-            </span>
-          </div>
-
-          {/* Headline — centered, very large */}
-          <h1 style={{
-            fontFamily: D, fontWeight: 400,
-            fontSize: "clamp(64px, 9vw, 120px)",
-            lineHeight: 0.95,
-            letterSpacing: "-0.04em",
-            color: "var(--color-near-white)",
-            textAlign: "center",
-            marginBottom: "28px",
-          }}>
-            Your trades.<br />Brutally honest.
-          </h1>
-
-          {/* Subtext — centered */}
-          <p style={{
-            fontFamily: M, fontSize: "12px",
-            color: "var(--color-ash-gray)",
-            letterSpacing: "0.02em",
-            lineHeight: 1.7,
-            textAlign: "center",
-            margin: "0 auto 48px",
-            maxWidth: "380px",
-          }}>
-            GER40 · Real-time performance tracking.<br />
-            Every trade from Notion and MetaTrader 5.
-          </p>
-
-          {/* Stat chips — centered row */}
-          <div style={{ display: "flex", gap: "8px", flexWrap: "wrap", justifyContent: "center", marginBottom: "64px" }}>
-            <StatChip label="Net P&L"  value={pnlValue}                       color={pnlColor} />
-            <StatChip label="Win Rate" value={`${stats.winRate.toFixed(1)}%`} color="var(--color-electric-aqua)" />
-            <StatChip label="Avg RR"   value={avgValue} />
-            <StatChip label="Trades"   value={String(stats.totalTrades)} />
-            <StatChip label="Max DD"   value={ddValue}                        color="var(--color-loss)" />
-          </div>
-
-          {/* Equity chart — full width, centered, tall */}
-          <div style={{
+          {/* Hero text */}
+          <div id="hero" className="card-glow" style={{
             backgroundColor: "var(--surface-card)",
             borderRadius: "var(--radius-cards)",
-            border: "1px solid rgba(255,255,255,0.06)",
-            padding: "20px 16px 16px 0",
-            height: "420px",
+            padding: "36px 40px",
             display: "flex", flexDirection: "column",
+            justifyContent: "space-between",
+            minHeight: "360px",
+          }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+              <span className="live-dot" />
+              <span style={{
+                fontFamily: M, fontSize: "10px", fontWeight: 500,
+                color: "var(--color-ash-gray)", letterSpacing: "0.15em", textTransform: "uppercase",
+              }}>
+                Live · {new Date().getFullYear()}
+              </span>
+            </div>
+
+            <div>
+              <h1 style={{
+                fontFamily: D, fontWeight: 400,
+                fontSize: "clamp(48px, 5vw, 76px)",
+                lineHeight: 0.95,
+                letterSpacing: "-0.04em",
+                color: "var(--color-near-white)",
+                marginBottom: "20px",
+              }}>
+                Your trades.<br />Brutally<br />honest.
+              </h1>
+              <p style={{
+                fontFamily: M, fontSize: "11px",
+                color: "var(--color-ash-gray)",
+                lineHeight: 1.7, letterSpacing: "0.01em",
+              }}>
+                GER40 · Real-time performance tracking.<br />
+                Every trade from Notion and MetaTrader 5.
+              </p>
+            </div>
+          </div>
+
+          {/* Chart */}
+          <div className="card-glow" style={{
+            backgroundColor: "var(--surface-card)",
+            borderRadius: "var(--radius-cards)",
+            padding: "20px 16px 16px 0",
             backgroundImage: "radial-gradient(ellipse 70% 60% at 50% 110%, rgba(25,208,232,0.09) 0%, transparent 70%)",
-            boxShadow: "var(--shadow-subtle-2)",
-            position: "relative", zIndex: 2,
+            display: "flex", flexDirection: "column",
           }}>
             <HeroChart data={equitySeries} />
           </div>
         </div>
 
-        {/* Giant background text — sits behind chart bottom */}
-        <div style={{
-          position: "absolute", bottom: "-24px", left: 0, right: 0,
-          fontFamily: D, fontWeight: 400,
-          fontSize: "clamp(100px, 22vw, 300px)",
-          color: "rgba(255,255,255,0.025)",
-          textAlign: "center",
-          lineHeight: 0.85,
-          letterSpacing: "-0.04em",
-          userSelect: "none", pointerEvents: "none",
-          whiteSpace: "nowrap",
-        }}>
-          GER40
+        {/* ── Row 2: 5 stat cards ── */}
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: "10px" }}>
+          <StatCard label="Net P&L"  value={pnlValue}                       color={pnlColor} />
+          <StatCard label="Win Rate" value={`${stats.winRate.toFixed(1)}%`} color="var(--color-electric-aqua)" />
+          <StatCard label="Avg RR"   value={avgValue} />
+          <StatCard label="Trades"   value={String(stats.totalTrades)} />
+          <StatCard label="Max DD"   value={ddValue}                        color="var(--color-loss)" />
         </div>
-      </section>
 
-      {/* ─── JOURNAL ──────────────────────────────────────────────── */}
-      <section style={{ padding: "80px 40px" }}>
-        <div style={{ maxWidth: "var(--page-max-width)", margin: "0 auto" }}>
+        {/* ── Row 3: Journal table ── */}
+        <JournalTable trades={trades} stats={stats} />
 
-          {/* Section eyebrow */}
-          <div style={{ marginBottom: "32px" }}>
-            <p style={{ fontFamily: M, fontSize: "10px", fontWeight: 500, color: "var(--color-ash-gray)", textTransform: "uppercase", letterSpacing: "0.15em", marginBottom: "8px" }}>
-              Every trade, every session
-            </p>
-            <h2 style={{ fontFamily: D, fontWeight: 400, fontSize: "clamp(32px, 3.5vw, 48px)", lineHeight: 1.05, letterSpacing: "-0.03em", color: "var(--color-near-white)", maxWidth: "520px" }}>
-              The full record, no filters.
-            </h2>
-          </div>
-
-          <JournalTable trades={trades} stats={stats} />
+        {/* ── Row 4: Setups + Reviews ── */}
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px", alignItems: "start" }}>
+          <SetupsGrid setups={setups} />
+          <MonthlyReviews reviews={reviews} />
         </div>
-      </section>
 
-      {/* ─── SETUPS + REVIEWS ─────────────────────────────────────── */}
-      <section style={{ padding: "0 40px 100px" }}>
-        <div style={{ maxWidth: "var(--page-max-width)", margin: "0 auto" }}>
-
-          {/* Section eyebrow */}
-          <div style={{ marginBottom: "32px" }}>
-            <p style={{ fontFamily: M, fontSize: "10px", fontWeight: 500, color: "var(--color-ash-gray)", textTransform: "uppercase", letterSpacing: "0.15em", marginBottom: "8px" }}>
-              Playbook & reflection
-            </p>
-            <h2 style={{ fontFamily: D, fontWeight: 400, fontSize: "clamp(32px, 3.5vw, 48px)", lineHeight: 1.05, letterSpacing: "-0.03em", color: "var(--color-near-white)", maxWidth: "520px" }}>
-              The system behind the trades.
-            </h2>
-          </div>
-
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px", alignItems: "start" }}>
-            <SetupsGrid setups={setups} />
-            <MonthlyReviews reviews={reviews} />
-          </div>
-        </div>
-      </section>
-
+      </div>
     </div>
   );
 }
