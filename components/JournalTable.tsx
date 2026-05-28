@@ -70,7 +70,7 @@ const TH: React.CSSProperties = {
   letterSpacing: "0.12em", padding: "10px 14px",
   textAlign: "left", whiteSpace: "nowrap",
   borderBottom: `1px solid var(--color-dark-charcoal)`,
-  backgroundColor: "var(--surface-canvas)",
+  backgroundColor: "#1e1e1e",
 };
 
 const TD: React.CSSProperties = {
@@ -259,16 +259,16 @@ export default function JournalTable({ trades }: { trades: Trade[]; stats: Trade
 
               {/* Footer */}
               <tfoot>
-                <tr style={{ backgroundColor: "var(--surface-canvas)", borderTop: "1px solid var(--color-dark-charcoal)" }}>
-                  <td colSpan={6} style={{ ...TD, fontSize: "12px", fontWeight: 500, color: AQUA, borderBottom: "none", backgroundColor: "var(--surface-canvas)" }}>
+                <tr style={{ backgroundColor: "#1e1e1e", borderTop: "1px solid var(--color-dark-charcoal)" }}>
+                  <td colSpan={6} style={{ ...TD, fontSize: "12px", fontWeight: 500, color: AQUA, borderBottom: "none", backgroundColor: "#1e1e1e" }}>
                     {filteredStats.totalTrades} trades · avg {filteredStats.avgRR >= 0 ? "+" : ""}{filteredStats.avgRR.toFixed(2)}R
                   </td>
-                  <td style={{ ...TD, fontSize: "13px", fontWeight: 500, borderBottom: "none", backgroundColor: "var(--surface-canvas)",
+                  <td style={{ ...TD, fontSize: "13px", fontWeight: 500, borderBottom: "none", backgroundColor: "#1e1e1e",
                     color: filteredStats.netPnL >= 0 ? "var(--color-win)" : "var(--color-loss)" }}>
                     {formatRR(filteredStats.netPnL)}
                   </td>
-                  <td style={{ ...TD, borderBottom: "none", backgroundColor: "var(--surface-canvas)" }} />
-                  <td style={{ ...TD, fontSize: "12px", fontWeight: 500, color: "var(--color-near-white)", borderBottom: "none", backgroundColor: "var(--surface-canvas)" }}>
+                  <td style={{ ...TD, borderBottom: "none", backgroundColor: "#1e1e1e" }} />
+                  <td style={{ ...TD, fontSize: "12px", fontWeight: 500, color: "var(--color-near-white)", borderBottom: "none", backgroundColor: "#1e1e1e" }}>
                     {formatWinRate(filteredStats.winRate)} WR
                   </td>
                 </tr>
