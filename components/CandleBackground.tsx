@@ -56,6 +56,7 @@ export default function CandleBackground() {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const candles = makeCandles(300);
     let offset = 0;
     let W = 0, H = 0;
@@ -150,7 +151,14 @@ export default function CandleBackground() {
       draw();
       raf = requestAnimationFrame(tick);
     }
-    raf = requestAnimationFrame(tick);
+
+    if (reducedMotion) {
+      // Static snapshot — no scrolling animation
+      resize();
+      draw();
+    } else {
+      raf = requestAnimationFrame(tick);
+    }
 
     const ro = new ResizeObserver(resize);
     ro.observe(canvas);

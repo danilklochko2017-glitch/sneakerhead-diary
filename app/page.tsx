@@ -78,16 +78,10 @@ export default async function HomePage() {
     }}>
 
       {/* ─── Content ─────────────────────────────────────────────────────── */}
-      <div style={{
-        position: "relative", zIndex: 1,
-        maxWidth: "var(--page-max-width)",
-        margin: "0 auto",
-        padding: "40px 40px 80px",
-        display: "flex", flexDirection: "column", gap: "10px",
-      }}>
+      <div className="page-content">
 
         {/* ── Row 1: Hero card + Chart card ── */}
-        <div style={{ display: "grid", gridTemplateColumns: "5fr 7fr", gap: "10px", alignItems: "stretch" }}>
+        <div className="page-row-hero">
 
           {/* Hero text */}
           <div id="hero" className="card-glow" style={{
@@ -149,7 +143,7 @@ export default async function HomePage() {
         </div>
 
         {/* ── Row 2: 5 stat cards ── */}
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: "10px" }}>
+        <div className="page-row-stats">
           <StatCard label="Net P&L"  value={pnlValue}                       color={pnlColor} />
           <StatCard label="Win Rate" value={`${stats.winRate.toFixed(1)}%`} color="var(--color-electric-aqua)" />
           <StatCard label="Avg RR"   value={avgValue} />
@@ -161,7 +155,7 @@ export default async function HomePage() {
         <JournalTable trades={trades} stats={stats} />
 
         {/* ── Row 4: Setups + Reviews ── */}
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px", alignItems: "start" }}>
+        <div className="page-row-bottom">
           <SetupsGrid setups={setups} />
           <MonthlyReviews reviews={reviews} />
         </div>

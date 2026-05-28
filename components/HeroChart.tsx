@@ -166,12 +166,12 @@ export default function HeroChart({ data }: { data: EquityPoint[] }) {
                 return p ? fmt(p.date) : "";
               }}
               stroke="transparent"
-              tick={{ fill: "var(--color-ash-gray)", fontSize: 10, fontFamily: M }}
+              tick={{ fill: "var(--color-ash-gray)", fontSize: 12, fontFamily: M }}
               tickLine={false} axisLine={false} dy={6}
             />
             <YAxis
               stroke="transparent"
-              tick={{ fill: "var(--color-ash-gray)", fontSize: 10, fontFamily: M }}
+              tick={{ fill: "var(--color-ash-gray)", fontSize: 12, fontFamily: M }}
               tickLine={false} axisLine={false}
               tickFormatter={v => `${v >= 0 ? "+" : ""}${v}R`}
               width={48} dx={0}

@@ -206,7 +206,7 @@ export default function JournalTable({ trades }: { trades: Trade[]; stats: Trade
                     <tr key={t.id}
                       onClick={() => setActive(t)}
                       style={{ cursor: "pointer", transition: "background 0.1s" }}
-                      onMouseEnter={e => Array.from(e.currentTarget.cells).forEach(c => ((c as HTMLTableCellElement).style.backgroundColor = "#222"))}
+                      onMouseEnter={e => Array.from(e.currentTarget.cells).forEach(c => ((c as HTMLTableCellElement).style.backgroundColor = "#282828"))}
                       onMouseLeave={e => Array.from(e.currentTarget.cells).forEach(c => ((c as HTMLTableCellElement).style.backgroundColor = rowBg))}
                     >
                       {/* Asset */}
