@@ -226,32 +226,24 @@ a:focus-visible {
 
 .page-row-hero {
   display: grid;
-  grid-template-columns: 5fr 7fr;
+  grid-template-columns: 7fr 5fr;
   gap: 10px;
   align-items: stretch;
 }
 
-.page-row-stats {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 10px;
-}
-
 .page-row-bottom {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 2fr 1fr;
   gap: 10px;
   align-items: start;
 }
 
 @media (max-width: 960px) {
-  .page-row-stats { grid-template-columns: repeat(3, 1fr); }
   .page-row-bottom { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 720px) {
-  .page-row-hero  { grid-template-columns: 1fr; }
-  .page-row-stats { grid-template-columns: repeat(2, 1fr); }
+  .page-row-hero { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 480px) {

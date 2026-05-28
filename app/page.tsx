@@ -11,30 +11,44 @@ export const revalidate = 60;
 
 const D = "var(--font-display)";
 const M = "var(--font-mono)";
+const AQUA = "#19d0e8";
 
-// ── Stat card ──────────────────────────────────────────────────────────────────
-function StatCard({ label, value, color = "var(--color-near-white)" }: {
-  label: string; value: string; color?: string;
+// ── Stat ticker ────────────────────────────────────────────────────────────────
+function StatTicker({ items }: {
+  items: { label: string; value: string; color?: string }[];
 }) {
   return (
     <div className="card-glow" style={{
       backgroundColor: "var(--surface-card)",
       borderRadius: "var(--radius-cards)",
-      padding: "20px 24px",
-      display: "flex", flexDirection: "column", gap: "6px",
+      display: "flex",
+      overflow: "hidden",
     }}>
-      <span style={{
-        fontFamily: M, fontSize: "12px", fontWeight: 500,
-        color: "var(--color-ash-gray)", textTransform: "uppercase", letterSpacing: "0.12em",
-      }}>
-        {label}
-      </span>
-      <span style={{
-        fontFamily: M, fontSize: "22px", fontWeight: 500,
-        color, lineHeight: 1, letterSpacing: "-0.02em",
-      }}>
-        {value}
-      </span>
+      {items.map((item, i) => (
+        <div key={item.label} style={{
+          flex: 1,
+          padding: "10px 16px",
+          borderRight: i < items.length - 1 ? "1px solid #111" : "none",
+          display: "flex",
+          flexDirection: "column",
+          gap: "4px",
+        }}>
+          <span style={{
+            fontFamily: M, fontSize: "12px", fontWeight: 500,
+            color: "var(--color-ash-gray)",
+            textTransform: "uppercase", letterSpacing: "0.12em",
+          }}>
+            {item.label}
+          </span>
+          <span style={{
+            fontFamily: M, fontSize: "16px", fontWeight: 500,
+            color: item.color ?? "var(--color-near-white)",
+            lineHeight: 1, letterSpacing: "-0.02em",
+          }}>
+            {item.value}
+          </span>
+        </div>
+      ))}
     </div>
   );
 }
@@ -63,70 +77,39 @@ export default async function HomePage() {
     return r;
   });
 
+  // Current month stats
+  const now = new Date();
+  const currentMonthKey = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}`;
+  const mtdTrades = trades.filter(t => t.date?.startsWith(currentMonthKey));
+  const mtdStats  = calculateStats(mtdTrades);
+
   const pnlColor = stats.netPnL >= 0 ? "var(--color-win)" : "var(--color-loss)";
   const pnlValue = `${stats.netPnL >= 0 ? "+" : ""}${stats.netPnL.toFixed(2)}R`;
+  const mtdColor = mtdStats.netPnL >= 0 ? "var(--color-win)" : "var(--color-loss)";
+  const mtdValue = `${mtdStats.netPnL >= 0 ? "+" : ""}${mtdStats.netPnL.toFixed(2)}R`;
   const ddValue  = stats.maxDrawdown > 0 ? `-${stats.maxDrawdown.toFixed(2)}R` : "0.00R";
   const avgValue = `${stats.avgRR >= 0 ? "+" : ""}${stats.avgRR.toFixed(2)}R`;
+
+  const tickerItems = [
+    { label: "Net P&L",  value: pnlValue,                         color: pnlColor               },
+    { label: "Win Rate", value: `${stats.winRate.toFixed(1)}%`,   color: AQUA                   },
+    { label: "Avg RR",   value: avgValue                                                         },
+    { label: "Trades",   value: String(stats.totalTrades)                                       },
+    { label: "Max DD",   value: ddValue,                          color: "var(--color-loss)"    },
+  ];
 
   return (
     <div style={{
       position: "relative",
       minHeight: "100vh",
       backgroundColor: "var(--surface-canvas)",
-      overflow: "hidden",
     }}>
-
-      {/* ─── Content ─────────────────────────────────────────────────────── */}
       <div className="page-content">
 
-        {/* ── Row 1: Hero card + Chart card ── */}
+        {/* ── Row 1: Chart (left, dominant) + Terminal info panel (right) ── */}
         <div className="page-row-hero">
 
-          {/* Hero text */}
-          <div id="hero" className="card-glow" style={{
-            backgroundColor: "var(--surface-card)",
-            borderRadius: "var(--radius-cards)",
-            padding: "36px 40px",
-            display: "flex", flexDirection: "column",
-            justifyContent: "space-between",
-            minHeight: "360px",
-            position: "relative",
-            overflow: "hidden",
-          }}>
-            {/* Text */}
-            <div style={{ position: "relative", zIndex: 1, display: "flex", alignItems: "center", gap: "8px" }}>
-              <span className="live-dot" />
-              <span style={{
-                fontFamily: M, fontSize: "12px", fontWeight: 500,
-                color: "var(--color-ash-gray)", letterSpacing: "0.15em", textTransform: "uppercase",
-              }}>
-                Live · {new Date().getFullYear()}
-              </span>
-            </div>
-
-            <div style={{ position: "relative", zIndex: 1 }}>
-              <h1 style={{
-                fontFamily: D, fontWeight: 400,
-                fontSize: "clamp(48px, 5vw, 76px)",
-                lineHeight: 0.95,
-                letterSpacing: "-0.04em",
-                color: "var(--color-near-white)",
-                marginBottom: "20px",
-              }}>
-                Trading Journal
-              </h1>
-              <p style={{
-                fontFamily: M, fontSize: "12px",
-                color: "var(--color-ash-gray)",
-                lineHeight: 1.7, letterSpacing: "0.01em",
-              }}>
-                GER40 · Real-time performance tracking.<br />
-                Every trade from Notion and MetaTrader 5.
-              </p>
-            </div>
-          </div>
-
-          {/* Chart */}
+          {/* Equity chart — left 7fr */}
           <div className="card-glow" style={{
             backgroundColor: "var(--surface-card)",
             borderRadius: "var(--radius-cards)",
@@ -136,23 +119,84 @@ export default async function HomePage() {
           }}>
             <HeroChart data={equitySeries} />
           </div>
+
+          {/* Terminal info panel — right 5fr */}
+          <div id="hero" className="card-glow" style={{
+            backgroundColor: "var(--surface-card)",
+            borderRadius: "var(--radius-cards)",
+            padding: "28px",
+            display: "flex", flexDirection: "column",
+            justifyContent: "space-between",
+            minHeight: "320px",
+          }}>
+            {/* Live indicator */}
+            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+              <span className="live-dot" />
+              <span style={{
+                fontFamily: M, fontSize: "12px", fontWeight: 500,
+                color: "var(--color-ash-gray)",
+                letterSpacing: "0.15em", textTransform: "uppercase",
+              }}>
+                Live · GER40 · {now.getFullYear()}
+              </span>
+            </div>
+
+            {/* Bottom content */}
+            <div>
+              <h1 style={{
+                fontFamily: D, fontWeight: 400,
+                fontSize: "clamp(36px, 3.8vw, 60px)",
+                lineHeight: 0.95, letterSpacing: "-0.04em",
+                color: "var(--color-near-white)",
+                marginBottom: "24px",
+              }}>
+                Trading<br />Journal
+              </h1>
+
+              {/* Terminal stats grid */}
+              <div style={{ borderTop: "1px solid #282828", paddingTop: "14px", marginBottom: "14px" }}>
+                <div style={{
+                  display: "grid", gridTemplateColumns: "1fr 1fr",
+                  gap: "1px", backgroundColor: "#111",
+                }}>
+                  {[
+                    { label: "MTD Net",    value: mtdStats.totalTrades > 0 ? mtdValue : "—", color: mtdStats.totalTrades > 0 ? mtdColor : "var(--color-ash-gray)" },
+                    { label: "All-time",   value: pnlValue,                                   color: pnlColor },
+                    { label: "MTD Trades", value: String(mtdStats.totalTrades),               color: "var(--color-near-white)" },
+                    { label: "Win Rate",   value: `${stats.winRate.toFixed(1)}%`,             color: AQUA },
+                  ].map(item => (
+                    <div key={item.label} style={{ backgroundColor: "var(--surface-card)", padding: "10px 12px" }}>
+                      <div style={{ fontFamily: M, fontSize: "12px", color: "var(--color-ash-gray)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "3px" }}>
+                        {item.label}
+                      </div>
+                      <div style={{ fontFamily: M, fontSize: "15px", fontWeight: 500, color: item.color, lineHeight: 1, letterSpacing: "-0.02em" }}>
+                        {item.value}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <p style={{
+                fontFamily: M, fontSize: "12px",
+                color: "var(--color-ash-gray)",
+                lineHeight: 1.6, letterSpacing: "0.01em",
+              }}>
+                Every trade from Notion + MetaTrader 5.
+              </p>
+            </div>
+          </div>
         </div>
 
-        {/* ── Row 2: 5 stat cards ── */}
-        <div className="page-row-stats">
-          <StatCard label="Net P&L"  value={pnlValue}                       color={pnlColor} />
-          <StatCard label="Win Rate" value={`${stats.winRate.toFixed(1)}%`} color="var(--color-electric-aqua)" />
-          <StatCard label="Avg RR"   value={avgValue} />
-          <StatCard label="Trades"   value={String(stats.totalTrades)} />
-          <StatCard label="Max DD"   value={ddValue}                        color="var(--color-loss)" />
-        </div>
+        {/* ── Row 2: Stat ticker ── */}
+        <StatTicker items={tickerItems} />
 
         {/* ── Row 3: Journal table ── */}
         <JournalTable trades={trades} stats={stats} />
 
-        {/* ── Row 4: Setups + Reviews ── */}
+        {/* ── Row 4: Setups (2fr) + Reviews (1fr) ── */}
         <div className="page-row-bottom">
-          <SetupsGrid setups={setups} />
+          <SetupsGrid setups={setups} trades={trades} />
           <MonthlyReviews reviews={reviews} />
         </div>
 

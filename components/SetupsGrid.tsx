@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import type { SetupCard } from "@/types/trade";
+import type { SetupCard, Trade } from "@/types/trade";
 import Image from "next/image";
 
 const D = "var(--font-display)";  // Instrument Serif
@@ -147,9 +147,33 @@ function renderDescriptionBlocks(text: string) {
   );
 }
 
+// ─── Win-rate badge ───────────────────────────────────────────────────────────
+
+function WinRateBadge({ trades, setupName }: { trades: Trade[]; setupName: string }) {
+  const relevant = trades.filter(t => t.setup === setupName && t.result !== "Pending");
+  if (relevant.length === 0) return null;
+  const wins = relevant.filter(t => t.result === "Win").length;
+  const rate = wins / relevant.length;
+  const color = rate >= 0.5 ? "var(--color-win)" : "var(--color-loss)";
+  const bg    = rate >= 0.5 ? "rgba(52,211,153,0.08)" : "rgba(248,113,113,0.08)";
+  const border = rate >= 0.5 ? "rgba(52,211,153,0.25)" : "rgba(248,113,113,0.25)";
+  return (
+    <span style={{
+      fontFamily: M, fontSize: "12px", fontWeight: 500,
+      color, backgroundColor: bg,
+      border: `1px solid ${border}`,
+      borderRadius: "var(--radius-buttons)",
+      padding: "2px 10px", whiteSpace: "nowrap",
+      letterSpacing: "0.05em",
+    }}>
+      {Math.round(rate * 100)}% · {relevant.length}T
+    </span>
+  );
+}
+
 // ─── Setup Card ───────────────────────────────────────────────────────────────
 
-function SetupCardUI({ s }: { s: SetupCard }) {
+function SetupCardUI({ s, trades }: { s: SetupCard; trades: Trade[] }) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -171,6 +195,7 @@ function SetupCardUI({ s }: { s: SetupCard }) {
           }}>
             {s.name}
           </span>
+          <WinRateBadge trades={trades} setupName={s.name} />
         </div>
 
         <div style={{ display: "flex", alignItems: "center", gap: "20px", flexWrap: "wrap" }}>
@@ -243,7 +268,7 @@ function SetupCardUI({ s }: { s: SetupCard }) {
 
 // ─── Grid ─────────────────────────────────────────────────────────────────────
 
-export default function SetupsGrid({ setups }: { setups: SetupCard[] }) {
+export default function SetupsGrid({ setups, trades = [] }: { setups: SetupCard[]; trades?: Trade[] }) {
   return (
     <div id="setups" className="card-glow" style={{
       backgroundColor: "var(--surface-card)",
@@ -266,7 +291,7 @@ export default function SetupsGrid({ setups }: { setups: SetupCard[] }) {
         </div>
       ) : (
         <div style={{ display: "flex", flexDirection: "column", gap: "1px", backgroundColor: "#0a0a0a", borderRadius: "var(--radius-default)", overflow: "hidden" }}>
-          {setups.map(s => <SetupCardUI key={s.id} s={s} />)}
+          {setups.map(s => <SetupCardUI key={s.id} s={s} trades={trades} />)}
         </div>
       )}
     </div>
