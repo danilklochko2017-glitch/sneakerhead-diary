@@ -175,8 +175,8 @@ async function mapPageToTrade(page: any): Promise<Trade> {
   const noteVal     = extractRichText(props["Note"]) || extractRichText(props["Notes"]);
 
   // Setup: try select first, then relation
-  let setupVal = extractSelect(props["Setup"]);
-  if (!setupVal) setupVal = await resolveRelationTitle(props["Setup"]);
+  let setupVal = extractSelect(props["Setups"]);
+  if (!setupVal) setupVal = await resolveRelationTitle(props["Setups"]);
   const instrumentVal = extractTitle(props["Pair"]) || "GER40";
   const riskPct     = extractNumber(props["Risk (%)"]);
 
