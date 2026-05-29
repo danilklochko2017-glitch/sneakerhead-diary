@@ -77,16 +77,10 @@ export default async function HomePage() {
     return r;
   });
 
-  // Current month stats
   const now = new Date();
-  const currentMonthKey = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}`;
-  const mtdTrades = trades.filter(t => t.date?.startsWith(currentMonthKey));
-  const mtdStats  = calculateStats(mtdTrades);
 
   const pnlColor = stats.netPnL >= 0 ? "var(--color-win)" : "var(--color-loss)";
   const pnlValue = `${stats.netPnL >= 0 ? "+" : ""}${stats.netPnL.toFixed(2)}R`;
-  const mtdColor = mtdStats.netPnL >= 0 ? "var(--color-win)" : "var(--color-loss)";
-  const mtdValue = `${mtdStats.netPnL >= 0 ? "+" : ""}${mtdStats.netPnL.toFixed(2)}R`;
   const ddValue  = stats.maxDrawdown > 0 ? `-${stats.maxDrawdown.toFixed(2)}R` : "0.00R";
   const avgValue = `${stats.avgRR >= 0 ? "+" : ""}${stats.avgRR.toFixed(2)}R`;
 
