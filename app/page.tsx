@@ -142,7 +142,6 @@ export default async function HomePage() {
                 fontSize: "clamp(36px, 3.8vw, 60px)",
                 lineHeight: 0.95, letterSpacing: "-0.04em",
                 color: "var(--color-near-white)",
-                marginBottom: "24px",
               }}>
                 Trading<br />Journal
               </h1>

@@ -123,7 +123,7 @@ export default function MonthlyReviews({ reviews }: { reviews: MonthlyReview[] }
           No closed trades yet.
         </div>
       ) : (
-        <div style={{ display: "flex", flexDirection: "column", gap: "1px", backgroundColor: "#0a0a0a", borderRadius: "var(--radius-default)", overflow: "hidden" }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: "8px", borderRadius: "var(--radius-default)", overflow: "hidden" }}>
           {reviews.map((r, i) => <ReviewCard key={i} r={r} />)}
         </div>
       )}
