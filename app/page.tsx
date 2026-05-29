@@ -153,36 +153,14 @@ export default async function HomePage() {
                 Trading<br />Journal
               </h1>
 
-              {/* Terminal stats grid */}
-              <div style={{ borderTop: "1px solid #282828", paddingTop: "14px", marginBottom: "14px" }}>
-                <div style={{
-                  display: "grid", gridTemplateColumns: "1fr 1fr",
-                  gap: "1px", backgroundColor: "#111",
-                }}>
-                  {[
-                    { label: "MTD Net",    value: mtdStats.totalTrades > 0 ? mtdValue : "—", color: mtdStats.totalTrades > 0 ? mtdColor : "var(--color-ash-gray)" },
-                    { label: "All-time",   value: pnlValue,                                   color: pnlColor },
-                    { label: "MTD Trades", value: String(mtdStats.totalTrades),               color: "var(--color-near-white)" },
-                    { label: "Win Rate",   value: `${stats.winRate.toFixed(1)}%`,             color: AQUA },
-                  ].map(item => (
-                    <div key={item.label} style={{ backgroundColor: "var(--surface-card)", padding: "10px 12px" }}>
-                      <div style={{ fontFamily: M, fontSize: "12px", color: "var(--color-ash-gray)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "3px" }}>
-                        {item.label}
-                      </div>
-                      <div style={{ fontFamily: M, fontSize: "15px", fontWeight: 500, color: item.color, lineHeight: 1, letterSpacing: "-0.02em" }}>
-                        {item.value}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
             </div>
           </div>
         </div>
 
         {/* ── Row 2: Stat ticker ── */}
-        <StatTicker items={tickerItems} />
+        <div style={{ marginTop: "12px" }}>
+          <StatTicker items={tickerItems} />
+        </div>
 
         {/* ── Row 3: Journal table ── */}
         <JournalTable trades={trades} stats={stats} />

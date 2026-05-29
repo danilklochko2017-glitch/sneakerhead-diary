@@ -67,7 +67,7 @@ const ROW_B = "#141414";  // slightly darker
 const TH: React.CSSProperties = {
   fontFamily: M, fontSize: "12px", fontWeight: 500,
   color: "var(--color-ash-gray)", textTransform: "uppercase",
-  letterSpacing: "0.12em", padding: "8px 12px",
+  letterSpacing: "0.12em", padding: "10px 14px",
   textAlign: "left", whiteSpace: "nowrap",
   borderBottom: `1px solid var(--color-dark-charcoal)`,
   borderRight: "1px solid rgba(255,255,255,0.04)",
@@ -76,7 +76,7 @@ const TH: React.CSSProperties = {
 
 const TD: React.CSSProperties = {
   fontFamily: M, fontSize: "12px",
-  color: "var(--color-near-white)", padding: "8px 12px",
+  color: "var(--color-near-white)", padding: "12px 14px",
   borderBottom: "1px solid #111",
   borderRight: "1px solid rgba(255,255,255,0.03)",
 };
