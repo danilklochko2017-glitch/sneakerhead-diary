@@ -27,11 +27,11 @@ function StatTicker({ items }: {
       {items.map((item, i) => (
         <div key={item.label} style={{
           flex: 1,
-          padding: "10px 16px",
+          padding: "16px 20px",
           borderRight: i < items.length - 1 ? "1px solid #111" : "none",
           display: "flex",
           flexDirection: "column",
-          gap: "4px",
+          gap: "6px",
         }}>
           <span style={{
             fontFamily: M, fontSize: "12px", fontWeight: 500,
@@ -151,9 +151,7 @@ export default async function HomePage() {
         </div>
 
         {/* ── Row 2: Stat ticker ── */}
-        <div style={{ marginTop: "12px" }}>
-          <StatTicker items={tickerItems} />
-        </div>
+        <StatTicker items={tickerItems} />
 
         {/* ── Row 3: Journal table ── */}
         <JournalTable trades={trades} stats={stats} />
