@@ -265,7 +265,7 @@ export default function SetupsGrid({ setups }: { setups: SetupCard[] }) {
           No setups loaded.
         </div>
       ) : (
-        <div style={{ display: "flex", flexDirection: "column", gap: "8px", borderRadius: "var(--radius-default)", overflow: "hidden" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px" }}>
           {setups.map(s => <SetupCardUI key={s.id} s={s} />)}
         </div>
       )}

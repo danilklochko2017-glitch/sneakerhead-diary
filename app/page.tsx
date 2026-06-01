@@ -1,11 +1,9 @@
 import HeroChart from "@/components/HeroChart";
 import JournalTable from "@/components/JournalTable";
 import SetupsGrid from "@/components/SetupsGrid";
-import MonthlyReviews from "@/components/MonthlyReviews";
-import { fetchTrades, fetchSetups, fetchAIReviews } from "@/lib/notion";
+import { fetchTrades, fetchSetups } from "@/lib/notion";
 import { calculateStats, buildEquitySeries } from "@/lib/calculations";
-import { buildMonthlyReviews } from "@/lib/reviews";
-import type { Trade, SetupCard, MonthlyReview } from "@/types/trade";
+import type { Trade, SetupCard } from "@/types/trade";
 
 export const revalidate = 60;
 
@@ -63,19 +61,6 @@ export default async function HomePage() {
 
   const stats        = calculateStats(trades);
   const equitySeries = buildEquitySeries(trades);
-
-  const templateReviews = buildMonthlyReviews(trades);
-  const aiReviews = await fetchAIReviews().catch(() => []);
-  const reviews: MonthlyReview[] = templateReviews.map((r) => {
-    const monthKey = `${r.year}-${String(
-      ["January","February","March","April","May","June",
-       "July","August","September","October","November","December"]
-        .indexOf(r.month) + 1
-    ).padStart(2, "0")}`;
-    const ai = aiReviews.find((a) => a.monthKey === monthKey);
-    if (ai) return { ...r, wentWell: ai.wentWell, toImprove: ai.toImprove };
-    return r;
-  });
 
   const now = new Date();
 
@@ -156,11 +141,8 @@ export default async function HomePage() {
         {/* ── Row 3: Journal table ── */}
         <JournalTable trades={trades} stats={stats} />
 
-        {/* ── Row 4: Setups (2fr) + Reviews (1fr) ── */}
-        <div className="page-row-bottom">
-          <SetupsGrid setups={setups} />
-          <MonthlyReviews reviews={reviews} />
-        </div>
+        {/* ── Row 4: Setups full width ── */}
+        <SetupsGrid setups={setups} />
 
       </div>
     </div>
