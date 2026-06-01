@@ -140,7 +140,7 @@ export default function HeroChart({ data }: { data: EquityPoint[] }) {
       </div>
 
       {/* Chart */}
-      <div style={{ flex: 1, minHeight: 0 }}>
+      <div style={{ flex: 1, minHeight: "260px" }}>
         <ResponsiveContainer width="100%" height="100%">
           <ComposedChart data={filtered} margin={{ top: 8, right: 16, left: 8, bottom: 0 }}>
             <defs>
